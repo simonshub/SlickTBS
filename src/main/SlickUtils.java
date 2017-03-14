@@ -35,6 +35,12 @@ public abstract class SlickUtils {
     
     
     
+    public static String getFileName (String path) {
+        return path.substring(path.lastIndexOf("/")+1,path.lastIndexOf("."));
+    }
+    
+    
+    
     public static void readObjectFromFile (File f, Object obj) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader (new FileReader (f));
         String line;

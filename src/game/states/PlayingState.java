@@ -31,7 +31,7 @@ public class PlayingState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        gameMap = new GameMap (100,100);
+        gameMap = new GameMap (container, 100, 100);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class PlayingState extends BasicGameState {
             int y = 32;
             g.setColor(Color.white);
             
-            g.drawString("Debug Mode", 0, y); y+=32;
+            g.drawString("Debug Mode", 0, y); y+=24;
             if (Consts.RENDER_DEBUG_CAMERA_INFO)
-                g.drawString("Camera: "+gameMap.camera.x+","+gameMap.camera.y, 0, y); y+=32;
+                g.drawString("Camera: "+String.format("% 05d",gameMap.camera.x)+","+String.format("% 05d",gameMap.camera.y)+"("+String.format("%.2f",gameMap.camera.zoom)+"z)", 0, y); y+=24;
             if (Consts.RENDER_DEBUG_RENDERED_HEXES)
-                g.drawString("Rendered hexes: "+gameMap.grid.counter, 0, y); y+=32;
+                g.drawString("Rendered hexes: "+gameMap.grid.counter, 0, y); y+=24;
         }
     }
 

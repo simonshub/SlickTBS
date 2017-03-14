@@ -37,7 +37,7 @@ public class Hex {
     public Hex (int x, int y) {
         this.x = x;
         this.y = y;
-        terrain = ResMgr.TERRAIN_DEFAULT;
+        terrain = TerrainType.DEFAULT;
         color = new Color (1f,1f,1f,0f);
     }
     
@@ -51,17 +51,34 @@ public class Hex {
     }
     
     public void render (Camera cam, GameContainer container, StateBasedGame game, Graphics g) {
+        if (terrain != null && terrain.img != null) {
+            terrain.img.draw(
+                             (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
+                             (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
+                             (HEX_GRID_SIZE_X)*cam.zoom,
+                             (HEX_GRID_SIZE_Y)*cam.zoom
+                            );
+        }
+        
         if (HEX_GRID_IMG == null)
             return;
         
-        g.setColor(color);
+//        g.setColor(color);
+//        g.drawRect( (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
+//                    (y*(HEX_GRID_SIZE_Y*3/4)-cam.y + (int)(Hex.HEX_GRID_SIZE_Y*1/8))*cam.zoom,
+//                    (HEX_GRID_SIZE_X)*cam.zoom,
+//                    (HEX_GRID_SIZE_Y*3/4)*cam.zoom);
         
-        if (y%2==0) {
-            HEX_GRID_IMG.draw(x*HEX_GRID_SIZE_X+HEX_GRID_SIZE_X/2-cam.x, y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y, HEX_GRID_SIZE_X, HEX_GRID_SIZE_Y);
-            g.drawRect(x*HEX_GRID_SIZE_X-cam.x, y*HEX_GRID_SIZE_Y-cam.y, HEX_GRID_SIZE_X, HEX_GRID_SIZE_Y);
-        } else {
-            HEX_GRID_IMG.draw(x*HEX_GRID_SIZE_X-cam.x, y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y, HEX_GRID_SIZE_X, HEX_GRID_SIZE_Y);
-            g.drawRect(x*HEX_GRID_SIZE_X-cam.x, y*HEX_GRID_SIZE_Y-cam.y, HEX_GRID_SIZE_X, HEX_GRID_SIZE_Y);
-        }
+        if (ResMgr.render_grid) HEX_GRID_IMG.draw(
+                                 (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
+                                 (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
+                                 (HEX_GRID_SIZE_X)*cam.zoom,
+                                 (HEX_GRID_SIZE_Y)*cam.zoom
+                                );
+    }
+    
+    // DEBUG
+    public void redify () {
+        this.color = new Color (1f,0f,0f,this.color.a+0.1f);
     }
 }

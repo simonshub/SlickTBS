@@ -19,23 +19,17 @@ import org.newdawn.slick.SlickException;
 public class ResMgr {
     public static ResMgr instance;
     
-    public static TerrainType TERRAIN_DEFAULT;
-    public static TerrainType TERRAIN_PLAINS;
-    public static TerrainType TERRAIN_FOREST;
-    public static TerrainType TERRAIN_MOUNTAINS;
-    public static TerrainType TERRAIN_HILLS;
-    public static TerrainType TERRAIN_SEA;
-    public static TerrainType TERRAIN_MARSHES;
-    public static TerrainType TERRAIN_DESERT;
-    
     public static int screen_res_w = 800;
     public static int screen_res_h = 600;
-    public static String title = "WW II";
+    public static boolean edit_mode = true;
+    public static boolean debug_mode = true;
+    public static boolean render_grid = true;
+    
+    public static String title = "Off-World";
     
     
     
     private ResMgr () {
-        TERRAIN_DEFAULT = new TerrainType ();
     }
     
     public static void init () throws IOException, FileNotFoundException, IllegalArgumentException, IllegalAccessException {

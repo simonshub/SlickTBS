@@ -21,8 +21,9 @@ public class HexGrid {
     public static final int DRAW_MARGIN_Y = 2;
     
     public int counter;
-    private int size_x, size_y;
-    private List<List<Hex>> grid;
+    private final int size_x;
+    private final int size_y;
+    private final List<List<Hex>> grid;
     
     public HexGrid (int size_x, int size_y) {
         this.size_x = size_x;
@@ -49,8 +50,8 @@ public class HexGrid {
         int start_y_index = (int)(cam.y / (Hex.HEX_GRID_SIZE_Y*3/4))-DRAW_MARGIN_Y;
         counter = 0;
         
-        for (int i=0;i<ResMgr.screen_res_h/(Hex.HEX_GRID_SIZE_Y*3/4)+DRAW_MARGIN_Y*2;i++) {
-            for (int j=0;j<ResMgr.screen_res_w/Hex.HEX_GRID_SIZE_X+DRAW_MARGIN_X*2;j++) {
+        for (int i=0;i<ResMgr.screen_res_h/((Hex.HEX_GRID_SIZE_Y*3/4)*cam.zoom)+DRAW_MARGIN_Y*2;i++) {
+            for (int j=0;j<ResMgr.screen_res_w/(Hex.HEX_GRID_SIZE_X*cam.zoom)+DRAW_MARGIN_X*2;j++) {
                 Hex hex = get(j + start_x_index, i + start_y_index);
                 if (hex!=null) { hex.render(cam, container, game, g); counter++; }
             }

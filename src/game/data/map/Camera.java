@@ -7,6 +7,7 @@ package game.data.map;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -18,15 +19,42 @@ public class Camera {
     private int freeze_x, freeze_y;
     
     public int x, y;
+    public float zoom;
     public boolean grip;
     
-    public Camera () {
+    public Camera (GameContainer gc) {
         x = 0;
         y = 0;
+        zoom = 1f;
         grip = false;
+        
+        gc.getInput().addMouseListener(new MouseListener () {
+            @Override
+            public void mouseWheelMoved(int i) {
+                zoom += i*0.0001f;
+            }
+            @Override
+            public void mouseClicked(int i, int i1, int i2, int i3) { }
+            @Override
+            public void mousePressed(int i, int i1, int i2) { }
+            @Override
+            public void mouseReleased(int i, int i1, int i2) { }
+            @Override
+            public void mouseMoved(int i, int i1, int i2, int i3) { }
+            @Override
+            public void mouseDragged(int i, int i1, int i2, int i3) { }
+            @Override
+            public void setInput(Input input) { }
+            @Override
+            public boolean isAcceptingInput() { return true; }
+            @Override
+            public void inputEnded() { }
+            @Override
+            public void inputStarted() { }
+        });
     }
     
-    public void update (GameContainer gc, StateBasedGame sbg) {
+    public void update (Camera cam, GameContainer gc, StateBasedGame sbg) {
         if (!gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && grip) {
             grip = false;
             click_x = 0;
@@ -44,8 +72,8 @@ public class Camera {
         }
         
         if (grip && gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-            this.x = freeze_x + click_x - gc.getInput().getMouseX();
-            this.y = freeze_y + click_y - gc.getInput().getMouseY();
+            this.x = (int) (freeze_x + (click_x - gc.getInput().getMouseX())/zoom);
+            this.y = (int) (freeze_y + (click_y - gc.getInput().getMouseY())/zoom);
         }
     }
 }
