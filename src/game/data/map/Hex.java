@@ -5,6 +5,8 @@
  */
 package game.data.map;
 
+import game.data.units.Unit;
+import java.util.List;
 import main.ResMgr;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -26,7 +28,9 @@ public class Hex {
     
     public int x, y;
     public Color color;
+    public List<Unit> units;
     public TerrainType terrain;
+    public List<TerrainFeature> features;
     
     public static void init () throws SlickException {
         HEX_GRID_IMG = new Image (HEX_GRID_IMG_PATH);
@@ -63,18 +67,14 @@ public class Hex {
         if (HEX_GRID_IMG == null)
             return;
         
-//        g.setColor(color);
-//        g.drawRect( (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
-//                    (y*(HEX_GRID_SIZE_Y*3/4)-cam.y + (int)(Hex.HEX_GRID_SIZE_Y*1/8))*cam.zoom,
-//                    (HEX_GRID_SIZE_X)*cam.zoom,
-//                    (HEX_GRID_SIZE_Y*3/4)*cam.zoom);
-        
         if (ResMgr.render_grid) HEX_GRID_IMG.draw(
                                  (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
                                  (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
                                  (HEX_GRID_SIZE_X)*cam.zoom,
                                  (HEX_GRID_SIZE_Y)*cam.zoom
                                 );
+        
+        
     }
     
     // DEBUG

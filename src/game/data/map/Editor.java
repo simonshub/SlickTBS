@@ -78,15 +78,16 @@ public class Editor {
         int x = gc.getInput().getMouseX();
         int y = gc.getInput().getMouseY();
         
-        if (x>=0 && x<=(ResMgr.screen_res_w/4) && y>=0 && y<=(MENU_ITEM_SIZE*TerrainType.values().length)) {
-            if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-                int index = y / MENU_ITEM_SIZE;
-                if (index>=0 && index<TerrainType.values().length) {
-                    this.paintTile = TerrainType.values()[index];
-                    System.out.println("Selected "+paintTile.name());
+        if (state==State.TILE) {
+            if (x>=0 && x<=(ResMgr.screen_res_w/4) && y>=0 && y<=(MENU_ITEM_SIZE*TerrainType.values().length)) {
+                if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+                    int index = y / MENU_ITEM_SIZE;
+                    if (index>=0 && index<TerrainType.values().length) {
+                        this.paintTile = TerrainType.values()[index];
+                    }
                 }
+                return true;
             }
-            return true;
         }
         
         return false;
