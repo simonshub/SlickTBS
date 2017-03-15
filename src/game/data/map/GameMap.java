@@ -46,15 +46,29 @@ public class GameMap {
         int x_index = (int)((x+(y_index%2==0?Hex.HEX_GRID_SIZE_X/2:0))/Hex.HEX_GRID_SIZE_X) - (y_index%2==0?1:0);
         
         if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
-            // something
-        }
-        
-        if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (grid.get(x_index, y_index) != null && editor != null && ResMgr.edit_mode) {
                 switch (editor.state) {
                     case TILE :
                         grid.get(x_index, y_index).terrain = editor.paintTile;
                         System.out.println("Painting "+SlickUtils.getFileName(editor.paintTile.img_path)+" to "+x_index+","+y_index);
+                        break;
+                    case TILE_SPECIAL :
+                        break;
+                    case UNIT :
+                        break;
+                    case NONE :
+                        break;
+                    default :
+                        break;
+                }
+            }
+        }
+        if (gc.getInput().isMousePressed(Input.MOUSE_MIDDLE_BUTTON)) {
+            if (grid.get(x_index, y_index) != null && editor != null && ResMgr.edit_mode) {
+                switch (editor.state) {
+                    case TILE :
+                        editor.paintTile = grid.get(x_index, y_index).terrain;
+                        System.out.println("Setting paint tile to "+editor.paintTile.name());
                         break;
                     case TILE_SPECIAL :
                         break;

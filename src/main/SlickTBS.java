@@ -25,6 +25,8 @@ public class SlickTBS extends StateBasedGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println (SlickUtils.capitalizeWords("hello world this is i !sad"));
+        
         System.out.println ("Starting ...");
         File file = new File ("natives");
         if (file.exists()) {

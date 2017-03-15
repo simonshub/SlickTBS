@@ -14,22 +14,15 @@ import org.newdawn.slick.SlickException;
 
 /**
  *
- * @author emil.simon
+ * @author XyRoN
  */
-public enum TerrainType {
-    DEFAULT, OPEN, HILLS, MOUNTAINS, TUNDRA, DESERT, MARSHES, TROPICAL, SEA, FOREST, URBAN, ARID;
+public enum Resources {
+    POWER, GOLD, POPULATION, FOOD, MATERIALS;
     
     public Image img;
     public String img_path;
     
-    public float cover;
-    public float soft_mod;
-    public float hard_mod;
-    
-    public float atk_mod;
-    public float def_mod;
-    
-    TerrainType () {
+    Resources () {
         this.img = null;
         this.img_path = "";
         

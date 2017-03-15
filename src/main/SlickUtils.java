@@ -38,6 +38,18 @@ public abstract class SlickUtils {
     public static String getFileName (String path) {
         return path.substring(path.lastIndexOf("/")+1,path.lastIndexOf("."));
     }
+    public static String capitalizeWords (String sentance) {
+        String result = "";
+        for (int i=0;i<sentance.length();i++) {
+            if (i==0)
+                result += Character.toUpperCase(sentance.charAt(i));
+            else if (sentance.charAt(i-1)==' ')
+                result += Character.toUpperCase(sentance.charAt(i));
+            else
+                result += sentance.charAt(i);
+        }
+        return result;
+    }
     
     
     
