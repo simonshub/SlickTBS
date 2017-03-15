@@ -7,8 +7,7 @@ package game.data.map;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import main.Consts;
 import main.SlickUtils;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -41,7 +40,7 @@ public enum TerrainType {
     }
     
     public void init () throws IOException, SlickException {
-        String path = "res/data/tiles/"+this.name().toLowerCase()+".tile";
+        String path = Consts.TILES_PATH+this.name().toLowerCase()+".tile";
         File f = new File (path);
         SlickUtils.readObjectFromFile(f, this);
         this.img = new Image (this.img_path);

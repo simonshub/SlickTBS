@@ -33,10 +33,12 @@ public class GameMap {
     
     public void render (GameContainer container, StateBasedGame game, Graphics g) {
         grid.render(camera, container, game, g);
+        editor.render(container, game, g);
     }
     
     public void update (GameContainer gc, StateBasedGame sbg) {
         camera.update(camera, gc, sbg);
+        if (editor.update(gc, sbg)) return;
         
         int y = (int)((gc.getInput().getMouseY() - (int)(Hex.HEX_GRID_SIZE_Y*1/8))/camera.zoom) + camera.y;
         int x = (int)((gc.getInput().getMouseX())/camera.zoom) + camera.x;
@@ -47,12 +49,12 @@ public class GameMap {
             // something
         }
         
-        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+        if (gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
             if (grid.get(x_index, y_index) != null && editor != null && ResMgr.edit_mode) {
                 switch (editor.state) {
                     case TILE :
                         grid.get(x_index, y_index).terrain = editor.paintTile;
-                        System.out.println("Painting "+SlickUtils.getFileName(editor.paintTile.img_path)+" to tile at "+x_index+","+y_index);
+                        System.out.println("Painting "+SlickUtils.getFileName(editor.paintTile.img_path)+" to "+x_index+","+y_index);
                         break;
                     case TILE_SPECIAL :
                         break;
@@ -73,6 +75,10 @@ public class GameMap {
         if (gc.getInput().isKeyPressed(Input.KEY_1) && editor.state==Editor.State.TILE) {
             editor.prevTile();
             System.out.println("Tile Painter: "+editor.paintTile.name());
+        }
+        
+        if (gc.getInput().isKeyPressed(Input.KEY_TAB)) {
+            editor.show = !editor.show;
         }
         
         if (gc.getInput().isKeyPressed(Input.KEY_T) && (gc.getInput().isKeyDown(Input.KEY_LCONTROL) || gc.getInput().isKeyDown(Input.KEY_RCONTROL))) {
