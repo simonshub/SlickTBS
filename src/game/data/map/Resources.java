@@ -5,38 +5,22 @@
  */
 package game.data.map;
 
-import java.io.File;
-import java.io.IOException;
-import main.Consts;
-import main.SlickUtils;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 /**
  *
  * @author XyRoN
  */
-public enum Resources {
-    POWER, GOLD, POPULATION, FOOD, MATERIALS;
+public class Resources {
+    public int oil;
+    public int steel;
+    public int aluminum;
+    public int manpower;
+    public int supplies;
     
-    public Image img;
-    public String img_path;
-    
-    Resources () {
-        this.img = null;
-        this.img_path = "";
-        
-        try {
-            init();
-        } catch (IOException | SlickException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public void init () throws IOException, SlickException {
-        String path = Consts.TILES_PATH+this.name().toLowerCase()+".tile";
-        File f = new File (path);
-        SlickUtils.readObjectFromFile(f, this);
-        this.img = new Image (this.img_path);
+    public Resources () {
+        oil = 0;
+        steel = 0;
+        aluminum = 0;
+        manpower = 0;
+        supplies = 0;
     }
 }

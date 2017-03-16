@@ -6,7 +6,7 @@
 package game.data.map;
 
 import main.ResMgr;
-import main.SlickUtils;
+import main.utils.SlickUtils;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;

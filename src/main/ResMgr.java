@@ -5,6 +5,7 @@
  */
 package main;
 
+import main.utils.SlickUtils;
 import game.data.map.Hex;
 import game.data.map.TerrainType;
 import java.io.File;

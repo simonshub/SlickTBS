@@ -8,7 +8,7 @@ package game.data.map;
 import java.io.File;
 import java.io.IOException;
 import main.Consts;
-import main.SlickUtils;
+import main.utils.SlickUtils;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

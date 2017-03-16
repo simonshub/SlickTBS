@@ -5,6 +5,7 @@
  */
 package main;
 
+import main.utils.SlickUtils;
 import game.states.MenuState;
 import game.states.PlayingState;
 import java.io.File;
