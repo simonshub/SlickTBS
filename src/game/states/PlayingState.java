@@ -31,7 +31,7 @@ public class PlayingState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        gameMap = new GameMap (container, 100, 100);
+        gameMap = new GameMap (container, 32, 32);
     }
 
     @Override

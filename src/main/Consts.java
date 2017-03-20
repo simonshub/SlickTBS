@@ -13,8 +13,13 @@ public abstract class Consts {
     public static final String SETTINGS_FILE_PATH = "settings.cfg";
     
     public static final String TILES_PATH = "res/data/tiles/";
+    public static final String SPELLS_PATH = "res/data/spells/";
+    
+    public static final String SPELL_EXT = "spl";
     
     public static final boolean RENDER_DEBUG = true;
     public static final boolean RENDER_DEBUG_CAMERA_INFO = true;
     public static final boolean RENDER_DEBUG_RENDERED_HEXES = true;
+    
+    public static final int MAX_PLAYERS = 16;
 }

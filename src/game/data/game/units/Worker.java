@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.data.units;
+package game.data.game.units;
 
 /**
  *
- * @author emil.simon
+ * @author XyRoN
  */
-public class Unit {
+public class Worker extends Unit {
+    
+    public Worker(int owner_id) {
+        super(owner_id);
+    }
     
 }

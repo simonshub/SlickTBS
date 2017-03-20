@@ -57,4 +57,10 @@ public class HexGrid {
             }
         }
     }
+    
+    public void renderMouseShadow (Camera cam, int x, int y) {
+        if (get(x,y)!=null) {
+            get(x,y).renderMouseShadow(cam);
+        }
+    }
 }

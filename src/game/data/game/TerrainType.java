@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.data.map;
+package game.data.game;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,17 +17,11 @@ import org.newdawn.slick.SlickException;
  * @author emil.simon
  */
 public enum TerrainType {
-    DEFAULT, OPEN, HILLS, MOUNTAINS, TUNDRA, DESERT, MARSHES, TROPICAL, SEA, FOREST, URBAN, ARID;
+    DEFAULT, OPEN, HILLS, MOUNTAINS, TUNDRA, DESERT, MARSHES, TROPICAL, SEA, FOREST, WASTES, ARID;
     
     public Image img;
     public String img_path;
     
-    public float cover;
-    public float soft_mod;
-    public float hard_mod;
-    
-    public float atk_mod;
-    public float def_mod;
     
     TerrainType () {
         this.img = null;
@@ -41,8 +35,8 @@ public enum TerrainType {
     }
     
     public void init () throws IOException, SlickException {
-        String path = Consts.TILES_PATH+this.name().toLowerCase()+".tile";
-        File f = new File (path);
+        img_path = Consts.TILES_PATH+this.name().toLowerCase()+".tile";
+        File f = new File (img_path);
         SlickUtils.readObjectFromFile(f, this);
         this.img = new Image (this.img_path);
     }
