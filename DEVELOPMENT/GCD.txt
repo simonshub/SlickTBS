@@ -1,0 +1,89 @@
+GAME RULES:
+
+
+
+THE GRID:
+
+
+
+TERRAIN TYPES:
+
+ - 
+
+    Terrain Types:
+        Marshes (-20% Defence, 0 Stone, 0-2 Timber)
+        Tropical (-20% Defence, 0 Stone, 1-3 Timber)
+        Sea (0 Stone, 0 Timber, Not pathable)
+        Hills (+20% Defence, 0-5 Stone, 0-2 Timber)
+        Forest (+20% Defence, 0-1 Stone, 3-6 Timber)
+        Mountain (+40% Defence, 2-6 Stone, 0-1 Timber)
+        Plains (0-1 Stone, 0-1 Timber)
+        Arid (0-2 Stone, 0 Timber)
+        Desert (0 Stone, 0 Timber)
+        Tundra (0-1 Stone, 0-1 Timber)
+        Wastes (0-2 Stone, 0-1 Timber)
+
+RESOURCES:
+
+ - There are five resources in W&W. These are; Power, Knowledge, Population, Timber and Stone.
+ - Power is the resource used to cast spells and purchase units. Every tile has a Power income, which contributes to how much Power is accumulated by it's owning player at the start of every turn. Power is stockpiled and spent by specific actions. The amount of Power a tile generates is determined by it's location (distance to Magical Sites and Ley Lines), it's current Population level (each level provides +1 Power, and provides a stacking +20% Power income bonus in the tile). Power income from Magical Sites is transfered to all adjacent tiles with a -4 penalty, and so on until the distance is greater than the Magical Site's bonus.
+ - Knowledge is accumulated by Apprentices performing various tasks, and is produced at the start of every turn at the player's Mage Citadel (main building). Knowledge income can be increased by building and upgrading Mage Towers, as well as upgrading the player's Mage Citadel. It can also be increased by various spells and events.
+ - The Population resource represents the total manpower in a specific tile. It is typically very high in urban areas, while being lower in rural areas and the wilderness. Each tile can hold a total Population level of up to 5. Population is used by some spells, as well as recruiting armies. Population levels can also be sacrificed to gain Power instantly. A tile's Population also affects how much Power the given tile produces (with each level providing a +20% bonus to the total Power income of the tile, along with an additional +1 bonus). Armies reduce a tile's Population by 1 whenever they pillage. Population is generated around settlements such as Villages, Towns and Cities, and is also produced at varying speeds in all of them.
+ - Timber and Stone are construction resources. They are bound to thier respective tile and can be used to construct a building, provided enough of the resource can be found on the given tile. Timber and Stone can be moved one at a time by a Worker unit (from it's own tile, to any other adjacent tile), or moved through spells.
+
+SPECIAL LOCATIONS:
+
+ - 
+
+    Magical Sites:
+        Stone Circle (+8 Power / +32 Total)
+        Forgotten Monument (+8 Power / +32 Total)
+        Sacred Glade (+12 Power / +108 Total)
+        Crystal Field (+12 Power / +108 Total)
+        Arcane Crater (+16 Power / +256 Total)
+        Ancient Temple (+16 Power / +256 Total)
+        Scrying Mirror (+4 Knowledge)
+        Mystical Library (+6 Knowledge)
+        Astral Gateway (+8 Knowledge)
+
+    Dungeons:
+        Demon Gate (Spawns Demons and Horrors) - Rare
+        Ancient Ruins (Spawns Undead and Horrors) - Rare
+        Fallen Temple (Spawns Horrors and Ghosts) - Rare
+        Hellish Fissure (Spawns Demons and Ghosts) - Rare
+        Cursed Tomb (Spawns Demons and Undead) - Uncommon
+        Eldritch Ruins (Spawns Horrors and Kobolds) - Uncommon
+        Haunted Mansion (Spawns Ghosts and Vampires) - Uncommon
+        Deep Cave (Spawns Kobolds and Demons) - Common
+        Ruined Fort (Spawns Undead and Ghosts) - Common
+        Haunted Crypt (Spawns Vampires and Undead) - Common
+
+BUILDINGS:
+
+ - 
+
+    Buildings:
+        Fort (Provides a massive Defence bonus to all Armies stationed on it's tile)
+        Village (Spreads Population slowly and provides +10 Power)
+        Town (Spreads Population and provides +15 Power)
+        City (Spreads Population quickly and provides +20 Power)
+        Mage Tower (The Apprentice's building, used for aiding research and extending influence)
+            Library (Provides Knowledge, upgrades for increased Knowledge income)
+            Reliquary (Provides Power, upgrades for increased Power income)
+            Oculus (Extends influence, upgrades for increased influence spread)
+        Mage Citadel (The player's main building, used for training Apprentices, and casting and researching Spells)
+            Library (Upgrades for global Knowledge income and Spell research speed)
+            Crystal Core (Extends influence, upgrades for global Power income and maximum Power storage capacity)
+            Great Hall (Trains Apprentices, upgrades for Apprentice training speed and training slot capacity)
+
+UNITS:
+
+ - 
+
+    Races:
+        Human (Strong mixed all-around army with good defence)
+        Orc (Strong mostly melee army with good offence)
+        Elf (Good all-around mostly archer army)
+        Dwarf (Extremely tough, exclusively melee army)
+        Goblin (Cheap, but very cost-effective mixed army)
+        Lizardfolk (Good all-around mostly melee army)
