@@ -5,6 +5,7 @@
  */
 package game.data.game.units;
 
+import game.data.game.Race;
 import game.data.game.Spell;
 import java.util.List;
 
@@ -22,21 +23,22 @@ public class Apprentice extends Unit {
     };
     
     public int power;
+    public int health;
     public int loyalty;
+    public int knowledge;
     public int current_exp;
     public int next_rank_exp;
-    public int loyalty_float_target;
     public List<Spell> spells;
     
     public Rank rank;
     
-    public Apprentice (int owner_id) {
+    public Apprentice (int owner_id, Race r) {
         super(owner_id);
         
-        power = 0;
+        power = r.apprentice_power;
+        knowledge = r.apprentice_knowledge;
         loyalty = 100;
         current_exp = 0;
-        loyalty_float_target = 100;
         setRank(Rank.INITIATE);
     }
     

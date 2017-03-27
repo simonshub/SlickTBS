@@ -5,21 +5,25 @@
  */
 package game.data.game.units;
 
+import game.data.map.Hex;
+
 /**
  *
  * @author emil.simon
  */
 public abstract class Unit {
     public String name;
+    public Hex hex;
     public int owner_id;
-    public int x, y;
     public boolean selected;
     
     public Unit (int owner_id) {
         this.name = "";
         this.owner_id = owner_id;
-        this.x = 0;
-        this.y = 0;
         this.selected = false;
+    }
+    
+    public void moveTo (Hex hex) {
+        this.hex = hex;
     }
 }

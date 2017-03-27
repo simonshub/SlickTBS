@@ -57,6 +57,8 @@ public abstract class SlickUtils {
         BufferedReader br = new BufferedReader (new FileReader (f));
         String line;
         while ((line=br.readLine()) != null) {
+            if (line.startsWith("#")) continue;
+            
             String[] args = SlickUtils.splitArgs(line);
             try {
                 Field aField = obj.getClass().getField(args[0]);

@@ -6,6 +6,7 @@
 package game.data.map;
 
 import game.data.game.TerrainType;
+import game.data.game.specials.TileSpecial;
 import game.data.game.units.Unit;
 import java.util.List;
 import main.ResMgr;
@@ -36,7 +37,8 @@ public class Hex {
     
     public int x, y;
     public Color color;
-    public List<Unit> units;
+    public Unit unit;
+    public TileSpecial special;
     public FogOfWar fog_of_war;
     public TerrainType terrain;
     

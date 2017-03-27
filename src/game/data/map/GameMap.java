@@ -49,4 +49,10 @@ public class GameMap {
             mouse_shadow_y = -1;
         }
     }
+    
+    
+    
+    public void generateMap (float land_perc, float specials_factor, int players) {
+        
+    }
 }

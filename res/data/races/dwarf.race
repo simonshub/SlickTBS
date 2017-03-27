@@ -1,0 +1,14 @@
+army_attack = 3
+army_defense = 8
+army_health = 35
+army_name = Dwarven Defenders
+army_description = Strong defensive army
+army_special = All damage done by spells is halved
+army_img_path = res/grfx/races/dwarf_army.png
+
+town_img_path = res/grfx/races/dwarf_town.png
+
+apprentice_power = 3
+apprentice_knowledge = 7
+apprentice_name_list = Thorvald|Thorbal|Tormund|Torval|Grimel|Kimel|Dormund|Dorvald|Derval|Doghbor|Grogval|Gorgal|Gormund|Doghmund
+apprentice_img_path = res/grfx/races/dwarf_apprentice.png
