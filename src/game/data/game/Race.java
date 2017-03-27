@@ -37,19 +37,19 @@ public enum Race {
     
     public Image town_img;
     public String town_img_path;
-    public Image army_img;
-    public String army_img_path;
-    public Image apprentice_img;
-    public String apprentice_img_path;
+    public Image army_portrait;
+    public String army_portrait_path;
+    public Image apprentice_portrait;
+    public String apprentice_portrait_path;
     
     
     Race () {
         this.town_img = null;
         this.town_img_path = "";
-        this.army_img = null;
-        this.army_img_path = "";
-        this.apprentice_img = null;
-        this.apprentice_img_path = "";
+        this.army_portrait = null;
+        this.army_portrait_path = "";
+        this.apprentice_portrait = null;
+        this.apprentice_portrait_path = "";
         this.apprentice_names = new ArrayList<> ();
         
         try {
@@ -69,7 +69,7 @@ public enum Race {
         }
         
         this.town_img = new Image (this.town_img_path);
-        this.army_img = new Image (this.army_img_path);
-        this.apprentice_img = new Image (this.apprentice_img_path);
+        this.army_portrait = new Image (this.army_portrait_path);
+        this.apprentice_portrait = new Image (this.apprentice_portrait_path);
     }
 }
