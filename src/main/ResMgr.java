@@ -28,6 +28,11 @@ public class ResMgr {
     public static boolean debug_mode = true;
     public static boolean render_grid = true;
     public static boolean render_continous = false;
+    public static boolean render_levels = true;
+    public static boolean render_units = true;
+    public static boolean render_token_backgrounds = true;
+    public static boolean render_tokens = true;
+    public static boolean render_tile_specials = true;
     
     public static String title = "Wizards & Warlocks";
     

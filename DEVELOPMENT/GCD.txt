@@ -87,3 +87,15 @@ UNITS:
         Dwarf (Extremely tough, exclusively melee army)
         Goblin (Cheap, but very cost-effective mixed army)
         Lizardfolk (Good all-around mostly melee army)
+
+SPELLS:
+
+ - 
+
+    Spell Schools:
+        Black Magic (Destructive magic that deals with curses, death and demolition)
+        White Magic (Mending magic that creates life, invigorates and heals)
+        Eldritch Magic (Forgotten and forbidden magic that invokes ancient horrors and mystical powers)
+        Nature Magic (Magic that controls the four natural elements)
+        Artificier Magic (Magic that focuses on breathing life into inanimate machines, creatures and items)
+        Runic Magic (An older form of magic that enchants and empowers)

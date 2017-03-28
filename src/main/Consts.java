@@ -14,6 +14,7 @@ public abstract class Consts {
     
     public static final String TILES_PATH = "res/data/tiles/";
     public static final String RACES_PATH = "res/data/races/";
+    public static final String UNITS_PATH = "res/data/units/";
     public static final String SPELLS_PATH = "res/data/spells/";
     
     public static final String SPELL_EXT = "spl";
