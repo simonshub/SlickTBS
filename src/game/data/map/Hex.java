@@ -6,11 +6,11 @@
 package game.data.map;
 
 import game.data.game.TerrainType;
-import game.data.game.specials.TileSpecial;
-import game.data.game.units.Unit;
+import java.util.ArrayList;
 import java.util.List;
 import main.ResMgr;
 import main.utils.Point;
+import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,18 +37,21 @@ public class Hex {
     
     public int x, y;
     public Color color;
-    public Unit unit;
-    public TileSpecial special;
     public FogOfWar fog_of_war;
     public TerrainType terrain;
+    
+    public enum DirEnum { UPPER_RIGHT(1,-1), RIGHT(1,0), LOWER_RIGHT(1,1), LOWER_LEFT(-1,1), LEFT(-1,0), UPPER_LEFT(-1,-1);
+        public int x_offset, y_offset;
+        DirEnum(int x,int y) { x_offset=x; y_offset=y; }
+    };
+    
+    
     
     public static void init () throws SlickException {
         HEX_GRID_IMG = new Image (HEX_GRID_IMG_PATH);
         HEX_OVERLAY_IMG = new Image (HEX_OVERLAY_IMG_PATH);
         HEX_FOG_OF_WAR_IMG = new Image (HEX_FOG_OF_WAR_IMG_PATH);
     }
-    
-    
     
     public Hex (int x, int y) {
         this.x = x;
@@ -58,6 +61,8 @@ public class Hex {
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
     }
+    
+    
     
     public void setLocation (int x, int y) {
         this.x = x;
@@ -84,33 +89,34 @@ public class Hex {
     
     public void render (Camera cam, GameContainer container, StateBasedGame game, Graphics g) {
         if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN) {
-            terrain.img.draw(
-                             (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
-                             (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
-                             (HEX_GRID_SIZE_X)*cam.zoom,
-                             (HEX_GRID_SIZE_Y)*cam.zoom
-                            );
+            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
+            
+            terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
         }
         
-        if (HEX_FOG_OF_WAR_IMG != null) {
-            HEX_FOG_OF_WAR_IMG.draw(
-                             (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
-                             (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
-                             (HEX_GRID_SIZE_X)*cam.zoom,
-                             (HEX_GRID_SIZE_Y)*cam.zoom,
-                             new Color (1f,1f,1f,fog_of_war.level/3)
-                            );
+        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0) {
+            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
+            
+            HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.level/3));
         }
         
         if (HEX_GRID_IMG == null)
             return;
         
-        if (ResMgr.render_grid) HEX_GRID_IMG.draw(
-                                 (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
-                                 (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
-                                 (HEX_GRID_SIZE_X)*cam.zoom,
-                                 (HEX_GRID_SIZE_Y)*cam.zoom
-                                );
+        if (ResMgr.render_grid) {
+            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
+            
+            HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
+        }
         
     }
     
@@ -124,5 +130,36 @@ public class Hex {
                              new Color (0f,0f,0f,0.2f)
                             );
         }
+    }
+    
+    public Hex getAdjacent (HexGrid grid, DirEnum direction) {
+        return grid.get(x+direction.x_offset, y+direction.y_offset);
+    }
+    
+    public List<Hex> getAllAdjacent (HexGrid grid) {
+        List<Hex> result = new ArrayList<> ();
+        for (DirEnum dir : DirEnum.values())
+            if (this.getAdjacent(grid, dir)!=null) result.add(this.getAdjacent(grid, dir));
+        return result;
+    }
+    
+    public boolean isCoastal (HexGrid grid) {
+        for (DirEnum dir : DirEnum.values())
+            if (getAdjacent(grid,dir)!=null && getAdjacent(grid,dir).terrain.equals(TerrainType.SEA) && !terrain.equals(TerrainType.SEA)) return true;
+        return false;
+    }
+    
+    public boolean spreadTerrain (HexGrid grid, List<Hex> land) {
+        DirEnum[] enums = DirEnum.values();
+        SlickUtils.shuffleArray(enums);
+        for (DirEnum dir : enums) {
+            if (getAdjacent(grid, dir)!=null && (getAdjacent(grid, dir).terrain != terrain)) {
+                getAdjacent(grid, dir).terrain = terrain;
+                if (terrain!=TerrainType.SEA) land.add(getAdjacent(grid, dir));
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

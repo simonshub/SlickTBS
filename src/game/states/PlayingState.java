@@ -43,10 +43,13 @@ public class PlayingState extends BasicGameState {
             g.setColor(Color.white);
             
             g.drawString("Debug Mode", 0, y); y+=24;
-            if (Consts.RENDER_DEBUG_CAMERA_INFO)
+            if (Consts.RENDER_DEBUG_CAMERA_INFO) {
                 g.drawString("Camera: "+String.format("% 05d",gameMap.camera.x)+","+String.format("% 05d",gameMap.camera.y)+"("+String.format("%.2f",gameMap.camera.zoom)+"z)", 0, y); y+=24;
-            if (Consts.RENDER_DEBUG_RENDERED_HEXES)
-                g.drawString("Rendered hexes: "+gameMap.grid.counter, 0, y); y+=24;
+            }
+            if (Consts.RENDER_DEBUG_RENDERED_HEXES) {
+                g.drawString("Rendered hexes: "+gameMap.grid.render_counter, 0, y); y+=24;
+                g.drawString("Not rendered hexes: "+gameMap.grid.not_render_counter, 0, y); y+=24;
+            }
         }
     }
 

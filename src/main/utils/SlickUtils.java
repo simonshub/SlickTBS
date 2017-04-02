@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Random;
 
 /**
  *
@@ -94,6 +95,24 @@ public abstract class SlickUtils {
         bw.write(result);
         bw.flush();
         bw.close();
+    }
+    
+    
+    
+    public static void shuffleArray(Object[] a) {
+        int n = a.length;
+        Random random = new Random();
+        random.nextInt();
+        for (int i = 0; i < n; i++) {
+            int change = i + random.nextInt(n - i);
+            swap(a, i, change);
+        }
+    }
+
+    private static void swap(Object[] a, int i, int change) {
+        Object helper = a[i];
+        a[i] = a[change];
+        a[change] = helper;
     }
     
 }

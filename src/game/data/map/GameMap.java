@@ -5,6 +5,10 @@
  */
 package game.data.map;
 
+import game.data.game.TerrainType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -18,11 +22,15 @@ public class GameMap {
     public Camera camera;
     public int mouse_shadow_x, mouse_shadow_y;
     
+    
+    
     public GameMap (GameContainer gc, int size_x, int size_y) {
         camera = new Camera (gc);
         grid = new HexGrid (size_x, size_y);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
+        
+        generateMap();
     }
     
     public void render (GameContainer container, StateBasedGame game, Graphics g) {
@@ -52,7 +60,36 @@ public class GameMap {
     
     
     
-    public void generateMap (float land_perc, float specials_factor, int players) {
+    public final void generateMap () {
+        Random rand = new Random ();
         
+        // set the entire grid to sea, initialization
+        for (int y=0;y<grid.getSizeY();y++) {
+            for (int x=0;x<grid.getSizeX();x++) {
+                grid.get(x, y).terrain = TerrainType.SEA;
+            }
+        }
+        
+        // make islands
+        List<Hex> land = new ArrayList<> ();
+        for (int i=0;i<grid.getNumberOfIslands();i++) {
+            int x = rand.nextInt(grid.getSizeX());
+            int y = rand.nextInt(grid.getSizeY());
+            
+            if (grid.get(x,y)!=null && grid.get(x,y).terrain==TerrainType.SEA && !land.contains(grid.get(x,y))) {
+                grid.get(x,y).terrain = TerrainType.OPEN;
+                land.add(grid.get(x,y));
+            } else {
+                i--;
+            }
+        }
+        
+        // extend random land until you have enough land
+        List<Hex> coast;
+        while (!grid.satisfiesLandPrecentage(land)) {
+            coast = grid.getCoastalHexes();
+            int index = rand.nextInt(coast.size());
+            if (!coast.get(index).spreadTerrain(grid, land)) ;
+        }
     }
 }

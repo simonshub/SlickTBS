@@ -7,6 +7,7 @@ package game.data.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import main.Consts;
 import main.ResMgr;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,7 +21,8 @@ public class HexGrid {
     public static final int DRAW_MARGIN_X = 2;
     public static final int DRAW_MARGIN_Y = 2;
     
-    public int counter;
+    public int render_counter;
+    public int not_render_counter;
     private final int size_x;
     private final int size_y;
     private final List<List<Hex>> grid;
@@ -28,7 +30,7 @@ public class HexGrid {
     public HexGrid (int size_x, int size_y) {
         this.size_x = size_x;
         this.size_y = size_y;
-        counter = 0;
+        render_counter = 0;
         
         grid = new ArrayList <> ();
         for (int i=0;i<size_y;i++) {
@@ -40,20 +42,55 @@ public class HexGrid {
     }
     
     public Hex get (int x, int y) {
-        if (y>=0 && y<size_y && x>=0 && x<size_x)
-            return grid.get(y).get(x);
-        return null;
+        try {
+            return grid.get(Math.abs(y%size_y)).get(Math.abs(x%size_x));
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return null;
+        }
     }
+    
+    public int getSizeX () {
+        return size_x;
+    }
+    
+    public int getSizeY () {
+        return size_y;
+    }
+    
+    public int getNumberOfIslands () {
+        return (int)((size_x*size_y)/100);
+    }
+    
+    public boolean satisfiesLandPrecentage (List<Hex> land) {
+        return (double)((double)land.size() / (double)(size_x*size_y)) >= Consts.MAP_LAND_PERCENTAGE;
+    }
+    
+    
+    public List<Hex> getCoastalHexes () {
+        List<Hex> result = new ArrayList<> ();
+        
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                if (this.get(x,y).isCoastal(this)) result.add(this.get(x,y));
+            }
+        }
+        
+        return result;
+    }
+    
+    
     
     public void render (Camera cam, GameContainer container, StateBasedGame game, Graphics g) {
         int start_x_index = (int)(cam.x / Hex.HEX_GRID_SIZE_X)-DRAW_MARGIN_X;
         int start_y_index = (int)(cam.y / (Hex.HEX_GRID_SIZE_Y*3/4))-DRAW_MARGIN_Y;
-        counter = 0;
+        render_counter = 0;
+        not_render_counter = 0;
         
         for (int i=0;i<ResMgr.screen_res_h/((Hex.HEX_GRID_SIZE_Y*3/4)*cam.zoom)+DRAW_MARGIN_Y*2;i++) {
             for (int j=0;j<ResMgr.screen_res_w/(Hex.HEX_GRID_SIZE_X*cam.zoom)+DRAW_MARGIN_X*2;j++) {
                 Hex hex = get(j + start_x_index, i + start_y_index);
-                if (hex!=null) { hex.render(cam, container, game, g); counter++; }
+                if (hex!=null) { hex.render(cam, container, game, g); render_counter++; }
+                else { not_render_counter++; }
             }
         }
     }

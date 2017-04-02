@@ -5,15 +5,11 @@
  */
 package main;
 
-import game.data.game.Spell;
 import main.utils.SlickUtils;
 import game.data.map.Hex;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -34,14 +30,12 @@ public class ResMgr {
     public static boolean render_tokens = true;
     public static boolean render_tile_specials = true;
     
-    public static String title = "Wizards & Warlocks";
-    
-    public static Map<String, Spell> spells;
+    public static String title = "??? WHAT ARE YOU ???";
     
     
     
     private ResMgr () {
-        spells = new HashMap<> ();
+        
     }
     
     public static void init () throws IOException, FileNotFoundException, IllegalArgumentException, IllegalAccessException {
@@ -50,7 +44,6 @@ public class ResMgr {
         try {
             Hex.init();
             instance.readSettings();
-            instance.initSpells();
         } catch (SlickException ex) {
             ex.printStackTrace();
             System.exit(1);
@@ -66,18 +59,5 @@ public class ResMgr {
             SlickUtils.writeObjectToFile(settings, this);
         else
             SlickUtils.readObjectFromFile(settings, this);
-    }
-    
-    
-    
-    public void initSpells () {
-        File containing_folder = new File (Consts.SPELLS_PATH);
-        
-        File[] files = containing_folder.listFiles(new FilenameFilter () {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(Consts.SPELL_EXT);
-            }
-        });
     }
 }
