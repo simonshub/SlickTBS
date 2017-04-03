@@ -5,7 +5,6 @@
  */
 package game.data.map;
 
-import game.data.game.TerrainType;
 import java.util.ArrayList;
 import java.util.List;
 import main.ResMgr;
@@ -87,37 +86,18 @@ public class Hex {
         return p;
     }
     
-    public void render (Camera cam, GameContainer container, StateBasedGame game, Graphics g) {
-        if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN) {
-            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
-            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
-            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
-            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
-            
+    public void render (float x_draw, float y_draw, float x_scale, float y_scale, GameContainer container, StateBasedGame game, Graphics g) {
+        if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN)
             terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
-        }
         
-        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0) {
-            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
-            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
-            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
-            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
-            
+        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0)
             HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.level/3));
-        }
         
         if (HEX_GRID_IMG == null)
             return;
         
-        if (ResMgr.render_grid) {
-            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
-            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
-            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
-            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
-            
+        if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
-        }
-        
     }
     
     public void renderMouseShadow (Camera cam) {

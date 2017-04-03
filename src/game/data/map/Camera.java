@@ -76,10 +76,5 @@ public class Camera {
             this.x = (int) (freeze_x + (click_x - gc.getInput().getMouseX())/zoom);
             this.y = (int) (freeze_y + (click_y - gc.getInput().getMouseY())/zoom);
         }
-        
-        if (this.x >= 2*ResMgr.screen_res_w) this.x-=ResMgr.screen_res_w;
-        if (this.x <= -2*ResMgr.screen_res_w) this.x+=ResMgr.screen_res_w;
-        if (this.y >= 2*ResMgr.screen_res_h) this.y-=ResMgr.screen_res_h;
-        if (this.y <= -2*ResMgr.screen_res_h) this.y+=ResMgr.screen_res_h;
     }
 }

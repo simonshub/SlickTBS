@@ -5,6 +5,8 @@
  */
 package game.data.map;
 
+import static game.data.map.Hex.HEX_GRID_SIZE_X;
+import static game.data.map.Hex.HEX_GRID_SIZE_Y;
 import java.util.ArrayList;
 import java.util.List;
 import main.Consts;
@@ -43,6 +45,11 @@ public class HexGrid {
     
     public Hex get (int x, int y) {
         try {
+            if (y<0 || y>=size_y) return null;
+            
+            while (y<0) y+=size_y;
+            while (x<0) x+=size_x;
+            
             return grid.get(Math.abs(y%size_y)).get(Math.abs(x%size_x));
         } catch (ArrayIndexOutOfBoundsException ex) {
             return null;
@@ -89,8 +96,20 @@ public class HexGrid {
         for (int i=0;i<ResMgr.screen_res_h/((Hex.HEX_GRID_SIZE_Y*3/4)*cam.zoom)+DRAW_MARGIN_Y*2;i++) {
             for (int j=0;j<ResMgr.screen_res_w/(Hex.HEX_GRID_SIZE_X*cam.zoom)+DRAW_MARGIN_X*2;j++) {
                 Hex hex = get(j + start_x_index, i + start_y_index);
-                if (hex!=null) { hex.render(cam, container, game, g); render_counter++; }
-                else { not_render_counter++; }
+                if (hex!=null) {
+                    int x = j + start_x_index;
+                    int y = i + start_y_index;
+                    
+                    float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+                    float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+                    float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+                    float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
+                    
+                    hex.render(x_draw, y_draw, x_scale, y_scale, container, game, g);
+                    render_counter++;
+                } else {
+                    not_render_counter++;
+                }
             }
         }
     }

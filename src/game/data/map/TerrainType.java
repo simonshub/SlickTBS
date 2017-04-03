@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.data.game;
+package game.data.map;
 
 import java.io.File;
 import java.io.IOException;

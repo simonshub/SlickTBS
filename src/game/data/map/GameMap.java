@@ -5,7 +5,6 @@
  */
 package game.data.map;
 
-import game.data.game.TerrainType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
