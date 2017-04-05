@@ -100,16 +100,9 @@ public class Hex {
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
     }
     
-    public void renderMouseShadow (Camera cam) {
-        if (HEX_OVERLAY_IMG != null) {
-            HEX_OVERLAY_IMG.draw(
-                             (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom,
-                             (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom,
-                             (HEX_GRID_SIZE_X)*cam.zoom,
-                             (HEX_GRID_SIZE_Y)*cam.zoom,
-                             new Color (0f,0f,0f,0.2f)
-                            );
-        }
+    public void renderMouseShadow (float x_draw, float y_draw, float x_scale, float y_scale) {
+        if (HEX_OVERLAY_IMG != null)
+            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (0f,0f,0f,0.2f));
     }
     
     public Hex getAdjacent (HexGrid grid, DirEnum direction) {

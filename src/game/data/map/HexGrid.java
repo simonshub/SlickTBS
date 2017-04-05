@@ -116,7 +116,12 @@ public class HexGrid {
     
     public void renderMouseShadow (Camera cam, int x, int y) {
         if (get(x,y)!=null) {
-            get(x,y).renderMouseShadow(cam);
+            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
+            
+            get(x,y).renderMouseShadow(x_draw, y_draw, x_scale, y_scale);
         }
     }
 }

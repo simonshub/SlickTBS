@@ -46,15 +46,10 @@ public class GameMap {
         int y = (int)((gc.getInput().getMouseY() - (int)(Hex.HEX_GRID_SIZE_Y*1/8))/camera.zoom) + camera.y;
         int x = (int)((gc.getInput().getMouseX())/camera.zoom) + camera.x;
         int y_index = (int)(y/(Hex.HEX_GRID_SIZE_Y*3/4));
-        int x_index = (int)((x+(y_index%2==0?Hex.HEX_GRID_SIZE_X/2:0))/Hex.HEX_GRID_SIZE_X) - (y_index%2==0?1:0);
+        int x_index = (int)((x+(y_index%2==0?Hex.HEX_GRID_SIZE_X/2:0))/Hex.HEX_GRID_SIZE_X) - (y_index%2==0?1:0) - (x<0?1:0);
         
-        if (grid.get(x_index, y_index)!=null) {
-            mouse_shadow_x = x_index;
-            mouse_shadow_y = y_index;
-        } else {
-            mouse_shadow_x = -1;
-            mouse_shadow_y = -1;
-        }
+        mouse_shadow_x = x_index;
+        mouse_shadow_y = y_index;
     }
     
     
