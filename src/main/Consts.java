@@ -14,7 +14,7 @@ public abstract class Consts {
     
     public static final String TILES_PATH = "res/data/tiles/";
     
-    public static final double MAP_LAND_PERCENTAGE = 0.3;
+    public static final double MAP_LAND_PERCENTAGE = 0.4;
     
     public static final boolean RENDER_DEBUG = true;
     public static final boolean RENDER_DEBUG_CAMERA_INFO = true;

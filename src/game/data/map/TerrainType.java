@@ -17,10 +17,18 @@ import org.newdawn.slick.SlickException;
  * @author emil.simon
  */
 public enum TerrainType {
-    DEFAULT, OPEN, HILLS, MOUNTAINS, TUNDRA, DESERT, MARSHES, TROPICAL, SEA, FOREST, WASTES, ARID;
+    DEFAULT,
+    OPEN, TUNDRA,
+    FOREST, TROPICAL,
+    SEA, MARSHES,
+    HILLS, MOUNTAINS, 
+    DESERT, WASTES, ARID, 
+    
+    ;
     
     public Image img;
     public String img_path;
+    
     
     
     TerrainType () {

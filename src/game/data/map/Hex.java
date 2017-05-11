@@ -41,7 +41,13 @@ public class Hex {
     
     public enum DirEnum { UPPER_RIGHT(1,-1), RIGHT(1,0), LOWER_RIGHT(1,1), LOWER_LEFT(-1,1), LEFT(-1,0), UPPER_LEFT(-1,-1);
         public int x_offset, y_offset;
-        DirEnum(int x,int y) { x_offset=x; y_offset=y; }
+        
+        DirEnum(int x, int y) { x_offset=x; y_offset=y; }
+        
+        public static DirEnum getRandom() {
+            int index = (int)(Math.random() * DirEnum.values().length);
+            return DirEnum.values()[index];
+        }
     };
     
     
@@ -105,8 +111,27 @@ public class Hex {
             HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (0f,0f,0f,0.2f));
     }
     
+    
+    
     public Hex getAdjacent (HexGrid grid, DirEnum direction) {
         return grid.get(x+direction.x_offset, y+direction.y_offset);
+    }
+    
+    public Hex getRandomAdjacent (HexGrid grid) {
+        return getAdjacent(grid, DirEnum.getRandom());
+    }
+    
+    public Hex getRandomAdjacentOfType (HexGrid grid, TerrainType type) {
+        List<Hex> result = new ArrayList<> ();
+        for (DirEnum dir : DirEnum.values())
+            if (this.getAdjacent(grid, dir)!=null && this.getAdjacent(grid, dir).terrain.equals(type))
+                result.add(this.getAdjacent(grid, dir));
+        
+        if (result.isEmpty())
+            return null;
+        
+        int index = (int)(Math.random()*result.size());
+        return result.get(index);
     }
     
     public List<Hex> getAllAdjacent (HexGrid grid) {

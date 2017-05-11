@@ -115,4 +115,16 @@ public abstract class SlickUtils {
         a[change] = helper;
     }
     
+    
+    
+    public static int rand (int min, int max) {
+        if (min > max)
+            throw new ArithmeticException ();
+        if (min==max)
+            return max;
+        
+        int result = (int)(Math.round(Math.random() * (max-min)) + min);
+        return result;
+    }
+    
 }

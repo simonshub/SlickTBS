@@ -8,6 +8,7 @@ package game.data.map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import main.utils.SlickUtils;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -84,6 +85,25 @@ public class GameMap {
             coast = grid.getCoastalHexes();
             int index = rand.nextInt(coast.size());
             if (!coast.get(index).spreadTerrain(grid, land)) ;
+        }
+        
+        
+        // make mountain ranges with hills
+        int mountain_ranges = (int)(Math.random()*3) + 2;
+        int mt_counter=0;
+        while (mt_counter < mountain_ranges) {
+            int length = (int)(Math.random()*10) + 6;
+            int index = SlickUtils.rand(0,land.size()); // starting point
+            
+            Hex hex = land.get(index);
+            if (hex==null) continue;
+            
+            for (int i=0;i<length;i++) {
+                hex.terrain = TerrainType.MOUNTAINS;
+                hex = hex.getRandomAdjacentOfType(grid, TerrainType.OPEN);
+            }
+            
+            mt_counter++;
         }
     }
 }

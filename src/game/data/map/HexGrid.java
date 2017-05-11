@@ -73,6 +73,7 @@ public class HexGrid {
     }
     
     
+    
     public List<Hex> getCoastalHexes () {
         List<Hex> result = new ArrayList<> ();
         
@@ -83,6 +84,19 @@ public class HexGrid {
         }
         
         return result;
+    }
+    
+    public Hex getRandomLandHex () {
+        Hex hex = null;
+        do {
+            int x = (int)(Math.random() * size_x);
+            int y = (int)(Math.random() * size_y);
+            hex = get(x,y);
+            
+            if (hex==null) continue;
+        } while (hex.terrain.equals(TerrainType.SEA));
+        
+        return hex;
     }
     
     
