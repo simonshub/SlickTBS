@@ -5,10 +5,8 @@
  */
 package game.data.map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import main.utils.SlickUtils;
+import static game.data.map.Hex.HEX_GRID_SIZE_X;
+import static game.data.map.Hex.HEX_GRID_SIZE_Y;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -28,14 +26,15 @@ public class GameMap {
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
         
-        generateMap();
+        WorldGenerator.setGrid(grid);
+        WorldGenerator.generateMap();
     }
     
     public void render (Camera camera, GameContainer container, StateBasedGame game, Graphics g) {
         grid.render(camera, container, game, g);
         
         if (grid.get(mouse_shadow_x, mouse_shadow_y)!=null) {
-            grid.renderMouseShadow(camera, mouse_shadow_x, mouse_shadow_y);
+            renderMouseShadow(camera, mouse_shadow_x, mouse_shadow_y);
         }
     }
     
@@ -51,91 +50,14 @@ public class GameMap {
         mouse_shadow_y = y_index;
     }
     
-    
-    
-    public final void generateMap () {
-        Random rand = new Random ();
-        
-        // set the entire grid to sea, initialization
-        for (int y=0;y<grid.getSizeY();y++) {
-            for (int x=0;x<grid.getSizeX();x++) {
-                grid.get(x, y).terrain = TerrainType.SEA;
-            }
-        }
-        
-        // make islands
-        List<Hex> land = new ArrayList<> ();
-        for (int i=0;i<grid.getNumberOfIslands();i++) {
-            int x = rand.nextInt(grid.getSizeX());
-            int y = rand.nextInt(grid.getSizeY());
+    public void renderMouseShadow (Camera cam, int x, int y) {
+        if (grid.get(x,y)!=null) {
+            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
+            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
+            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
+            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
             
-            if (grid.get(x,y)!=null && grid.get(x,y).terrain==TerrainType.SEA && !land.contains(grid.get(x,y))) {
-                grid.get(x,y).terrain = TerrainType.OPEN;
-                land.add(grid.get(x,y));
-            } else {
-                i--;
-            }
-        }
-        
-        // extend random land until you have enough land
-        List<Hex> coast;
-        while (!grid.satisfiesLandPrecentage(land)) {
-            coast = grid.getCoastalHexes();
-            int index = rand.nextInt(coast.size());
-            if (!coast.get(index).spreadTerrain(grid, land)) ;
-        }
-        
-        
-        // make mountain ranges with hills
-        int mountain_ranges = grid.getNumberOfMountains(land);
-        int mt_counter=0;
-        while (mt_counter < mountain_ranges) {
-            int length = (int)(Math.random()*9) + 8;
-            List<Hex> mountains = new ArrayList<> ();
-            
-            Hex hex = grid.getRandomHexOfType(TerrainType.OPEN);
-            if (hex==null) continue;
-            mountains.add(hex);
-            
-            // propagate mountains into a chain
-            for (int i=0;i<length;i++) {
-                Hex next = hex.getRandomAdjacentOfType(grid, TerrainType.OPEN);
-                if (next==null) { break; }
-                hex = next;
-                hex.terrain = TerrainType.MOUNTAINS;
-                mountains.add(hex);
-            }
-            
-            // propagate hills from random mountains, four times for each mountain
-            for (int i=0;i<mountains.size()*4;i++) {
-                Hex next = mountains.get(SlickUtils.rand(0,mountains.size()-1)).getRandomAdjacentOfType(grid, TerrainType.OPEN);
-                if (next==null) { continue; }
-                next.terrain = TerrainType.HILLS;
-            }
-            
-            mt_counter++;
-        }
-        
-        
-        // make forests
-        int forests = grid.getNumberOfForests(land);
-        int fr_counter=0;
-        while (fr_counter < forests) {
-            int size = SlickUtils.rand(4, 30);
-            List<Hex> forest = new ArrayList<> ();
-            
-            Hex hex = grid.getRandomHexOfType(TerrainType.OPEN);
-            hex.terrain = TerrainType.FOREST;
-            forest.add(hex);
-            for (int i=0;i<size;i++) {
-                Hex next = forest.get(SlickUtils.rand(0,forest.size()-1)).getRandomAdjacentOfType(grid, TerrainType.OPEN);
-                if (next==null) continue;
-                forest.add(next);
-                hex = next;
-                hex.terrain = TerrainType.FOREST;
-            }
-            
-            fr_counter++;
+            grid.get(x,y).renderMouseShadow(x_draw, y_draw, x_scale, y_scale);
         }
     }
 }

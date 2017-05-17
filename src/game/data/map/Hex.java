@@ -22,22 +22,59 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author emil.simon
  */
 public class Hex {
-    public static final String HEX_FOG_OF_WAR_IMG_PATH = "res/grfx/fog.png";
-    public static final String HEX_OVERLAY_IMG_PATH = "res/grfx/overlay.png";
-    public static final String HEX_GRID_IMG_PATH = "res/grfx/hex_blue.png";
+    
     public static final int HEX_GRID_SIZE_X = 64;
     public static final int HEX_GRID_SIZE_Y = 64;
     
     public static Image HEX_FOG_OF_WAR_IMG;
     public static Image HEX_OVERLAY_IMG;
     public static Image HEX_GRID_IMG;
+    public static final String HEX_FOG_OF_WAR_IMG_PATH = "res/grfx/fog.png";
+    public static final String HEX_OVERLAY_IMG_PATH = "res/grfx/overlay.png";
+    public static final String HEX_GRID_IMG_PATH = "res/grfx/hex_blue.png";
+    
+    public static Image HEX_COAST_SANDY_UL_IMG;
+    public static Image HEX_COAST_SANDY_UR_IMG;
+    public static Image HEX_COAST_SANDY_L_IMG;
+    public static Image HEX_COAST_SANDY_R_IMG;
+    public static Image HEX_COAST_SANDY_DL_IMG;
+    public static Image HEX_COAST_SANDY_DR_IMG;
+    public static Image HEX_COAST_CLIFF_UL_IMG;
+    public static Image HEX_COAST_CLIFF_UR_IMG;
+    public static Image HEX_COAST_CLIFF_L_IMG;
+    public static Image HEX_COAST_CLIFF_R_IMG;
+    public static Image HEX_COAST_CLIFF_DL_IMG;
+    public static Image HEX_COAST_CLIFF_DR_IMG;
+    public static String HEX_COAST_SANDY_UL_IMG_PATH = "res/grfx/coast/coast_sandy_ul.png";
+    public static String HEX_COAST_SANDY_UR_IMG_PATH = "res/grfx/coast/coast_sandy_ur.png";
+    public static String HEX_COAST_SANDY_L_IMG_PATH = "res/grfx/coast/coast_sandy_l.png";
+    public static String HEX_COAST_SANDY_R_IMG_PATH = "res/grfx/coast/coast_sandy_r.png";
+    public static String HEX_COAST_SANDY_DL_IMG_PATH = "res/grfx/coast/coast_sandy_dl.png";
+    public static String HEX_COAST_SANDY_DR_IMG_PATH = "res/grfx/coast/coast_sandy_dr.png";
+    public static String HEX_COAST_CLIFF_UL_IMG_PATH = "res/grfx/coast/coast_cliff_ul.png";
+    public static String HEX_COAST_CLIFF_UR_IMG_PATH = "res/grfx/coast/coast_cliff_ur.png";
+    public static String HEX_COAST_CLIFF_L_IMG_PATH = "res/grfx/coast/coast_cliff_l.png";
+    public static String HEX_COAST_CLIFF_R_IMG_PATH = "res/grfx/coast/coast_cliff_r.png";
+    public static String HEX_COAST_CLIFF_DL_IMG_PATH = "res/grfx/coast/coast_cliff_dl.png";
+    public static String HEX_COAST_CLIFF_DR_IMG_PATH = "res/grfx/coast/coast_cliff_dr.png";
     
     public boolean river;
+    public boolean coast_is_cliff;
+    public boolean coastal_ul;
+    public boolean coastal_ur;
+    public boolean coastal_l;
+    public boolean coastal_r;
+    public boolean coastal_dl;
+    public boolean coastal_dr;
     
     public int x, y;
+    public int continent_index;
+    
     public Color color;
     public FogOfWar fog_of_war;
     public TerrainType terrain;
+    
+    
     
     public enum DirEnum { UPPER_RIGHT(1,-1), RIGHT(1,0), LOWER_RIGHT(1,1), LOWER_LEFT(-1,1), LEFT(-1,0), UPPER_LEFT(-1,-1);
         public int x_offset, y_offset;
@@ -56,15 +93,36 @@ public class Hex {
         HEX_GRID_IMG = new Image (HEX_GRID_IMG_PATH);
         HEX_OVERLAY_IMG = new Image (HEX_OVERLAY_IMG_PATH);
         HEX_FOG_OF_WAR_IMG = new Image (HEX_FOG_OF_WAR_IMG_PATH);
+        
+        HEX_COAST_SANDY_UL_IMG = new Image (HEX_COAST_SANDY_UL_IMG_PATH);
+        HEX_COAST_SANDY_UR_IMG = new Image (HEX_COAST_SANDY_UR_IMG_PATH);
+        HEX_COAST_SANDY_L_IMG = new Image (HEX_COAST_SANDY_L_IMG_PATH);
+        HEX_COAST_SANDY_R_IMG = new Image (HEX_COAST_SANDY_R_IMG_PATH);
+        HEX_COAST_SANDY_DL_IMG = new Image (HEX_COAST_SANDY_DL_IMG_PATH);
+        HEX_COAST_SANDY_DR_IMG = new Image (HEX_COAST_SANDY_DR_IMG_PATH);
+        
+        HEX_COAST_CLIFF_UL_IMG = new Image (HEX_COAST_CLIFF_UL_IMG_PATH);
+        HEX_COAST_CLIFF_UR_IMG = new Image (HEX_COAST_CLIFF_UR_IMG_PATH);
+        HEX_COAST_CLIFF_L_IMG = new Image (HEX_COAST_CLIFF_L_IMG_PATH);
+        HEX_COAST_CLIFF_R_IMG = new Image (HEX_COAST_CLIFF_R_IMG_PATH);
+        HEX_COAST_CLIFF_DL_IMG = new Image (HEX_COAST_CLIFF_DL_IMG_PATH);
+        HEX_COAST_CLIFF_DR_IMG = new Image (HEX_COAST_CLIFF_DR_IMG_PATH);
     }
     
-    public Hex (int x, int y) {
+    public Hex (int x, int y, int continent_index) {
         this.x = x;
         this.y = y;
+        this.continent_index = continent_index;
         terrain = TerrainType.DEFAULT;
         color = new Color (1f,1f,1f,0f);
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
+        coastal_ul = false;
+        coastal_ur = false;
+        coastal_l = false;
+        coastal_r = false;
+        coastal_dl = false;
+        coastal_dr = false;
     }
     
     
@@ -151,9 +209,10 @@ public class Hex {
         DirEnum[] enums = DirEnum.values();
         SlickUtils.shuffleArray(enums);
         for (DirEnum dir : enums) {
-            if (getAdjacent(grid, dir)!=null && (getAdjacent(grid, dir).terrain != terrain)) {
-                getAdjacent(grid, dir).terrain = terrain;
-                if (terrain!=TerrainType.SEA) land.add(getAdjacent(grid, dir));
+            Hex adj = getAdjacent(grid, dir);
+            if (adj!=null && (adj.terrain != terrain)) {
+                adj.terrain = terrain;
+                if (terrain!=TerrainType.SEA) land.add(adj);
                 return true;
             }
         }

@@ -1,0 +1,87 @@
+#
+# Tier I Classes :
+#
+#    Warrior [W] - Primary Class (inherently more loyal, and have more combinations!)
+#    Apprentice [Ap] - Primary Class (inherently more loyal, and have more combinations!)
+#    Priest [P] - Primary Class (inherently more loyal, and have more combinations!)
+#    Monk [M] - Support Class (inherently more disloyal!)
+#    Druid [D] - Support Class (inherently more disloyal!)
+#    Acolyte [Ac] - Support Class (inherently more disloyal!)
+#    Rogue [R] - Support Class (inherently more disloyal!)
+#
+# Tier II Classes :
+# 
+#    Warrior :
+#        Berserker
+#        Champion
+#        Paladin
+#        Ranger
+#        Duelist
+#    Apprentice :
+#        Sorcerer
+#        Wizard
+#        Hedge Wizard
+#        Necromancer
+#        
+#    Priest :
+#        Templar
+#        Cleric
+#        Warlock
+#        Paladin
+#        Healer
+#    Monk :
+#        Champion
+#        Templar
+#    Druid :
+#        Ranger
+#        Healer
+#        Hedge Wizard
+#    Acolyte :
+#        Necromancer
+#        Warlock
+#    Rogue :
+#        Sorcerer
+#        
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#

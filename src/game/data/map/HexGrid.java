@@ -38,7 +38,7 @@ public class HexGrid {
         for (int i=0;i<size_y;i++) {
             grid.add(new ArrayList<> ());
             for (int j=0;j<size_x;j++) {
-                grid.get(i).add(new Hex (j, i));
+                grid.get(i).add(new Hex (j, i, 0));
             }
         }
     }
@@ -64,37 +64,8 @@ public class HexGrid {
         return size_y;
     }
     
-    public int getNumberOfIslands () {
-        return (int)((size_x*size_y)/100);
-    }
-    
-    public int getNumberOfMountains (List<Hex> land) {
-        int num = (int) Math.round((double)((double)land.size() / (double)(size_x*size_y)) * ((size_x*size_y)/100));
-        return num;
-    }
-    
-    public int getNumberOfForests (List<Hex> land) {
-        int num = (int) Math.round((double)((double)land.size() / (double)(size_x*size_y)) * ((size_x*size_y)/50));
-        return num;
-    }
-    
-    public boolean satisfiesLandPrecentage (List<Hex> land) {
-        return (double)((double)land.size() / (double)(size_x*size_y)) >= Consts.MAP_LAND_PERCENTAGE;
-    }
     
     
-    
-    public List<Hex> getCoastalHexes () {
-        List<Hex> result = new ArrayList<> ();
-        
-        for (int y=0;y<size_y;y++) {
-            for (int x=0;x<size_x;x++) {
-                if (this.get(x,y).isCoastal(this)) result.add(this.get(x,y));
-            }
-        }
-        
-        return result;
-    }
     
     public List<Hex> getAllOfType (TerrainType type) {
         List<Hex> result = new ArrayList<> ();
@@ -106,19 +77,6 @@ public class HexGrid {
             }
         }
         return result;
-    }
-    
-    public Hex getRandomLandHex () {
-        Hex hex = null;
-        do {
-            int x = (int)(Math.random() * size_x);
-            int y = (int)(Math.random() * size_y);
-            hex = get(x,y);
-            
-            if (hex==null) continue;
-        } while (hex.terrain.equals(TerrainType.SEA));
-        
-        return hex;
     }
     
     public Hex getRandomHexOfType (TerrainType type) {
@@ -136,8 +94,6 @@ public class HexGrid {
         
         return hex;
     }
-    
-    
     
     public void render (Camera cam, GameContainer container, StateBasedGame game, Graphics g) {
         int start_x_index = (int)(cam.x / Hex.HEX_GRID_SIZE_X)-DRAW_MARGIN_X;
@@ -163,17 +119,6 @@ public class HexGrid {
                     not_render_counter++;
                 }
             }
-        }
-    }
-    
-    public void renderMouseShadow (Camera cam, int x, int y) {
-        if (get(x,y)!=null) {
-            float x_draw = (x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x)*cam.zoom;
-            float y_draw = (y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y)*cam.zoom;
-            float x_scale = (HEX_GRID_SIZE_X)*cam.zoom;
-            float y_scale = (HEX_GRID_SIZE_Y)*cam.zoom;
-            
-            get(x,y).renderMouseShadow(x_draw, y_draw, x_scale, y_scale);
         }
     }
 }
