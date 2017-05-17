@@ -19,13 +19,11 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameMap {
     public HexGrid grid;
-    public Camera camera;
     public int mouse_shadow_x, mouse_shadow_y;
     
     
     
-    public GameMap (GameContainer gc, int size_x, int size_y) {
-        camera = new Camera (gc);
+    public GameMap (int size_x, int size_y) {
         grid = new HexGrid (size_x, size_y);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
@@ -33,7 +31,7 @@ public class GameMap {
         generateMap();
     }
     
-    public void render (GameContainer container, StateBasedGame game, Graphics g) {
+    public void render (Camera camera, GameContainer container, StateBasedGame game, Graphics g) {
         grid.render(camera, container, game, g);
         
         if (grid.get(mouse_shadow_x, mouse_shadow_y)!=null) {
@@ -41,7 +39,7 @@ public class GameMap {
         }
     }
     
-    public void update (GameContainer gc, StateBasedGame sbg) {
+    public void update (Camera camera, GameContainer gc, StateBasedGame sbg) {
         camera.update(camera, gc, sbg);
         
         int y = (int)((gc.getInput().getMouseY() - (int)(Hex.HEX_GRID_SIZE_Y*1/8))/camera.zoom) + camera.y;
@@ -89,21 +87,55 @@ public class GameMap {
         
         
         // make mountain ranges with hills
-        int mountain_ranges = (int)(Math.random()*3) + 2;
+        int mountain_ranges = grid.getNumberOfMountains(land);
         int mt_counter=0;
         while (mt_counter < mountain_ranges) {
-            int length = (int)(Math.random()*10) + 6;
-            int index = SlickUtils.rand(0,land.size()); // starting point
+            int length = (int)(Math.random()*9) + 8;
+            List<Hex> mountains = new ArrayList<> ();
             
-            Hex hex = land.get(index);
+            Hex hex = grid.getRandomHexOfType(TerrainType.OPEN);
             if (hex==null) continue;
+            mountains.add(hex);
             
+            // propagate mountains into a chain
             for (int i=0;i<length;i++) {
+                Hex next = hex.getRandomAdjacentOfType(grid, TerrainType.OPEN);
+                if (next==null) { break; }
+                hex = next;
                 hex.terrain = TerrainType.MOUNTAINS;
-                hex = hex.getRandomAdjacentOfType(grid, TerrainType.OPEN);
+                mountains.add(hex);
+            }
+            
+            // propagate hills from random mountains, four times for each mountain
+            for (int i=0;i<mountains.size()*4;i++) {
+                Hex next = mountains.get(SlickUtils.rand(0,mountains.size()-1)).getRandomAdjacentOfType(grid, TerrainType.OPEN);
+                if (next==null) { continue; }
+                next.terrain = TerrainType.HILLS;
             }
             
             mt_counter++;
+        }
+        
+        
+        // make forests
+        int forests = grid.getNumberOfForests(land);
+        int fr_counter=0;
+        while (fr_counter < forests) {
+            int size = SlickUtils.rand(4, 30);
+            List<Hex> forest = new ArrayList<> ();
+            
+            Hex hex = grid.getRandomHexOfType(TerrainType.OPEN);
+            hex.terrain = TerrainType.FOREST;
+            forest.add(hex);
+            for (int i=0;i<size;i++) {
+                Hex next = forest.get(SlickUtils.rand(0,forest.size()-1)).getRandomAdjacentOfType(grid, TerrainType.OPEN);
+                if (next==null) continue;
+                forest.add(next);
+                hex = next;
+                hex.terrain = TerrainType.FOREST;
+            }
+            
+            fr_counter++;
         }
     }
 }

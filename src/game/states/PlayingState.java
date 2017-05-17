@@ -5,6 +5,7 @@
  */
 package game.states;
 
+import game.data.map.Camera;
 import game.data.map.GameMap;
 import main.Consts;
 import org.newdawn.slick.Color;
@@ -23,6 +24,7 @@ public class PlayingState extends BasicGameState {
     public static final int ID = 1;
     
     public GameMap gameMap;
+    public Camera camera;
 
     @Override
     public int getID() {
@@ -31,12 +33,13 @@ public class PlayingState extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        gameMap = new GameMap (container, 32, 32);
+        camera = new Camera (container);
+        gameMap = new GameMap (32, 32);
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        gameMap.render(container, game, g);
+        gameMap.render(camera, container, game, g);
         
         if (Consts.RENDER_DEBUG) {
             int y = 32;
@@ -44,7 +47,7 @@ public class PlayingState extends BasicGameState {
             
             g.drawString("Debug Mode", 0, y); y+=24;
             if (Consts.RENDER_DEBUG_CAMERA_INFO) {
-                g.drawString("Camera: "+String.format("% 05d",gameMap.camera.x)+","+String.format("% 05d",gameMap.camera.y)+"("+String.format("%.2f",gameMap.camera.zoom)+"z)", 0, y); y+=24;
+                g.drawString("Camera: "+String.format("% 05d",camera.x)+","+String.format("% 05d",camera.y)+"("+String.format("%.2f",camera.zoom)+"z)", 0, y); y+=24;
             }
             if (Consts.RENDER_DEBUG_RENDERED_HEXES) {
                 g.drawString("Rendered hexes: "+gameMap.grid.render_counter, 0, y); y+=24;
@@ -55,19 +58,23 @@ public class PlayingState extends BasicGameState {
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        gameMap.update(container, game);
+        gameMap.update(camera, container, game);
         
         if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
-            gameMap.camera.x--;
+            camera.x--;
         }
         if (container.getInput().isKeyDown(Input.KEY_RIGHT)) {
-            gameMap.camera.x++;
+            camera.x++;
         }
         if (container.getInput().isKeyDown(Input.KEY_UP)) {
-            gameMap.camera.y--;
+            camera.y--;
         }
         if (container.getInput().isKeyDown(Input.KEY_DOWN)) {
-            gameMap.camera.y++;
+            camera.y++;
+        }
+        
+        if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            gameMap = new GameMap (32, 32);
         }
     }
     

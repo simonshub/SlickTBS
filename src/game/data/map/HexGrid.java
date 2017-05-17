@@ -68,6 +68,16 @@ public class HexGrid {
         return (int)((size_x*size_y)/100);
     }
     
+    public int getNumberOfMountains (List<Hex> land) {
+        int num = (int) Math.round((double)((double)land.size() / (double)(size_x*size_y)) * ((size_x*size_y)/100));
+        return num;
+    }
+    
+    public int getNumberOfForests (List<Hex> land) {
+        int num = (int) Math.round((double)((double)land.size() / (double)(size_x*size_y)) * ((size_x*size_y)/50));
+        return num;
+    }
+    
     public boolean satisfiesLandPrecentage (List<Hex> land) {
         return (double)((double)land.size() / (double)(size_x*size_y)) >= Consts.MAP_LAND_PERCENTAGE;
     }
@@ -86,6 +96,18 @@ public class HexGrid {
         return result;
     }
     
+    public List<Hex> getAllOfType (TerrainType type) {
+        List<Hex> result = new ArrayList<> ();
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                if (get(x,y).terrain.equals(type)) {
+                    result.add(get(x,y));
+                }
+            }
+        }
+        return result;
+    }
+    
     public Hex getRandomLandHex () {
         Hex hex = null;
         do {
@@ -95,6 +117,22 @@ public class HexGrid {
             
             if (hex==null) continue;
         } while (hex.terrain.equals(TerrainType.SEA));
+        
+        return hex;
+    }
+    
+    public Hex getRandomHexOfType (TerrainType type) {
+        Hex hex = null;
+        
+        
+        
+        do {
+            int x = (int)(Math.random() * size_x);
+            int y = (int)(Math.random() * size_y);
+            hex = get(x,y);
+            
+            if (hex==null) continue;
+        } while (!hex.terrain.equals(type));
         
         return hex;
     }
