@@ -116,6 +116,13 @@ public abstract class SlickUtils {
     }
     
     
+    public static boolean equalsAnyInArray(Object[] array, Object obj) {
+        for (Object arr_obj : array)
+            if (arr_obj.equals(obj)) return true;
+        return false;
+    }
+    
+    
     
     public static int rand (int min, int max) {
         if (min > max)

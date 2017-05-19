@@ -94,19 +94,19 @@ public class Hex {
         HEX_OVERLAY_IMG = new Image (HEX_OVERLAY_IMG_PATH);
         HEX_FOG_OF_WAR_IMG = new Image (HEX_FOG_OF_WAR_IMG_PATH);
         
-        HEX_COAST_SANDY_UL_IMG = new Image (HEX_COAST_SANDY_UL_IMG_PATH);
-        HEX_COAST_SANDY_UR_IMG = new Image (HEX_COAST_SANDY_UR_IMG_PATH);
-        HEX_COAST_SANDY_L_IMG = new Image (HEX_COAST_SANDY_L_IMG_PATH);
-        HEX_COAST_SANDY_R_IMG = new Image (HEX_COAST_SANDY_R_IMG_PATH);
-        HEX_COAST_SANDY_DL_IMG = new Image (HEX_COAST_SANDY_DL_IMG_PATH);
-        HEX_COAST_SANDY_DR_IMG = new Image (HEX_COAST_SANDY_DR_IMG_PATH);
-        
-        HEX_COAST_CLIFF_UL_IMG = new Image (HEX_COAST_CLIFF_UL_IMG_PATH);
-        HEX_COAST_CLIFF_UR_IMG = new Image (HEX_COAST_CLIFF_UR_IMG_PATH);
-        HEX_COAST_CLIFF_L_IMG = new Image (HEX_COAST_CLIFF_L_IMG_PATH);
-        HEX_COAST_CLIFF_R_IMG = new Image (HEX_COAST_CLIFF_R_IMG_PATH);
-        HEX_COAST_CLIFF_DL_IMG = new Image (HEX_COAST_CLIFF_DL_IMG_PATH);
-        HEX_COAST_CLIFF_DR_IMG = new Image (HEX_COAST_CLIFF_DR_IMG_PATH);
+//        HEX_COAST_SANDY_UL_IMG = new Image (HEX_COAST_SANDY_UL_IMG_PATH);
+//        HEX_COAST_SANDY_UR_IMG = new Image (HEX_COAST_SANDY_UR_IMG_PATH);
+//        HEX_COAST_SANDY_L_IMG = new Image (HEX_COAST_SANDY_L_IMG_PATH);
+//        HEX_COAST_SANDY_R_IMG = new Image (HEX_COAST_SANDY_R_IMG_PATH);
+//        HEX_COAST_SANDY_DL_IMG = new Image (HEX_COAST_SANDY_DL_IMG_PATH);
+//        HEX_COAST_SANDY_DR_IMG = new Image (HEX_COAST_SANDY_DR_IMG_PATH);
+//        
+//        HEX_COAST_CLIFF_UL_IMG = new Image (HEX_COAST_CLIFF_UL_IMG_PATH);
+//        HEX_COAST_CLIFF_UR_IMG = new Image (HEX_COAST_CLIFF_UR_IMG_PATH);
+//        HEX_COAST_CLIFF_L_IMG = new Image (HEX_COAST_CLIFF_L_IMG_PATH);
+//        HEX_COAST_CLIFF_R_IMG = new Image (HEX_COAST_CLIFF_R_IMG_PATH);
+//        HEX_COAST_CLIFF_DL_IMG = new Image (HEX_COAST_CLIFF_DL_IMG_PATH);
+//        HEX_COAST_CLIFF_DR_IMG = new Image (HEX_COAST_CLIFF_DR_IMG_PATH);
     }
     
     public Hex (int x, int y, int continent_index) {
@@ -184,6 +184,21 @@ public class Hex {
         for (DirEnum dir : DirEnum.values())
             if (this.getAdjacent(grid, dir)!=null && this.getAdjacent(grid, dir).terrain.equals(type))
                 result.add(this.getAdjacent(grid, dir));
+        
+        if (result.isEmpty())
+            return null;
+        
+        int index = (int)(Math.random()*result.size());
+        return result.get(index);
+    }
+    
+    public Hex getRandomAdjacentOfTypes (HexGrid grid, TerrainType... types) {
+        List<Hex> result = new ArrayList<> ();
+        for (DirEnum dir : DirEnum.values()) {
+            Hex adj = this.getAdjacent(grid, dir);
+            if (adj!=null && SlickUtils.equalsAnyInArray(types, adj.terrain))
+                result.add(adj);
+        }
         
         if (result.isEmpty())
             return null;

@@ -19,6 +19,7 @@ public abstract class WorldGenerator {
     
     public static double MOUNTAIN_GENERATION_FACTOR = .7;
     public static double FOREST_GENERATION_FACTOR = 2.8;
+    public static double WASTELAND_GENERATION_FACTOR = .5;
     
     public static HexGrid GRID;
     
@@ -34,6 +35,8 @@ public abstract class WorldGenerator {
         return (int)((GRID.getSizeX()*GRID.getSizeY())/100);
     }
     
+    
+    
     public static int getNumberOfMountains (List<Hex> land) {
         int num = (int) Math.round((double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) * ((GRID.getSizeX()*GRID.getSizeY())/100) * MOUNTAIN_GENERATION_FACTOR);
         return num;
@@ -44,9 +47,16 @@ public abstract class WorldGenerator {
         return num;
     }
     
+    public static int getNumberOfWastelands (List<Hex> land) {
+        int num = (int) Math.round((double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) * ((GRID.getSizeX()*GRID.getSizeY())/100) * WASTELAND_GENERATION_FACTOR);
+        return num;
+    }
+    
     public static boolean satisfiesLandPrecentage (List<Hex> land) {
         return (double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) >= Consts.MAP_LAND_PERCENTAGE;
     }
+    
+    
     
     public static Hex getRandomLandHex () {
         Hex hex = null;
@@ -158,6 +168,28 @@ public abstract class WorldGenerator {
             }
             
             fr_counter++;
+        }
+        
+        
+        // make wastelands
+        int wastes = getNumberOfWastelands(land);
+        int waste_counter=0;
+        while (waste_counter < wastes) {
+            int size = SlickUtils.rand(6, 10);
+            List<Hex> wasteland = new ArrayList<> ();
+            
+            Hex hex = GRID.getRandomHexOfType(TerrainType.OPEN);
+            hex.terrain = TerrainType.DESERT;
+            wasteland.add(hex);
+            for (int i=0;i<size;i++) {
+                Hex next = wasteland.get(SlickUtils.rand(0,wasteland.size()-1)).getRandomAdjacentOfTypes(GRID, TerrainType.OPEN, TerrainType.FOREST);
+                if (next==null) continue;
+                wasteland.add(next);
+                hex = next;
+                hex.terrain = TerrainType.DESERT;
+            }
+            
+            waste_counter++;
         }
     }
 }
