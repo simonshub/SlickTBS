@@ -16,13 +16,23 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author emil.simon
  */
 public class GameMap {
+    
+    public enum MapSize {
+        TINY(64), SMALL(96), MEDIUM(128), LARGE(192), HUGE(256), EPIC(512)
+        ;
+        public int size;
+        MapSize (int size) { this.size = size; }
+    }
+    
+    
+    
     public HexGrid grid;
     public int mouse_shadow_x, mouse_shadow_y;
     
     
     
-    public GameMap (int size_x, int size_y) {
-        grid = new HexGrid (size_x, size_y);
+    public GameMap (MapSize size) {
+        grid = new HexGrid (size.size*2, size.size);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
         

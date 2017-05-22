@@ -16,7 +16,7 @@ import org.newdawn.slick.SlickException;
  *
  * @author emil.simon
  */
-public enum TerrainType {
+public enum TerrainTypeEnum {
     DEFAULT,
     OPEN, TUNDRA,
     FOREST, TROPICAL,
@@ -31,7 +31,7 @@ public enum TerrainType {
     
     
     
-    TerrainType () {
+    TerrainTypeEnum () {
         this.img = null;
         this.img_path = "";
         

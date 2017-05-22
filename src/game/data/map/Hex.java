@@ -6,6 +6,7 @@
 package game.data.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import main.ResMgr;
 import main.utils.Point;
@@ -72,18 +73,45 @@ public class Hex {
     
     public Color color;
     public FogOfWar fog_of_war;
-    public TerrainType terrain;
+    public TerrainTypeEnum terrain;
+    
+    public Color debug_continent_indicator;
+    public Color debug_biome_indicator;
     
     
     
-    public enum DirEnum { UPPER_RIGHT(1,-1), RIGHT(1,0), LOWER_RIGHT(1,1), LOWER_LEFT(-1,1), LEFT(-1,0), UPPER_LEFT(-1,-1);
-        public int x_offset, y_offset;
+    public enum DirEnum {
+//        CLOCKWISE
+        UPPER_RIGHT(1,-1 , 0,-1), RIGHT(1,0 , 1,0), LOWER_RIGHT(1,1 , 0,1), LOWER_LEFT(0,1 , -1,1), LEFT(-1,0 , -1,0), UPPER_LEFT(0,-1 , -1,-1),
+//        GRID :
+//        UPPER_LEFT( 0,-1 , -1,-1),        UPPER_RIGHT(1,-1 , 0,-1), 
+//        LEFT      (-1, 0 , -1, 0),        RIGHT      (1, 0 , 1, 0), 
+//        LOWER_LEFT( 0, 1 , -1, 1),        LOWER_RIGHT(1, 1 , 0, 1)
+        ;
         
-        DirEnum(int x, int y) { x_offset=x; y_offset=y; }
+        int even_x_offset, even_y_offset;
+        int odd_x_offset, odd_y_offset;
+        
+        DirEnum(int even_x, int even_y, int odd_x, int odd_y) { even_x_offset=even_x; even_y_offset=even_y; odd_x_offset=odd_x; odd_y_offset=odd_y; }
         
         public static DirEnum getRandom() {
             int index = (int)(Math.random() * DirEnum.values().length);
             return DirEnum.values()[index];
+        }
+        
+        public static DirEnum getAdjacentClockwise (DirEnum dir, int offset) {
+            int index = -1;
+            for (int i=0;i<DirEnum.values().length;i++) {
+                if (dir == DirEnum.values()[i]) {
+                    index = i;
+                    break;
+                }
+            }
+            
+            int adj_index = index + offset;
+            while (adj_index>=DirEnum.values().length) adj_index -= DirEnum.values().length;
+            while (adj_index<0) adj_index += DirEnum.values().length;
+            return DirEnum.values()[adj_index];
         }
     };
     
@@ -113,7 +141,7 @@ public class Hex {
         this.x = x;
         this.y = y;
         this.continent_index = continent_index;
-        terrain = TerrainType.DEFAULT;
+        terrain = TerrainTypeEnum.DEFAULT;
         color = new Color (1f,1f,1f,0f);
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
@@ -160,6 +188,12 @@ public class Hex {
         if (HEX_GRID_IMG == null)
             return;
         
+        if (ResMgr.render_continents && debug_continent_indicator!=null)
+            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, debug_continent_indicator);
+        
+        if (ResMgr.render_biomes && debug_biome_indicator!=null)
+            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, debug_biome_indicator);
+        
         if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
     }
@@ -172,14 +206,17 @@ public class Hex {
     
     
     public Hex getAdjacent (HexGrid grid, DirEnum direction) {
-        return grid.get(x+direction.x_offset, y+direction.y_offset);
+        if (y%2==0)
+            return grid.get(x+direction.even_x_offset, y+direction.even_y_offset);
+        else
+            return grid.get(x+direction.odd_x_offset, y+direction.odd_y_offset);
     }
     
     public Hex getRandomAdjacent (HexGrid grid) {
         return getAdjacent(grid, DirEnum.getRandom());
     }
     
-    public Hex getRandomAdjacentOfType (HexGrid grid, TerrainType type) {
+    public Hex getRandomAdjacentOfType (HexGrid grid, TerrainTypeEnum type) {
         List<Hex> result = new ArrayList<> ();
         for (DirEnum dir : DirEnum.values())
             if (this.getAdjacent(grid, dir)!=null && this.getAdjacent(grid, dir).terrain.equals(type))
@@ -192,7 +229,7 @@ public class Hex {
         return result.get(index);
     }
     
-    public Hex getRandomAdjacentOfTypes (HexGrid grid, TerrainType... types) {
+    public Hex getRandomAdjacentOfTypes (HexGrid grid, TerrainTypeEnum... types) {
         List<Hex> result = new ArrayList<> ();
         for (DirEnum dir : DirEnum.values()) {
             Hex adj = this.getAdjacent(grid, dir);
@@ -215,23 +252,78 @@ public class Hex {
     }
     
     public boolean isCoastal (HexGrid grid) {
-        for (DirEnum dir : DirEnum.values())
-            if (getAdjacent(grid,dir)!=null && getAdjacent(grid,dir).terrain.equals(TerrainType.SEA) && !terrain.equals(TerrainType.SEA)) return true;
+        return isBorder(grid, TerrainTypeEnum.SEA);
+    }
+    
+    public boolean isBorder (HexGrid grid) {
+//        for (DirEnum dir : DirEnum.values())
+//            if (getAdjacent(grid,dir)!=null && !getAdjacent(grid,dir).terrain.equals(terrain)) return true;
+//        return false;
+        List<Hex> adj_list = getAllAdjacent(grid);
+        for (Hex adj : adj_list) {
+            if (!adj.terrain.equals(this.terrain)) return true;
+        }
         return false;
     }
     
-    public boolean spreadTerrain (HexGrid grid, List<Hex> land) {
+    public boolean isBorder (HexGrid grid, TerrainTypeEnum for_type) {
+//        for (DirEnum dir : DirEnum.values())
+//            if (getAdjacent(grid,dir)!=null && getAdjacent(grid,dir).terrain.equals(type) && !terrain.equals(type)) return true;
+//        return false;
+        List<Hex> adj_list = getAllAdjacent(grid);
+        for (Hex adj : adj_list) {
+            if (adj.terrain.equals(for_type)) return true;
+        }
+        return false;
+    }
+    
+    public List<Hex> spreadTerrainExcl (HexGrid grid, TerrainTypeEnum... exclude_types) {
         DirEnum[] enums = DirEnum.values();
-        SlickUtils.shuffleArray(enums);
+        List<TerrainTypeEnum> exclude_list;
+        
+        if (exclude_types!=null) {
+            exclude_list = Arrays.asList(exclude_types);
+        } else {
+            exclude_list = new ArrayList<> ();
+        }
+        
+        List<Hex> additions = new ArrayList<> ();
+        
         for (DirEnum dir : enums) {
             Hex adj = getAdjacent(grid, dir);
-            if (adj!=null && (adj.terrain != terrain)) {
-                adj.terrain = terrain;
-                if (terrain!=TerrainType.SEA) land.add(adj);
-                return true;
+            if (adj!=null && !exclude_list.contains(adj.terrain)) {
+                adj.terrain = this.terrain;
+                additions.add(adj);
             }
         }
         
-        return false;
+        return additions;
+    }
+    
+    public List<Hex> spreadTerrainIncl (HexGrid grid, TerrainTypeEnum... include_types) {
+        DirEnum[] enums = DirEnum.values();
+        List<TerrainTypeEnum> include_list;
+        
+        if (include_types!=null) {
+            include_list = Arrays.asList(include_types);
+        } else {
+            include_list = new ArrayList<> ();
+        }
+        
+        List<Hex> additions = new ArrayList<> ();
+        
+        for (DirEnum dir : enums) {
+            Hex adj = getAdjacent(grid, dir);
+            if (adj!=null && include_list.contains(adj.terrain)) {
+                adj.terrain = this.terrain;
+                additions.add(adj);
+            }
+        }
+        
+        return additions;
+    }
+    
+    public List<Hex> spreadTerrain (HexGrid grid) {
+        return spreadTerrainExcl(grid, (TerrainTypeEnum[]) null);
     }
 }

@@ -124,6 +124,13 @@ public abstract class SlickUtils {
     
     
     
+    
+    /**
+     * 
+     * @param min inclusive
+     * @param max not inclusive
+     * @return 
+     */
     public static int rand (int min, int max) {
         if (min > max)
             throw new ArithmeticException ();
@@ -132,6 +139,29 @@ public abstract class SlickUtils {
         
         int result = (int)(Math.round(Math.random() * (max-min)) + min);
         return result;
+    }
+    
+    public static double rand (double min, double max) {
+        if (min > max)
+            throw new ArithmeticException ();
+        if (min==max)
+            return max;
+        
+        double result = (Math.random() * (max-min)) + min;
+        return result;
+    }
+    
+    public static int randIndex (int size) {
+        return (int)(Math.floor(Math.random()*size));
+    }
+    
+    public static boolean chanceRoll (double chance) {
+        return (Math.random()<=chance);
+    }
+    
+    public static int numPlusMinus (int num, int plus, int minus) {
+        int offset = rand(minus,plus);
+        return num+offset;
     }
     
 }

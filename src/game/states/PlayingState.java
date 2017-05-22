@@ -34,7 +34,7 @@ public class PlayingState extends BasicGameState {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         camera = new Camera (container);
-        gameMap = new GameMap (80, 80);
+        gameMap = new GameMap (GameMap.MapSize.LARGE);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class PlayingState extends BasicGameState {
         }
         
         if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-            gameMap = new GameMap (32, 32);
+            gameMap = new GameMap (GameMap.MapSize.LARGE);
         }
     }
     

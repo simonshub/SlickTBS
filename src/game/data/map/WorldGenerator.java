@@ -5,11 +5,11 @@
  */
 package game.data.map;
 
+import game.data.map.Hex.DirEnum;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import main.Consts;
 import main.utils.SlickUtils;
+import org.newdawn.slick.Color;
 
 /**
  *
@@ -21,6 +21,24 @@ public abstract class WorldGenerator {
     public static double FOREST_GENERATION_FACTOR = 2.8;
     public static double WASTELAND_GENERATION_FACTOR = .5;
     
+    public static final double MAP_LAND_PERCENTAGE = 0.4;
+    public static final double MAP_CONTINENT_MOUNTAIN_PERCENTAGE = 0.025;
+    public static final double MAP_CONTINENT_FOREST_PERCENTAGE = 0.180;
+    public static final double MAP_CONTINENT_WASTELAND_PERCENTAGE = 0.025;
+    
+    public static int CHAIN_PROPAGATION_RETRY_COUNT = 4;
+    
+    public static double FOREST_SPARSE_CHANCE = 0.33;
+    
+    public static int MOUNTAIN_CHAIN_MIN_LEN = 4;
+    public static int MOUNTAIN_CHAIN_MAX_LEN = 20;
+    public static int FOREST_RADIAL_MIN_SIZE = 2;
+    public static int FOREST_RADIAL_MAX_SIZE = 40;
+    public static int WASTELAND_RADIAL_MIN_SIZE = 10;
+    public static int WASTELAND_RADIAL_MAX_SIZE = 40;
+    
+    public static List<List<Hex>> CONTINENTS;
+    
     public static HexGrid GRID;
     
     
@@ -31,29 +49,26 @@ public abstract class WorldGenerator {
     
     
     
-    public static int getNumberOfIslands () {
-        return (int)((GRID.getSizeX()*GRID.getSizeY())/100);
+    public static int getContinentSize () {
+        return (int)(Math.round((GRID.getSizeX()*GRID.getSizeY())/30));
     }
     
     
-    
-    public static int getNumberOfMountains (List<Hex> land) {
-        int num = (int) Math.round((double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) * ((GRID.getSizeX()*GRID.getSizeY())/100) * MOUNTAIN_GENERATION_FACTOR);
-        return num;
-    }
-    
-    public static int getNumberOfForests (List<Hex> land) {
-        int num = (int) Math.round((double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) * ((GRID.getSizeX()*GRID.getSizeY())/100) * FOREST_GENERATION_FACTOR);
-        return num;
-    }
-    
-    public static int getNumberOfWastelands (List<Hex> land) {
-        int num = (int) Math.round((double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) * ((GRID.getSizeX()*GRID.getSizeY())/100) * WASTELAND_GENERATION_FACTOR);
-        return num;
-    }
     
     public static boolean satisfiesLandPrecentage (List<Hex> land) {
-        return (double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) >= Consts.MAP_LAND_PERCENTAGE;
+        return (double)((double)land.size() / (double)(GRID.getSizeX()*GRID.getSizeY())) >= MAP_LAND_PERCENTAGE;
+    }
+    
+    public static boolean satisfiesMountainPrecentage (double mt_factor, List<Hex> mountains, List<Hex> continent) {
+        return (double)((double)mountains.size() / (double)(continent.size())) >= MAP_CONTINENT_MOUNTAIN_PERCENTAGE*mt_factor;
+    }
+    
+    public static boolean satisfiesForestPrecentage (double fr_factor, List<Hex> forests, List<Hex> continent) {
+        return (double)((double)forests.size() / (double)(continent.size())) >= MAP_CONTINENT_FOREST_PERCENTAGE*fr_factor;
+    }
+    
+    public static boolean satisfiesWastelandPrecentage (double ws_factor, List<Hex> wastelands, List<Hex> continent) {
+        return (double)((double)wastelands.size() / (double)(continent.size())) >= MAP_CONTINENT_WASTELAND_PERCENTAGE*ws_factor;
     }
     
     
@@ -64,9 +79,7 @@ public abstract class WorldGenerator {
             int x = (int)(Math.random() * GRID.getSizeX());
             int y = (int)(Math.random() * GRID.getSizeY());
             hex = GRID.get(x,y);
-            
-            if (hex==null) continue;
-        } while (hex.terrain.equals(TerrainType.SEA));
+        } while (hex==null || hex.terrain.equals(TerrainTypeEnum.SEA));
         
         return hex;
     }
@@ -83,113 +96,235 @@ public abstract class WorldGenerator {
         return result;
     }
     
+    public static List<Hex> getBorderHexes (TerrainTypeEnum type) {
+        List<Hex> result = new ArrayList<> ();
+        
+        for (int y=0;y<GRID.getSizeY();y++) {
+            for (int x=0;x<GRID.getSizeX();x++) {
+                if (GRID.get(x,y).isBorder(GRID, type)) result.add(GRID.get(x,y));
+            }
+        }
+        
+        return result;
+    }
+    
+    public static List<Hex> getBorderHexes (TerrainTypeEnum type, List<Hex> hexes) {
+        List<Hex> result = new ArrayList<> ();
+        
+        if (type==null) return getBorderHexes(hexes);
+        
+        for (Hex hex : hexes) {
+            if (hex.isBorder(GRID, type)) result.add(hex);
+        }
+        
+        return result;
+    }
+    
+    public static List<Hex> getBorderHexes (List<Hex> hexes) {
+        List<Hex> result = new ArrayList<> ();
+        
+        for (Hex hex : hexes) {
+            if (hex.isBorder(GRID)) result.add(hex);
+        }
+        
+        return result;
+    }
+    
+    
+    
+    public static final List<Hex> generateRadial (boolean incl, TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_size, int max_size) {
+        int size = SlickUtils.rand(min_size, max_size);
+        List<Hex> radial = new ArrayList<> ();
+        radial.add(starting_point);
+        
+        System.out.println("Generating radial of size "+size+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
+        
+        for (int i=0;radial.size()<size;i++) {
+            List<Hex> radial_border = getBorderHexes (from_type, radial);
+            if (radial_border.isEmpty()) break;
+            
+            int index = SlickUtils.randIndex(radial_border.size());
+            List<Hex> additions;
+            if (incl)
+                additions = radial_border.get(index).spreadTerrainIncl(GRID, from_type);
+            else
+                additions = radial_border.get(index).spreadTerrain(GRID);
+            radial.addAll(additions);
+        }
+        
+        return radial;
+    }
+    
+    public static final List<Hex> generateChain (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point,
+                                                 int min_length, int max_length, double snakeyness, double widen_chance, int spread_times) {
+        int length = SlickUtils.rand(min_length, max_length);
+        DirEnum direction = DirEnum.getRandom();
+        
+        List<Hex> chain = new ArrayList<> ();
+        chain.add(starting_point);
+        Hex head = starting_point;
+        
+        System.out.println("Generating chain of length "+length+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
+        int retry_count = 0;
+        
+        for (int i=0;chain.size()<length;i++) {
+            if (SlickUtils.chanceRoll(widen_chance)) {
+                DirEnum widen_dir = DirEnum.getAdjacentClockwise(direction, SlickUtils.numPlusMinus(0,1,-1));
+                Hex widen_hex = head.getAdjacent(GRID, widen_dir);
+                
+                if (widen_hex!=null) {
+                    widen_hex.terrain = to_type;
+                    chain.add(widen_hex);
+                }
+            } else if (SlickUtils.chanceRoll(snakeyness)) {
+                direction = DirEnum.getAdjacentClockwise(direction, SlickUtils.numPlusMinus(0,1,-1));
+            }
+            
+            Hex propagation_candidate = head.getAdjacent(GRID, direction);
+            if (propagation_candidate==null) {
+                if (retry_count<CHAIN_PROPAGATION_RETRY_COUNT) {
+                    retry_count++;
+                    Hex tmp = head;
+                    head = starting_point;
+                    starting_point = tmp;
+                    --i;
+                    System.out.println("Retry!");
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            
+            if (!propagation_candidate.isCoastal(GRID) && // invalid selection, chains cannot propagate to coastal tiles
+                    propagation_candidate.terrain!=TerrainTypeEnum.SEA && // invalid selection, only land hexes can be propagated to
+                    (from_type==null || propagation_candidate.terrain==from_type) // invalid selection, is not of from_type
+                    ) {
+                propagation_candidate.terrain = to_type;
+                chain.add(propagation_candidate);
+                head = propagation_candidate;
+            } else if (retry_count<CHAIN_PROPAGATION_RETRY_COUNT) { // try the other end, opposite direction
+                retry_count++;
+                Hex tmp = head;
+                head = starting_point;
+                starting_point = tmp;
+                --i;
+                System.out.println("Retry!");
+            } else {
+                break;
+            }
+        }
+        
+        for (int i=0;i<spread_times;i++) {
+            chain.addAll(chain.get(SlickUtils.randIndex(chain.size())).spreadTerrainExcl(GRID, TerrainTypeEnum.SEA));
+        }
+        
+        return chain;
+    }
+    
     
     
     public static final void generateMap () {
-        Random rand = new Random ();
+        System.out.println("Generating map...");
+        CONTINENTS = new ArrayList<> ();
         
         // set the entire grid to sea, initialization
         for (int y=0;y<GRID.getSizeY();y++) {
             for (int x=0;x<GRID.getSizeX();x++) {
-                GRID.get(x, y).terrain = TerrainType.SEA;
+                GRID.get(x, y).terrain = TerrainTypeEnum.SEA;
             }
         }
         
-        // make islands
         List<Hex> land = new ArrayList<> ();
-        for (int i=0;i<getNumberOfIslands();i++) {
-            int x = rand.nextInt(GRID.getSizeX());
-            int y = rand.nextInt(GRID.getSizeY());
+        
+        for (int i=0;!satisfiesLandPrecentage(land);i++) {
+            Hex starting_point = GRID.get(SlickUtils.randIndex(GRID.getSizeX()), SlickUtils.randIndex(GRID.getSizeY()));
             
-            if (GRID.get(x,y)!=null && GRID.get(x,y).terrain==TerrainType.SEA && !land.contains(GRID.get(x,y))) {
-                GRID.get(x,y).terrain = TerrainType.OPEN;
-                land.add(GRID.get(x,y));
-            } else {
-                i--;
+            boolean taken = false;
+            for (List<Hex> cont : CONTINENTS) {
+                if (cont.contains(starting_point)) {
+                    taken = true;
+                    break;
+                }
             }
-        }
-        
-        // extend random land until you have enough land
-        List<Hex> coast;
-        while (!satisfiesLandPrecentage(land)) {
-            coast = getCoastalHexes();
-            int index = rand.nextInt(coast.size());
-            if (!coast.get(index).spreadTerrain(GRID, land)) ;
-        }
-        
-        
-        // make mountain ranges with hills
-        int mountain_ranges = getNumberOfMountains(land);
-        int mt_counter=0;
-        while (mt_counter < mountain_ranges) {
-            int length = (int)(Math.random()*9) + 8;
+            if (taken) {
+                --i;
+                System.out.println("start point "+starting_point.x+","+starting_point.y+" already taken!");
+                continue;
+            }
+            
+            starting_point.terrain = TerrainTypeEnum.OPEN;
+            land.add(starting_point);
+            List<Hex> continent = generateRadial (false, TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.25f), (int)(getContinentSize()*5f));
+            System.out.println("Continent "+(i+1)+" created, size: "+continent.size());
+            
+            for (Hex cont_hex : continent) {
+                land.add(cont_hex);
+                cont_hex.continent_index = i;
+            }
+            CONTINENTS.add(continent);
+            
             List<Hex> mountains = new ArrayList<> ();
-            
-            Hex hex = GRID.getRandomHexOfType(TerrainType.OPEN);
-            if (hex==null) continue;
-            mountains.add(hex);
-            
-            // propagate mountains into a chain
-            for (int i=0;i<length;i++) {
-                Hex next = hex.getRandomAdjacentOfType(GRID, TerrainType.OPEN);
-                if (next==null) { break; }
-                hex = next;
-                hex.terrain = TerrainType.MOUNTAINS;
-                mountains.add(hex);
+            for (int mt=0;!satisfiesMountainPrecentage(SlickUtils.rand(0.5,1.5), mountains, continent);mt++) {
+                Hex mt_starting_point = continent.get(SlickUtils.randIndex(continent.size()));
+                if (mt_starting_point.terrain!=TerrainTypeEnum.OPEN) {
+                    --mt; // try again !
+                    continue;
+                }
+                
+                mt_starting_point.terrain = TerrainTypeEnum.MOUNTAINS;
+                
+                List<Hex> chain = generateChain (TerrainTypeEnum.MOUNTAINS, TerrainTypeEnum.OPEN, mt_starting_point, MOUNTAIN_CHAIN_MIN_LEN, MOUNTAIN_CHAIN_MAX_LEN, 0.75, 0.75, 0);
+                System.out.println("Mountain chain "+(mt+1)+" created, size: "+chain.size());
+                mountains.addAll(chain);
             }
             
-            // propagate hills from random mountains, four times for each mountain
-            for (int i=0;i<mountains.size()*4;i++) {
-                Hex next = mountains.get(SlickUtils.rand(0,mountains.size()-1)).getRandomAdjacentOfType(GRID, TerrainType.OPEN);
-                if (next==null) { continue; }
-                next.terrain = TerrainType.HILLS;
+            List<Hex> forests = new ArrayList<> ();
+            for (int fr=0;!satisfiesForestPrecentage(SlickUtils.rand(0.5,3), forests, continent);fr++) {
+                Hex fr_starting_point = continent.get(SlickUtils.randIndex(continent.size()));
+                if (fr_starting_point.terrain!=TerrainTypeEnum.OPEN) {
+                    --fr; // try again !
+                    continue;
+                }
+                
+                fr_starting_point.terrain = TerrainTypeEnum.FOREST;
+                
+                List<Hex> radial;
+                radial = generateRadial (true, TerrainTypeEnum.FOREST, TerrainTypeEnum.OPEN, fr_starting_point, FOREST_RADIAL_MIN_SIZE, FOREST_RADIAL_MAX_SIZE);
+                
+                System.out.println("Forest "+(fr+1)+" created, size: "+radial.size());
+                forests.addAll(radial);
             }
             
-            mt_counter++;
+            List<Hex> wastelands = new ArrayList<> ();
+            for (int ws=0;!satisfiesWastelandPrecentage(SlickUtils.rand(0.5,3), wastelands, continent);ws++) {
+                Hex ws_starting_point = continent.get(SlickUtils.randIndex(continent.size()));
+                if (ws_starting_point.terrain!=TerrainTypeEnum.OPEN) {
+                    --ws; // try again !
+                    continue;
+                }
+                
+                ws_starting_point.terrain = TerrainTypeEnum.WASTES;
+                
+                List<Hex> radial;
+                radial = generateRadial (true, TerrainTypeEnum.WASTES, TerrainTypeEnum.OPEN, ws_starting_point, WASTELAND_RADIAL_MIN_SIZE, WASTELAND_RADIAL_MAX_SIZE);
+                
+                System.out.println("Wasteland "+(ws+1)+" created, size: "+radial.size());
+                wastelands.addAll(radial);
+            }
         }
         
-        
-        // make forests
-        int forests = getNumberOfForests(land);
-        int fr_counter=0;
-        while (fr_counter < forests) {
-            int size = SlickUtils.rand(2, 20);
-            List<Hex> forest = new ArrayList<> ();
-            
-            Hex hex = GRID.getRandomHexOfType(TerrainType.OPEN);
-            hex.terrain = TerrainType.FOREST;
-            forest.add(hex);
-            for (int i=0;i<size;i++) {
-                Hex next = forest.get(SlickUtils.rand(0,forest.size()-1)).getRandomAdjacentOfType(GRID, TerrainType.OPEN);
-                if (next==null) continue;
-                forest.add(next);
-                hex = next;
-                hex.terrain = TerrainType.FOREST;
+        for (List<Hex> continent : CONTINENTS) {
+//            Color continent_border_color = new Color ((float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f);
+//            Color continent_color = new Color (continent_border_color.r-0.15f, continent_border_color.g-0.15f, continent_border_color.b-0.15f, 0.5f);
+            Color continent_color = new Color ((float)Math.random(), (float)Math.random(), (float)Math.random(), 0.2f);
+            for (Hex cont_hex : continent) {
+//                if (cont_hex.isBorder(GRID))
+//                    cont_hex.debug_continent_indicator = continent_border_color;
+//                else
+//                    cont_hex.debug_continent_indicator = continent_color;
+
+                cont_hex.debug_continent_indicator = continent_color;
             }
-            
-            fr_counter++;
-        }
-        
-        
-        // make wastelands
-        int wastes = getNumberOfWastelands(land);
-        int waste_counter=0;
-        while (waste_counter < wastes) {
-            int size = SlickUtils.rand(6, 10);
-            List<Hex> wasteland = new ArrayList<> ();
-            
-            Hex hex = GRID.getRandomHexOfType(TerrainType.OPEN);
-            hex.terrain = TerrainType.DESERT;
-            wasteland.add(hex);
-            for (int i=0;i<size;i++) {
-                Hex next = wasteland.get(SlickUtils.rand(0,wasteland.size()-1)).getRandomAdjacentOfTypes(GRID, TerrainType.OPEN, TerrainType.FOREST);
-                if (next==null) continue;
-                wasteland.add(next);
-                hex = next;
-                hex.terrain = TerrainType.DESERT;
-            }
-            
-            waste_counter++;
         }
     }
 }

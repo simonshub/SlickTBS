@@ -5,7 +5,6 @@
  */
 package game.data.map;
 
-import main.ResMgr;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
@@ -32,7 +31,7 @@ public class Camera {
         gc.getInput().addMouseListener(new MouseListener () {
             @Override
             public void mouseWheelMoved(int i) {
-                zoom += i*0.0001f;
+                zoom += i*0.0005f;
             }
             @Override
             public void mouseClicked(int i, int i1, int i2, int i3) { }

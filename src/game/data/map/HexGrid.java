@@ -9,7 +9,6 @@ import static game.data.map.Hex.HEX_GRID_SIZE_X;
 import static game.data.map.Hex.HEX_GRID_SIZE_Y;
 import java.util.ArrayList;
 import java.util.List;
-import main.Consts;
 import main.ResMgr;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -67,7 +66,7 @@ public class HexGrid {
     
     
     
-    public List<Hex> getAllOfType (TerrainType type) {
+    public List<Hex> getAllOfType (TerrainTypeEnum type) {
         List<Hex> result = new ArrayList<> ();
         for (int y=0;y<size_y;y++) {
             for (int x=0;x<size_x;x++) {
@@ -79,7 +78,7 @@ public class HexGrid {
         return result;
     }
     
-    public Hex getRandomHexOfType (TerrainType type) {
+    public Hex getRandomHexOfType (TerrainTypeEnum type) {
         Hex hex = null;
         
         
