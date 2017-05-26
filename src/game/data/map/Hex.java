@@ -69,7 +69,7 @@ public class Hex {
     public boolean coastal_dr;
     
     public int x, y;
-    public int continent_index;
+    public Continent continent;
     
     public Color color;
     public FogOfWar fog_of_war;
@@ -137,10 +137,10 @@ public class Hex {
 //        HEX_COAST_CLIFF_DR_IMG = new Image (HEX_COAST_CLIFF_DR_IMG_PATH);
     }
     
-    public Hex (int x, int y, int continent_index) {
+    public Hex (int x, int y, String continent_name) {
         this.x = x;
         this.y = y;
-        this.continent_index = continent_index;
+        this.continent = null;
         terrain = TerrainTypeEnum.DEFAULT;
         color = new Color (1f,1f,1f,0f);
         river = false;
@@ -251,6 +251,18 @@ public class Hex {
         return result;
     }
     
+    public List<Hex> getAllAdjacentOfTypes (HexGrid grid, TerrainTypeEnum... types) {
+        List<TerrainTypeEnum> allowed_types = Arrays.asList(types);
+        List<Hex> result = new ArrayList<> ();
+        for (DirEnum dir : DirEnum.values()) {
+            Hex adj = this.getAdjacent(grid, dir);
+            if (adj!=null && allowed_types.contains(adj.terrain)) result.add(adj);
+        }
+        return result;
+    }
+    
+    
+    
     public boolean isCoastal (HexGrid grid) {
         return isBorder(grid, TerrainTypeEnum.SEA);
     }
@@ -276,6 +288,8 @@ public class Hex {
         }
         return false;
     }
+    
+    
     
     public List<Hex> spreadTerrainExcl (HexGrid grid, TerrainTypeEnum... exclude_types) {
         DirEnum[] enums = DirEnum.values();
@@ -325,5 +339,21 @@ public class Hex {
     
     public List<Hex> spreadTerrain (HexGrid grid) {
         return spreadTerrainExcl(grid, (TerrainTypeEnum[]) null);
+    }
+    
+    public List<Hex> propagate (HexGrid grid, TerrainTypeEnum from_type, TerrainTypeEnum to_type) {
+        List<Hex> adj = this.getAllAdjacentOfTypes (grid, from_type);
+        List<Hex> candidates = new ArrayList<> ();
+        
+        for (int count=0;count<adj.size();count++) {
+            int index = SlickUtils.randIndex(adj.size());
+            candidates.add(adj.get(index));
+            adj.remove(index);
+        }
+        
+        for (Hex hex : candidates)
+            hex.terrain = to_type;
+        
+        return candidates;
     }
 }

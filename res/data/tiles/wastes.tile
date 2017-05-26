@@ -1,4 +1,4 @@
-img_path = res/grfx/tiles/urban.png
+img_path = res/grfx/tiles/arid.png
 soft_mod = 1.0f
 hard_mod = 1.0f
 atk_mod = 1.0f

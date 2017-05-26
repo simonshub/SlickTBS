@@ -37,7 +37,7 @@ public class HexGrid {
         for (int i=0;i<size_y;i++) {
             grid.add(new ArrayList<> ());
             for (int j=0;j<size_x;j++) {
-                grid.get(i).add(new Hex (j, i, 0));
+                grid.get(i).add(new Hex (j, i, "none"));
             }
         }
     }
