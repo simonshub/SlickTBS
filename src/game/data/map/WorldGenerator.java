@@ -5,7 +5,7 @@
  */
 package game.data.map;
 
-import game.data.map.Hex.DirEnum;
+import game.data.map.DirEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -142,8 +142,7 @@ public abstract class WorldGenerator {
         return radial;
     }
     
-    public static final List<Hex> generateChain (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point,
-                                                 int min_length, int max_length, double snakeyness, double widen_chance, int spread_times) {
+    public static final List<Hex> generateChain (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_length, int max_length) {
         int length = SlickUtils.rand(min_length, max_length);
         DirEnum direction = DirEnum.getRandom();
         
@@ -155,17 +154,7 @@ public abstract class WorldGenerator {
         int retry_count = 0;
         
         for (int i=0;chain.size()<length;i++) {
-            if (SlickUtils.chanceRoll(widen_chance)) {
-                DirEnum widen_dir = DirEnum.getAdjacentClockwise(direction, SlickUtils.numPlusMinus(0,1,-1));
-                Hex widen_hex = head.getAdjacent(GRID, widen_dir);
-                
-                if (widen_hex!=null) {
-                    widen_hex.terrain = to_type;
-                    chain.add(widen_hex);
-                }
-            } else if (SlickUtils.chanceRoll(snakeyness)) {
-                direction = DirEnum.getAdjacentClockwise(direction, SlickUtils.numPlusMinus(0,1,-1));
-            }
+            direction = DirEnum.getAdjacents(direction)[SlickUtils.randIndex(3)];
             
             Hex propagation_candidate = head.getAdjacent(GRID, direction);
             if (propagation_candidate==null) {
@@ -195,14 +184,10 @@ public abstract class WorldGenerator {
                 head = starting_point;
                 starting_point = tmp;
                 --i;
-                System.out.println("Retry!");
+//                System.out.println("Retry!");
             } else {
                 break;
             }
-        }
-        
-        for (int i=0;i<spread_times;i++) {
-            chain.addAll(chain.get(SlickUtils.randIndex(chain.size())).spreadTerrainExcl(GRID, TerrainTypeEnum.SEA));
         }
         
         return chain;
@@ -240,8 +225,7 @@ public abstract class WorldGenerator {
             
             starting_point.terrain = TerrainTypeEnum.OPEN;
             land.add(starting_point);
-            Continent continent = new Continent (starting_point.x+";"+starting_point.y);
-            continent.setHexes(generateRadial (false, TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.25f), (int)(getContinentSize()*5f)));
+            Continent continent = new Continent (starting_point.x+";"+starting_point.y, starting_point, generateRadial (false, TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.25f), (int)(getContinentSize()*5f)));
             System.out.println("Continent "+continent.name+" created, size: "+continent.size());
             
             for (Hex cont_hex : continent.getAll()) {

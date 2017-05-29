@@ -20,7 +20,7 @@ public class GameMap {
     public enum MapSize {
         TINY(64), SMALL(96), MEDIUM(128), LARGE(192), HUGE(256), EPIC(512)
         ;
-        public int size;
+        public final int size;
         MapSize (int size) { this.size = size; }
     }
     
