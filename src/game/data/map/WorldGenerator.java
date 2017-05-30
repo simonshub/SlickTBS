@@ -27,7 +27,7 @@ public abstract class WorldGenerator {
     public static final double MAP_CONTINENT_FOREST_PERCENTAGE = 0.180;
     public static final double MAP_CONTINENT_WASTELAND_PERCENTAGE = 0.025;
     
-    public static int CHAIN_PROPAGATION_RETRY_COUNT = 4;
+    public static int CHAIN_PROPAGATION_RETRY_COUNT = 5;
     
     public static double FOREST_SPARSE_CHANCE = 0.33;
     
@@ -37,8 +37,6 @@ public abstract class WorldGenerator {
     public static int FOREST_RADIAL_MAX_SIZE = 40;
     public static int WASTELAND_RADIAL_MIN_SIZE = 10;
     public static int WASTELAND_RADIAL_MAX_SIZE = 40;
-    
-    public static List<Continent> CONTINENTS;
     
     public static HexGrid GRID;
     
@@ -51,7 +49,7 @@ public abstract class WorldGenerator {
     
     
     public static int getContinentSize () {
-        return (int)(Math.round((GRID.getSizeX()*GRID.getSizeY())/30));
+        return (int)(Math.round((GRID.getSizeX()*GRID.getSizeY())/50));
     }
     
     public static boolean satisfiesLandPrecentage (List<Hex> land) {
@@ -67,6 +65,17 @@ public abstract class WorldGenerator {
             int y = (int)(Math.random() * GRID.getSizeY());
             hex = GRID.get(x,y);
         } while (hex==null || hex.terrain.equals(TerrainTypeEnum.SEA));
+        
+        return hex;
+    }
+    
+    public static Hex getRandomSeaHex () {
+        Hex hex = null;
+        do {
+            int x = (int)(Math.random() * GRID.getSizeX());
+            int y = (int)(Math.random() * GRID.getSizeY());
+            hex = GRID.get(x,y);
+        } while (hex==null || hex.terrain.equals(TerrainTypeEnum.OPEN));
         
         return hex;
     }
@@ -96,10 +105,9 @@ public abstract class WorldGenerator {
     }
     
     public static List<Hex> getBorderHexes (TerrainTypeEnum type, List<Hex> hexes) {
-        List<Hex> result = new ArrayList<> ();
-        
         if (type==null) return getBorderHexes(hexes);
         
+        List<Hex> result = new ArrayList<> ();
         for (Hex hex : hexes) {
             if (hex.isBorder(GRID, type)) result.add(hex);
         }
@@ -119,23 +127,31 @@ public abstract class WorldGenerator {
     
     
     
-    public static final List<Hex> generateRadial (boolean incl, TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_size, int max_size) {
+    public static final List<Hex> generateRadial (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_size, int max_size) {
         int size = SlickUtils.rand(min_size, max_size);
+        starting_point.terrain = to_type;
         List<Hex> radial = new ArrayList<> ();
         radial.add(starting_point);
         
-//        System.out.println("Generating radial of size "+size+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
+        System.out.println("Generating radial of size "+size+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
         
         for (int i=0;radial.size()<size;i++) {
-            List<Hex> radial_border = getBorderHexes (from_type, radial);
+            List<Hex> radial_border;
+            
+            if (from_type!=null)
+                radial_border = getBorderHexes (from_type, radial);
+            else
+                radial_border = getBorderHexes (radial);
+            
             if (radial_border.isEmpty()) break;
             
             int index = SlickUtils.randIndex(radial_border.size());
             List<Hex> additions;
-            if (incl)
-                additions = radial_border.get(index).spreadTerrainIncl(GRID, from_type);
+            if (from_type!=null)
+                additions = radial_border.get(index).spreadTerrainToTypes(GRID, from_type);
             else
                 additions = radial_border.get(index).spreadTerrain(GRID);
+            
             radial.addAll(additions);
         }
         
@@ -144,6 +160,7 @@ public abstract class WorldGenerator {
     
     public static final List<Hex> generateChain (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_length, int max_length) {
         int length = SlickUtils.rand(min_length, max_length);
+        starting_point.terrain = to_type;
         DirEnum direction = DirEnum.getRandom();
         
         List<Hex> chain = new ArrayList<> ();
@@ -163,8 +180,8 @@ public abstract class WorldGenerator {
                     Hex tmp = head;
                     head = starting_point;
                     starting_point = tmp;
+                    direction = DirEnum.opposite(direction);
                     --i;
-                    System.out.println("Retry!");
                     continue;
                 } else {
                     break;
@@ -173,7 +190,7 @@ public abstract class WorldGenerator {
             
             if (!propagation_candidate.isCoastal(GRID) && // invalid selection, chains cannot propagate to coastal tiles
                     propagation_candidate.terrain!=TerrainTypeEnum.SEA && // invalid selection, only land hexes can be propagated to
-                    (from_type==null || propagation_candidate.terrain==from_type) // invalid selection, is not of from_type
+                    (from_type==null || propagation_candidate.terrain==from_type || propagation_candidate.terrain==to_type) // invalid selection, is not of from_type (if it is defined)
                     ) {
                 propagation_candidate.terrain = to_type;
                 chain.add(propagation_candidate);
@@ -197,7 +214,8 @@ public abstract class WorldGenerator {
     
     public static final void generateMap () {
         System.out.println("Generating map...");
-        CONTINENTS = new ArrayList<> ();
+        GRID.continents = new ArrayList<> ();
+        GRID.land = new ArrayList<> ();
         
         // set the entire grid to sea, initialization
         for (int y=0;y<GRID.getSizeY();y++) {
@@ -206,13 +224,11 @@ public abstract class WorldGenerator {
             }
         }
         
-        List<Hex> land = new ArrayList<> ();
-        
-        for (int i=0;!satisfiesLandPrecentage(land);i++) {
+        for (int i=0;!satisfiesLandPrecentage(GRID.land);i++) {
             Hex starting_point = GRID.get(SlickUtils.randIndex(GRID.getSizeX()), SlickUtils.randIndex(GRID.getSizeY()));
             
             boolean taken = false;
-            for (Continent cont : CONTINENTS) {
+            for (Continent cont : GRID.continents) {
                 if (cont.contains(starting_point)) {
                     taken = true;
                     break;
@@ -224,15 +240,9 @@ public abstract class WorldGenerator {
             }
             
             starting_point.terrain = TerrainTypeEnum.OPEN;
-            land.add(starting_point);
-            Continent continent = new Continent (starting_point.x+";"+starting_point.y, starting_point, generateRadial (false, TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.25f), (int)(getContinentSize()*5f)));
-            System.out.println("Continent "+continent.name+" created, size: "+continent.size());
-            
-            for (Hex cont_hex : continent.getAll()) {
-                land.add(cont_hex);
-                cont_hex.continent = continent;
-            }
-            CONTINENTS.add(continent);
+            Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*10f)));
+            GRID.continents.add(continent);
+            GRID.land.addAll(continent.getAll());
             
             continent.generate(GRID);
         }

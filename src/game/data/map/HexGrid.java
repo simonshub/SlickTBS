@@ -18,9 +18,12 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author emil.simon
  */
-public class HexGrid {
+public final class HexGrid {
     public static final int DRAW_MARGIN_X = 2;
     public static final int DRAW_MARGIN_Y = 2;
+    
+    public List<Hex> land;
+    public List<Continent> continents;
     
     public int render_counter;
     public int not_render_counter;

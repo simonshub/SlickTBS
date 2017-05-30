@@ -22,7 +22,7 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  * @author emil.simon
  */
-public class Hex {
+public final class Hex {
     
     public static final int HEX_GRID_SIZE_X = 64;
     public static final int HEX_GRID_SIZE_Y = 64;
@@ -70,13 +70,8 @@ public class Hex {
     
     public int x, y;
     public Continent continent;
-    
-    public Color color;
     public FogOfWar fog_of_war;
     public TerrainTypeEnum terrain;
-    
-    public Color debug_continent_indicator;
-    public Color debug_biome_indicator;
     
     
     
@@ -105,7 +100,6 @@ public class Hex {
         this.y = y;
         this.continent = null;
         terrain = TerrainTypeEnum.DEFAULT;
-        color = new Color (1f,1f,1f,0f);
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
         coastal_ul = false;
@@ -121,10 +115,6 @@ public class Hex {
     public void setLocation (int x, int y) {
         this.x = x;
         this.y = y;
-    }
-    
-    public void setColor (Color col) {
-        color = col;
     }
     
     public Point getMapCoordsCenter () {
@@ -151,11 +141,8 @@ public class Hex {
         if (HEX_GRID_IMG == null)
             return;
         
-        if (ResMgr.render_continents && debug_continent_indicator!=null)
-            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, debug_continent_indicator);
-        
-        if (ResMgr.render_biomes && debug_biome_indicator!=null)
-            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, debug_biome_indicator);
+        if (ResMgr.render_continents && continent!=null && continent.getColor()!=null)
+            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, continent.getColor());
         
         if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
@@ -254,7 +241,7 @@ public class Hex {
     
     
     
-    public List<Hex> spreadTerrainExcl (HexGrid grid, TerrainTypeEnum... exclude_types) {
+    public List<Hex> spreadTerrainExceptTypes (HexGrid grid, TerrainTypeEnum... exclude_types) {
         DirEnum[] enums = DirEnum.values();
         List<TerrainTypeEnum> exclude_list;
         
@@ -277,7 +264,7 @@ public class Hex {
         return additions;
     }
     
-    public List<Hex> spreadTerrainIncl (HexGrid grid, TerrainTypeEnum... include_types) {
+    public List<Hex> spreadTerrainToTypes (HexGrid grid, TerrainTypeEnum... include_types) {
         DirEnum[] enums = DirEnum.values();
         List<TerrainTypeEnum> include_list;
         
@@ -301,7 +288,7 @@ public class Hex {
     }
     
     public List<Hex> spreadTerrain (HexGrid grid) {
-        return spreadTerrainExcl(grid, (TerrainTypeEnum[]) null);
+        return spreadTerrainExceptTypes(grid, (TerrainTypeEnum[]) null);
     }
     
     public List<Hex> propagate (HexGrid grid, TerrainTypeEnum from_type, TerrainTypeEnum to_type) {

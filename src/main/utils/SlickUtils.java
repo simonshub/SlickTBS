@@ -122,6 +122,14 @@ public abstract class SlickUtils {
         return false;
     }
     
+    public static int cyclicalIndex (Object[] array, int index) {
+        if (index >= array.length)
+            index -= array.length;
+        if (index < 0)
+            index += array.length;
+        return index;
+    }
+    
     
     
     

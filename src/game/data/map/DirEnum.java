@@ -1,5 +1,7 @@
 package game.data.map;
 
+import main.utils.SlickUtils;
+
 enum DirEnum {
 //    CLOCKWISE
     UPPER_RIGHT(1,-1 , 0,-1), RIGHT(1,0 , 1,0), LOWER_RIGHT(1,1 , 0,1), LOWER_LEFT(0,1 , -1,1), LEFT(-1,0 , -1,0), UPPER_LEFT(0,-1 , -1,-1),
@@ -49,10 +51,15 @@ enum DirEnum {
         DirEnum[] result = new DirEnum[3];
         int index = DirEnum.getIndex(dir);
         
-        result[0] = DirEnum.values()[index-1];
-        result[1] = DirEnum.values()[index];
-        result[2] = DirEnum.values()[index+1];
+        result[0] = DirEnum.values() [ SlickUtils.cyclicalIndex(DirEnum.values(), index-1) ];
+        result[1] = DirEnum.values() [ SlickUtils.cyclicalIndex(DirEnum.values(), index) ];
+        result[2] = DirEnum.values() [ SlickUtils.cyclicalIndex(DirEnum.values(), index+1) ];
         
         return result;
+    }
+    
+    public static DirEnum opposite (DirEnum dir) {
+        int index = DirEnum.getIndex(dir);
+        return DirEnum.values()[SlickUtils.cyclicalIndex(DirEnum.values(), index+3)];
     }
 };
