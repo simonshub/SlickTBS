@@ -1,8 +1,8 @@
-package game.data.map;
+package game.data.hex;
 
 import main.utils.SlickUtils;
 
-enum DirEnum {
+public enum DirEnum {
 //    CLOCKWISE
     UPPER_RIGHT(1,-1 , 0,-1), RIGHT(1,0 , 1,0), LOWER_RIGHT(1,1 , 0,1), LOWER_LEFT(0,1 , -1,1), LEFT(-1,0 , -1,0), UPPER_LEFT(0,-1 , -1,-1),
 //    GRID :

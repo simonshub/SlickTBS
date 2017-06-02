@@ -5,6 +5,9 @@
  */
 package game.data.map;
 
+import game.data.hex.DirEnum;
+import game.data.hex.HexGrid;
+import game.data.hex.Hex;
 import java.util.ArrayList;
 import java.util.List;
 import main.utils.SlickUtils;

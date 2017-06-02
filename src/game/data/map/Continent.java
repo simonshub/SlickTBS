@@ -5,6 +5,9 @@
  */
 package game.data.map;
 
+import game.data.hex.HexGroup;
+import game.data.hex.HexGrid;
+import game.data.hex.Hex;
 import static game.data.map.WorldGenerator.FOREST_RADIAL_MAX_SIZE;
 import static game.data.map.WorldGenerator.FOREST_RADIAL_MIN_SIZE;
 import static game.data.map.WorldGenerator.MOUNTAIN_CHAIN_MAX_LEN;

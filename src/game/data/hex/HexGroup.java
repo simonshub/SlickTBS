@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.data.map;
+package game.data.hex;
 
+import game.data.map.TerrainTypeEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

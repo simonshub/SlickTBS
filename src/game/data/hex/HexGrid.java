@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.data.map;
+package game.data.hex;
 
-import static game.data.map.Hex.HEX_GRID_SIZE_X;
-import static game.data.map.Hex.HEX_GRID_SIZE_Y;
+import game.data.map.Camera;
+import game.data.map.Continent;
+import game.data.map.TerrainTypeEnum;
+import static game.data.hex.Hex.HEX_GRID_SIZE_X;
+import static game.data.hex.Hex.HEX_GRID_SIZE_Y;
 import java.util.ArrayList;
 import java.util.List;
 import main.ResMgr;

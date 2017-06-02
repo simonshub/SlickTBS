@@ -5,8 +5,10 @@
  */
 package game.data.map;
 
-import static game.data.map.Hex.HEX_GRID_SIZE_X;
-import static game.data.map.Hex.HEX_GRID_SIZE_Y;
+import game.data.hex.HexGrid;
+import game.data.hex.Hex;
+import static game.data.hex.Hex.HEX_GRID_SIZE_X;
+import static game.data.hex.Hex.HEX_GRID_SIZE_Y;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
