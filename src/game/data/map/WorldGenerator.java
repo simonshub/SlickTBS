@@ -5,12 +5,9 @@
  */
 package game.data.map;
 
-import game.data.map.DirEnum;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import main.utils.SlickUtils;
-import org.newdawn.slick.Color;
 
 /**
  *
@@ -18,24 +15,15 @@ import org.newdawn.slick.Color;
  */
 public abstract class WorldGenerator {
     
-    public static double MOUNTAIN_GENERATION_FACTOR = .7;
-    public static double FOREST_GENERATION_FACTOR = 2.8;
-    public static double WASTELAND_GENERATION_FACTOR = .5;
-    
-    public static final double MAP_LAND_PERCENTAGE = 0.4;
-    public static final double MAP_CONTINENT_MOUNTAIN_PERCENTAGE = 0.025;
-    public static final double MAP_CONTINENT_FOREST_PERCENTAGE = 0.180;
-    public static final double MAP_CONTINENT_WASTELAND_PERCENTAGE = 0.025;
+    public static final double MAP_LAND_PERCENTAGE = 0.3;
     
     public static int CHAIN_PROPAGATION_RETRY_COUNT = 5;
     
-    public static double FOREST_SPARSE_CHANCE = 0.33;
-    
-    public static int MOUNTAIN_CHAIN_MIN_LEN = 4;
-    public static int MOUNTAIN_CHAIN_MAX_LEN = 20;
-    public static int FOREST_RADIAL_MIN_SIZE = 2;
+    public static int MOUNTAIN_CHAIN_MIN_LEN = 3;
+    public static int MOUNTAIN_CHAIN_MAX_LEN = 40;
+    public static int FOREST_RADIAL_MIN_SIZE = 3;
     public static int FOREST_RADIAL_MAX_SIZE = 40;
-    public static int WASTELAND_RADIAL_MIN_SIZE = 10;
+    public static int WASTELAND_RADIAL_MIN_SIZE = 20;
     public static int WASTELAND_RADIAL_MAX_SIZE = 40;
     
     public static HexGrid GRID;
@@ -133,7 +121,7 @@ public abstract class WorldGenerator {
         List<Hex> radial = new ArrayList<> ();
         radial.add(starting_point);
         
-        System.out.println("Generating radial of size "+size+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
+//        System.out.println("Generating radial of size "+size+", start point ("+starting_point.x+","+starting_point.y+") and type "+to_type.name());
         
         for (int i=0;radial.size()<size;i++) {
             List<Hex> radial_border;
@@ -180,7 +168,7 @@ public abstract class WorldGenerator {
                     Hex tmp = head;
                     head = starting_point;
                     starting_point = tmp;
-                    direction = DirEnum.opposite(direction);
+                    direction = direction.opposite();
                     --i;
                     continue;
                 } else {
@@ -188,8 +176,7 @@ public abstract class WorldGenerator {
                 }
             }
             
-            if (!propagation_candidate.isCoastal(GRID) && // invalid selection, chains cannot propagate to coastal tiles
-                    propagation_candidate.terrain!=TerrainTypeEnum.SEA && // invalid selection, only land hexes can be propagated to
+            if (propagation_candidate.terrain!=TerrainTypeEnum.SEA && // invalid selection, only land hexes can be propagated to
                     (from_type==null || propagation_candidate.terrain==from_type || propagation_candidate.terrain==to_type) // invalid selection, is not of from_type (if it is defined)
                     ) {
                 propagation_candidate.terrain = to_type;
@@ -200,8 +187,8 @@ public abstract class WorldGenerator {
                 Hex tmp = head;
                 head = starting_point;
                 starting_point = tmp;
+                direction = direction.opposite();
                 --i;
-//                System.out.println("Retry!");
             } else {
                 break;
             }
@@ -240,7 +227,7 @@ public abstract class WorldGenerator {
             }
             
             starting_point.terrain = TerrainTypeEnum.OPEN;
-            Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*10f)));
+            Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*5f)));
             GRID.continents.add(continent);
             GRID.land.addAll(continent.getAll());
             

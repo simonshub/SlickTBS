@@ -27,12 +27,14 @@ public class Continent {
     private Hex source;
     private HexGroup hexes;
     
+    public ContinentTypeEnum continent_type;
+    
     public List<HexGroup> mountain_list;
     public List<HexGroup> forest_list;
     public List<HexGroup> wastes_list;
     
-    private static final double MAX_TARGET_TOTAL_COVERAGE = .95;
-    private static final double MIN_TARGET_TOTAL_COVERAGE = .5;
+    private static final double MAX_TARGET_TOTAL_COVERAGE = 1.25;
+    private static final double MIN_TARGET_TOTAL_COVERAGE = 0.75;
     
     String name = "";
     
@@ -66,6 +68,7 @@ public class Continent {
     }
     
     private Continent () {
+        continent_type = ContinentTypeEnum.getRandom();
         mountain_list = new ArrayList<> ();
         forest_list = new ArrayList<> ();
         wastes_list = new ArrayList<> ();
@@ -141,15 +144,19 @@ public class Continent {
     private void calculateTargetPercentages () {
         calculateFeaturePercentages();
         
-        target_total_coverage = SlickUtils.rand(MIN_TARGET_TOTAL_COVERAGE, MAX_TARGET_TOTAL_COVERAGE);
+//        double mt_factor = Math.round(SlickUtils.rand(0, 10 * (heat*10)));
+//        double fr_factor = Math.round(SlickUtils.rand(0, 10 * (wetness*10)));
+//        double wl_factor = Math.round(SlickUtils.rand(0, 10 * (heat*10)));
         
-        double mt_factor = Math.round(SlickUtils.rand(0, 10 * (heat*10)));
-        double fr_factor = Math.round(SlickUtils.rand(0, 10 * (wetness*10)));
-        double wl_factor = Math.round(SlickUtils.rand(0, 10 * (heat*10)));
+        target_total_coverage = this.continent_type.coverage * SlickUtils.rand(MIN_TARGET_TOTAL_COVERAGE, MAX_TARGET_TOTAL_COVERAGE);
         
-        target_mountain_percentage = (mt_factor / (mt_factor + fr_factor + wl_factor)) * target_total_coverage;
-        target_forest_percentage = (fr_factor / (mt_factor + fr_factor + wl_factor)) * target_total_coverage;
-        target_wastes_percentage = (wl_factor / (mt_factor + fr_factor + wl_factor)) * target_total_coverage;
+        double mt_factor = this.continent_type.mt_factor;
+        double fr_factor = this.continent_type.fr_factor;
+        double ws_factor = this.continent_type.ws_factor;
+        
+        target_mountain_percentage = (mt_factor / (mt_factor + fr_factor + ws_factor)) * target_total_coverage;
+        target_forest_percentage = (fr_factor / (mt_factor + fr_factor + ws_factor)) * target_total_coverage;
+        target_wastes_percentage = (ws_factor / (mt_factor + fr_factor + ws_factor)) * target_total_coverage;
         
         System.out.println("Continent "+name+
                 "\n | Source: "+source.x+","+source.y+
@@ -168,7 +175,7 @@ public class Continent {
         flatness = Math.random();
         corruption = Math.random();
         
-        color = new Color ((float)heat, (float)wetness, (float)corruption, 0.25f);
+        color = new Color ((float)corruption, (float)heat, (float)wetness, 0.25f);
     }
     
     
@@ -178,9 +185,7 @@ public class Continent {
         for (HexGroup mt : mountain_list)
             mt_count += mt.size();
         
-//        System.out.println("Satisfies mountain perc: "+
-//                (mt_count/hexes.size())+">="+target_mountain_percentage+" ("
-//                +((mt_count/hexes.size())>=target_mountain_percentage)+")");
+        mt_count*=2.; // increase mt_count to get less mountains
         return (mt_count/hexes.size())>=target_mountain_percentage;
     }
     
@@ -189,9 +194,7 @@ public class Continent {
         for (HexGroup wl : wastes_list)
             wl_count += wl.size();
         
-//        System.out.println("Satisfies wastes perc: "+
-//                (wl_count/hexes.size())+">="+target_wastes_percentage+" ("
-//                +((wl_count/hexes.size())>=target_wastes_percentage)+")");
+        wl_count*=1.; // increase wl_count to get less wastes
         return (wl_count/hexes.size())>=target_wastes_percentage;
     }
     
@@ -200,9 +203,7 @@ public class Continent {
         for (HexGroup fr : forest_list)
             fr_count += fr.size();
         
-//        System.out.println("Satisfies forest perc: "+
-//                (fr_count/hexes.size())+">="+target_forest_percentage+" ("
-//                +((fr_count/hexes.size())>=target_forest_percentage)+")");
+        fr_count*=1.; // increase fr_count to get less forests
         return (fr_count/hexes.size())>=target_forest_percentage;
     }
     
@@ -217,12 +218,10 @@ public class Continent {
                 continue;
             }
             
-            mt_starting_point.terrain = TerrainTypeEnum.MOUNTAINS;
-            
             List<Hex> chain = generateChain (TerrainTypeEnum.MOUNTAINS, TerrainTypeEnum.OPEN, mt_starting_point, MOUNTAIN_CHAIN_MIN_LEN, MOUNTAIN_CHAIN_MAX_LEN);
             HexGroup mountain_range = new HexGroup (chain);
             mountain_list.add(mountain_range);
-            System.out.println("Mountain range "+(mt+1)+" : size("+mountain_range.size()+"), mountains("+mountains().size()+" / "+(hexes.size()*target_mountain_percentage)+" / "+hexes.size()+")");
+//            System.out.println("Mountain range "+(mt+1)+" : size("+mountain_range.size()+"), mountains("+mountains().size()+" / "+(hexes.size()*target_mountain_percentage)+" / "+hexes.size()+")");
         }
         // propagate some hills
         Hex[] mt = new Hex [mountains().size()];
@@ -240,13 +239,11 @@ public class Continent {
                 continue;
             }
 
-            ws_starting_point.terrain = TerrainTypeEnum.WASTES;
-
             List<Hex> radial;
-            radial = generateRadial (TerrainTypeEnum.WASTES, TerrainTypeEnum.OPEN, ws_starting_point, WASTELAND_RADIAL_MIN_SIZE, WASTELAND_RADIAL_MAX_SIZE);
+            radial = generateRadial (continent_type.wasteland, TerrainTypeEnum.OPEN, ws_starting_point, WASTELAND_RADIAL_MIN_SIZE, WASTELAND_RADIAL_MAX_SIZE);
             HexGroup waste = new HexGroup (radial);
             wastes_list.add(waste);
-            System.out.println("Wasteland "+(ws+1)+" : size("+waste.size()+"), wastes("+wastes().size()+"/"+(hexes.size()*target_wastes_percentage)+" / "+hexes.size()+")");
+//            System.out.println("Wasteland "+(ws+1)+" : size("+waste.size()+"), wastes("+wastes().size()+"/"+(hexes.size()*target_wastes_percentage)+" / "+hexes.size()+")");
         }
         
         // generate forests
@@ -257,13 +254,11 @@ public class Continent {
                 continue;
             }
 
-            fr_starting_point.terrain = TerrainTypeEnum.FOREST;
-
             List<Hex> radial;
-            radial = generateRadial (TerrainTypeEnum.FOREST, TerrainTypeEnum.OPEN, fr_starting_point, FOREST_RADIAL_MIN_SIZE, FOREST_RADIAL_MAX_SIZE);
+            radial = generateRadial (continent_type.forest, TerrainTypeEnum.OPEN, fr_starting_point, FOREST_RADIAL_MIN_SIZE, FOREST_RADIAL_MAX_SIZE);
             HexGroup forest = new HexGroup (radial);
             forest_list.add(forest);
-            System.out.println("Forest "+(fr+1)+" : size("+forest.size()+"), forests("+forests().size()+"/"+(hexes.size()*target_forest_percentage)+" / "+hexes.size()+")");
+//            System.out.println("Forest "+(fr+1)+" : size("+forest.size()+"), forests("+forests().size()+"/"+(hexes.size()*target_forest_percentage)+" / "+hexes.size()+")");
         }
     }
 }

@@ -58,8 +58,8 @@ enum DirEnum {
         return result;
     }
     
-    public static DirEnum opposite (DirEnum dir) {
-        int index = DirEnum.getIndex(dir);
+    public DirEnum opposite () {
+        int index = DirEnum.getIndex(this);
         return DirEnum.values()[SlickUtils.cyclicalIndex(DirEnum.values(), index+3)];
     }
 };
