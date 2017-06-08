@@ -178,7 +178,7 @@ public class Continent {
         flatness = Math.random();
         corruption = Math.random();
         
-        color = new Color ((float)corruption, (float)heat, (float)wetness, 0.25f);
+        color = new Color ((float)corruption, (float)heat, (float)wetness, 0.1f);
     }
     
     
@@ -221,7 +221,7 @@ public class Continent {
                 continue;
             }
             
-            List<Hex> chain = generateChain (TerrainTypeEnum.MOUNTAINS, TerrainTypeEnum.OPEN, mt_starting_point, MOUNTAIN_CHAIN_MIN_LEN, MOUNTAIN_CHAIN_MAX_LEN);
+            List<Hex> chain = generateChain (TerrainTypeEnum.OPEN, TerrainTypeEnum.MOUNTAINS, mt_starting_point, MOUNTAIN_CHAIN_MIN_LEN, MOUNTAIN_CHAIN_MAX_LEN);
             HexGroup mountain_range = new HexGroup (chain);
             mountain_list.add(mountain_range);
 //            System.out.println("Mountain range "+(mt+1)+" : size("+mountain_range.size()+"), mountains("+mountains().size()+" / "+(hexes.size()*target_mountain_percentage)+" / "+hexes.size()+")");
@@ -243,7 +243,7 @@ public class Continent {
             }
 
             List<Hex> radial;
-            radial = generateRadial (continent_type.wasteland, TerrainTypeEnum.OPEN, ws_starting_point, WASTELAND_RADIAL_MIN_SIZE, WASTELAND_RADIAL_MAX_SIZE);
+            radial = generateRadial (TerrainTypeEnum.OPEN, continent_type.wasteland, ws_starting_point, WASTELAND_RADIAL_MIN_SIZE, WASTELAND_RADIAL_MAX_SIZE);
             HexGroup waste = new HexGroup (radial);
             wastes_list.add(waste);
 //            System.out.println("Wasteland "+(ws+1)+" : size("+waste.size()+"), wastes("+wastes().size()+"/"+(hexes.size()*target_wastes_percentage)+" / "+hexes.size()+")");
@@ -258,10 +258,17 @@ public class Continent {
             }
 
             List<Hex> radial;
-            radial = generateRadial (continent_type.forest, TerrainTypeEnum.OPEN, fr_starting_point, FOREST_RADIAL_MIN_SIZE, FOREST_RADIAL_MAX_SIZE);
+            radial = generateRadial (TerrainTypeEnum.OPEN, continent_type.forest, fr_starting_point, FOREST_RADIAL_MIN_SIZE, FOREST_RADIAL_MAX_SIZE);
             HexGroup forest = new HexGroup (radial);
             forest_list.add(forest);
 //            System.out.println("Forest "+(fr+1)+" : size("+forest.size()+"), forests("+forests().size()+"/"+(hexes.size()*target_forest_percentage)+" / "+hexes.size()+")");
+        }
+        
+        // convert remaining open terrain to continent type terrain, if it's different to the default OPEN terrain
+        if (continent_type.open != TerrainTypeEnum.OPEN) {
+            for (Hex hex : hexes.getAllOfTypes(TerrainTypeEnum.OPEN)) {
+                hex.terrain = continent_type.open;
+            }
         }
     }
 }

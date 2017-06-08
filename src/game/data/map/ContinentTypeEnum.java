@@ -10,16 +10,18 @@ package game.data.map;
  * @author emil.simon
  */
 public enum ContinentTypeEnum {
-    // NAME         FOREST ENUM                 WASTES ENUM             COV     MT      FR      WS
-    FLAT_STEPPES    (TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .33,    5.,     2.,     5.),
-    MOUNTAINOUS     (TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .8,     10.,    8.,     0.),
-    DESERT          (TerrainTypeEnum.FOREST,    TerrainTypeEnum.DESERT, .8,     2.,     0.,     10.),
-    WOODLANDS       (TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .8,     3.,     10.,    0.),
-    VALLEY          (TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .5,     3.,     3.,     0.5),
-    BARRENS         (TerrainTypeEnum.MARSHES,   TerrainTypeEnum.WASTES, .85,    10.,    2.,     20.),
+    // NAME          OPEN ENUM                  FOREST ENUM                WASTES ENUM             COV     MT      FR      WS
+    FLAT_STEPPES    (TerrainTypeEnum.SAVANNA,   TerrainTypeEnum.GRASS,     TerrainTypeEnum.ARID,   .33,    5.,     2.,     5.),
+    MOUNTAINOUS     (TerrainTypeEnum.GRASS,     TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .8,     10.,    8.,     0.),
+    DESERT          (TerrainTypeEnum.SAVANNA,   TerrainTypeEnum.FOREST,    TerrainTypeEnum.DESERT, .8,     2.,     0.,     10.),
+    WOODLANDS       (TerrainTypeEnum.GRASS,     TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .8,     3.,     10.,    0.),
+    JUNGLE          (TerrainTypeEnum.GRASS,     TerrainTypeEnum.TROPICAL,  TerrainTypeEnum.ARID,   .8,     3.,     10.,    0.),
+    VALLEY          (TerrainTypeEnum.GRASS,     TerrainTypeEnum.FOREST,    TerrainTypeEnum.ARID,   .5,     3.,     3.,     0.5),
+    BARRENS         (TerrainTypeEnum.ARID,      TerrainTypeEnum.MARSHES,   TerrainTypeEnum.WASTES, .85,    10.,    2.,     20.),
     
     ;
     
+    public TerrainTypeEnum open;
     public TerrainTypeEnum forest;
     public TerrainTypeEnum wasteland;
     
@@ -28,7 +30,8 @@ public enum ContinentTypeEnum {
     public double fr_factor;
     public double ws_factor;
     
-    ContinentTypeEnum (TerrainTypeEnum forest, TerrainTypeEnum wasteland, double coverage, double mt, double fr, double ws) {
+    ContinentTypeEnum (TerrainTypeEnum open, TerrainTypeEnum forest, TerrainTypeEnum wasteland, double coverage, double mt, double fr, double ws) {
+        this.open = open;
         this.forest = forest;
         this.wasteland = wasteland;
         this.coverage = coverage;

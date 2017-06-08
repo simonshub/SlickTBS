@@ -84,18 +84,56 @@ public final class HexGrid {
         return result;
     }
     
+    public List<Hex> getAllNotOfType (TerrainTypeEnum type) {
+        List<Hex> result = new ArrayList<> ();
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                if (!get(x,y).terrain.equals(type)) {
+                    result.add(get(x,y));
+                }
+            }
+        }
+        return result;
+    }
+    
+    public List<Hex> getAllOfTypes (TerrainTypeEnum... types) {
+        List<Hex> result = new ArrayList<> ();
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                for (TerrainTypeEnum type : types) {
+                    if (get(x,y).terrain.equals(type)) {
+                        result.add(get(x,y));
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    
+    public List<Hex> getAllNotOfTypes (TerrainTypeEnum... types) {
+        List<Hex> result = new ArrayList<> ();
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                for (TerrainTypeEnum type : types) {
+                    if (!get(x,y).terrain.equals(type)) {
+                        result.add(get(x,y));
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    
     public Hex getRandomHexOfType (TerrainTypeEnum type) {
         Hex hex = null;
-        
-        
         
         do {
             int x = (int)(Math.random() * size_x);
             int y = (int)(Math.random() * size_y);
             hex = get(x,y);
-            
-            if (hex==null) continue;
-        } while (!hex.terrain.equals(type));
+        } while (hex==null || !hex.terrain.equals(type));
         
         return hex;
     }

@@ -17,8 +17,8 @@ import org.newdawn.slick.SlickException;
  * @author emil.simon
  */
 public enum TerrainTypeEnum {
-    DEFAULT,
-    OPEN, TUNDRA,
+    OPEN,
+    GRASS, SAVANNA, TUNDRA,
     FOREST, TROPICAL,
     SEA, MARSHES,
     HILLS, MOUNTAINS, 

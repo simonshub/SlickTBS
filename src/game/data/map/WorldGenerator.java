@@ -5,12 +5,13 @@
  */
 package game.data.map;
 
+import main.utils.SlickUtils;
 import game.data.hex.DirEnum;
 import game.data.hex.HexGrid;
 import game.data.hex.Hex;
+import game.states.PlayingState;
 import java.util.ArrayList;
 import java.util.List;
-import main.utils.SlickUtils;
 
 /**
  *
@@ -118,7 +119,7 @@ public abstract class WorldGenerator {
     
     
     
-    public static final List<Hex> generateRadial (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_size, int max_size) {
+    public static final List<Hex> generateRadial (TerrainTypeEnum from_type, TerrainTypeEnum to_type, Hex starting_point, int min_size, int max_size) {
         int size = SlickUtils.rand(min_size, max_size);
         starting_point.terrain = to_type;
         List<Hex> radial = new ArrayList<> ();
@@ -149,7 +150,7 @@ public abstract class WorldGenerator {
         return radial;
     }
     
-    public static final List<Hex> generateChain (TerrainTypeEnum to_type, TerrainTypeEnum from_type, Hex starting_point, int min_length, int max_length) {
+    public static final List<Hex> generateChain (TerrainTypeEnum from_type, TerrainTypeEnum to_type, Hex starting_point, int min_length, int max_length) {
         int length = SlickUtils.rand(min_length, max_length);
         starting_point.terrain = to_type;
         DirEnum direction = DirEnum.getRandom();
@@ -204,10 +205,17 @@ public abstract class WorldGenerator {
     
     public static final void generateMap () {
         System.out.println("Generating map...");
+        String loadLabelBase = "... Loading ...\n";
+        
+        PlayingState.isLoading = true;
+        PlayingState.loadLabel = loadLabelBase;
+        long start = System.currentTimeMillis();
+        
         GRID.continents = new ArrayList<> ();
         GRID.land = new ArrayList<> ();
         
         // set the entire grid to sea, initialization
+        PlayingState.loadLabel = loadLabelBase + "Initializing";
         for (int y=0;y<GRID.getSizeY();y++) {
             for (int x=0;x<GRID.getSizeX();x++) {
                 GRID.get(x, y).terrain = TerrainTypeEnum.SEA;
@@ -224,17 +232,69 @@ public abstract class WorldGenerator {
                     break;
                 }
             }
+            
             if (taken) {
                 --i;
                 continue;
             }
             
+            PlayingState.loadLabel = loadLabelBase + "Generating landmass #" + String.valueOf(i+1);
+            
             starting_point.terrain = TerrainTypeEnum.OPEN;
-            Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.OPEN, TerrainTypeEnum.SEA, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*5f)));
+            Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.SEA, TerrainTypeEnum.OPEN, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*5f)));
             GRID.continents.add(continent);
             GRID.land.addAll(continent.getAll());
             
             continent.generate(GRID);
         }
+        
+        PlayingState.loadLabel = loadLabelBase + "Cleaning singular hexes";
+        for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
+            if (hex.getAllAdjacentOfTypes(GRID, hex.terrain).isEmpty()) {
+                Hex adj = hex.getRandomAdjacent(GRID);
+                if (adj!=null) hex.terrain = adj.terrain;
+            }
+        }
+        
+        PlayingState.loadLabel = loadLabelBase + "Adding transitional hexes";
+        for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
+            TerrainTypeEnum transition = null;
+            
+            switch (hex.terrain) {
+                case FOREST :
+                    transition = TerrainTypeEnum.GRASS;
+                    break;
+                case TROPICAL :
+                    transition = TerrainTypeEnum.GRASS;
+                    break;
+                case MARSHES :
+                    transition = TerrainTypeEnum.GRASS;
+                    break;
+                case WASTES :
+                    transition = TerrainTypeEnum.SAVANNA;
+                    break;
+                case DESERT :
+                    transition = TerrainTypeEnum.SAVANNA;
+                    break;
+                case ARID :
+                    transition = TerrainTypeEnum.SAVANNA;
+                    break;
+                default :
+                    break;
+            }
+            
+            if (transition == null) continue;
+            
+            List<Hex> adjs = hex.getAllAdjacent(GRID);
+            for (Hex adj : adjs) {
+                if (!adj.terrain.equals(TerrainTypeEnum.SEA) && !adj.terrain.equals(TerrainTypeEnum.MOUNTAINS)
+                        && !adj.terrain.equals(transition) && !adj.terrain.equals(hex.terrain)) {
+                    adj.terrain = transition;
+                }
+            }
+        }
+        
+        PlayingState.isLoading = false;
+        System.out.printf("Map generated in %.2f sec", (System.currentTimeMillis()-start)/1000f);
     }
 }

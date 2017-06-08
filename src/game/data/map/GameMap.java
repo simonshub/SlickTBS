@@ -11,6 +11,7 @@ import static game.data.hex.Hex.HEX_GRID_SIZE_X;
 import static game.data.hex.Hex.HEX_GRID_SIZE_Y;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -29,7 +30,10 @@ public class GameMap {
     
     
     public HexGrid grid;
+    
     public int mouse_shadow_x, mouse_shadow_y;
+    
+    public Hex debug_hex;
     
     
     
@@ -37,6 +41,7 @@ public class GameMap {
         grid = new HexGrid (size.size*2, size.size);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
+        debug_hex = null;
         
         WorldGenerator.setGrid(grid);
         WorldGenerator.generateMap();
@@ -60,6 +65,10 @@ public class GameMap {
         
         mouse_shadow_x = x_index;
         mouse_shadow_y = y_index;
+        
+        if (gc.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+            debug_hex = grid.get(x_index, y_index);
+        }
     }
     
     public void renderMouseShadow (Camera cam, int x, int y) {

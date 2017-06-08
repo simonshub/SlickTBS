@@ -23,9 +23,14 @@ import org.newdawn.slick.state.StateBasedGame;
 public class PlayingState extends BasicGameState {
     public static final int ID = 1;
     
+    public static String loadLabel;
+    public static boolean isLoading;
+    
     public GameMap gameMap;
     public Camera camera;
-
+    
+    
+    
     @Override
     public int getID() {
         return ID;
@@ -34,30 +39,48 @@ public class PlayingState extends BasicGameState {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         camera = new Camera (container);
-        gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+        isLoading = true;
+        loadLabel = "";
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        gameMap.render(camera, container, game, g);
-        
-        if (Consts.RENDER_DEBUG) {
-            int y = 32;
-            g.setColor(Color.white);
-            
-            g.drawString("Debug Mode", 0, y); y+=24;
-            if (Consts.RENDER_DEBUG_CAMERA_INFO) {
-                g.drawString("Camera: "+String.format("% 05d",camera.x)+","+String.format("% 05d",camera.y)+"("+String.format("%.2f",camera.zoom)+"z)", 0, y); y+=24;
-            }
-            if (Consts.RENDER_DEBUG_RENDERED_HEXES) {
-                g.drawString("Rendered hexes: "+gameMap.grid.render_counter, 0, y); y+=24;
-                g.drawString("Not rendered hexes: "+gameMap.grid.not_render_counter, 0, y); y+=24;
+        if (isLoading) {
+            g.drawString(loadLabel, (container.getWidth()/2) - (g.getFont().getWidth(loadLabel)/2), (container.getHeight()/2) - (g.getFont().getHeight(loadLabel)/2));
+        } else {
+            gameMap.render(camera, container, game, g);
+
+            if (Consts.RENDER_DEBUG) {
+                int y = 32;
+                g.setColor(Color.white);
+
+                g.drawString("Debug Mode", 0, y); y+=24;
+                if (Consts.RENDER_DEBUG_CAMERA_INFO) {
+                    g.drawString("Camera: "+String.format("% 05d",camera.x)+","+String.format("% 05d",camera.y)+"("+String.format("%.2f",camera.zoom)+"z)", 0, y); y+=24;
+                }
+                if (Consts.RENDER_DEBUG_RENDERED_HEXES) {
+                    g.drawString("Rendered hexes: "+gameMap.grid.render_counter, 0, y); y+=24;
+    //                g.drawString("Not rendered hexes: "+gameMap.grid.not_render_counter, 0, y); y+=24;
+                }
+                if (gameMap.debug_hex != null) {
+                    g.drawString("Hex: "+gameMap.debug_hex.x+","+gameMap.debug_hex.y, 0, y); y+=24;
+                    g.drawString("\tType: "+gameMap.debug_hex.terrain.name(), 0, y); y+=24;
+                    if (gameMap.debug_hex.continent != null) {
+                        g.drawString("\tContinent: "+gameMap.debug_hex.continent.continent_type.name(), 0, y); y+=24;
+                        g.drawString("\tHt/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
+                    }
+                }
             }
         }
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+        if (gameMap==null) {
+            this.gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+            return;
+        }
+        
         gameMap.update(camera, container, game);
         
         if (container.getInput().isKeyDown(Input.KEY_LEFT)) {

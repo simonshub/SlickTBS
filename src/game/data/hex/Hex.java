@@ -103,9 +103,11 @@ public final class Hex {
         this.x = x;
         this.y = y;
         this.continent = null;
-        terrain = TerrainTypeEnum.DEFAULT;
+        
+        terrain = TerrainTypeEnum.OPEN;
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
+        
         coastal_ul = false;
         coastal_ur = false;
         coastal_l = false;
