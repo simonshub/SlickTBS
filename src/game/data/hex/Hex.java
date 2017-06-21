@@ -5,6 +5,7 @@
  */
 package game.data.hex;
 
+import game.data.game.PointOfInterest;
 import game.data.map.Camera;
 import game.data.map.Continent;
 import game.data.map.FogOfWar;
@@ -76,6 +77,7 @@ public final class Hex {
     public Continent continent;
     public FogOfWar fog_of_war;
     public TerrainTypeEnum terrain;
+    public PointOfInterest poi;
     
     
     
@@ -107,6 +109,7 @@ public final class Hex {
         terrain = TerrainTypeEnum.OPEN;
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
+        poi = null;
         
         coastal_ul = false;
         coastal_ur = false;
@@ -121,6 +124,10 @@ public final class Hex {
     public void setLocation (int x, int y) {
         this.x = x;
         this.y = y;
+    }
+    
+    public void setPointOfInterest (PointOfInterest poi) {
+        this.poi = poi;
     }
     
     public Point getMapCoordsCenter () {
@@ -152,6 +159,9 @@ public final class Hex {
         
         if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
+        
+        if (poi != null)
+            poi.render(x_draw, y_draw, x_scale, y_scale);
     }
     
     public void renderMouseShadow (float x_draw, float y_draw, float x_scale, float y_scale) {

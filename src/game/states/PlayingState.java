@@ -69,6 +69,10 @@ public class PlayingState extends BasicGameState {
                         g.drawString("\tContinent: "+gameMap.debug_hex.continent.continent_type.name(), 0, y); y+=24;
                         g.drawString("\tHt/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
                     }
+                    if (gameMap.debug_hex.poi != null) {
+                        g.drawString("\tPoint of Interest: "+gameMap.debug_hex.poi.name, 0, y); y+=24;
+                        g.drawString("\tDescription: "+gameMap.debug_hex.poi.description, 0, y); y+=24;
+                    }
                 }
             }
         }

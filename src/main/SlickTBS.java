@@ -77,7 +77,7 @@ public class SlickTBS extends StateBasedGame {
         this.addState(new MenuState ());
         this.addState(new PlayingState ());
         
-        this.enterState(PlayingState.ID);
+        this.enterState(MenuState.ID);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package game.data.map;
 
+import game.data.game.PointOfInterest;
 import main.utils.SlickUtils;
 import game.data.hex.DirEnum;
 import game.data.hex.HexGrid;
@@ -216,6 +217,7 @@ public abstract class WorldGenerator {
         
         // set the entire grid to sea, initialization
         PlayingState.loadLabel = loadLabelBase + "Initializing";
+            System.out.println(PlayingState.loadLabel);
         for (int y=0;y<GRID.getSizeY();y++) {
             for (int x=0;x<GRID.getSizeX();x++) {
                 GRID.get(x, y).terrain = TerrainTypeEnum.SEA;
@@ -239,6 +241,7 @@ public abstract class WorldGenerator {
             }
             
             PlayingState.loadLabel = loadLabelBase + "Generating landmass #" + String.valueOf(i+1);
+            System.out.println(PlayingState.loadLabel);
             
             starting_point.terrain = TerrainTypeEnum.OPEN;
             Continent continent = new Continent (String.valueOf(i+1), starting_point, generateRadial (TerrainTypeEnum.SEA, TerrainTypeEnum.OPEN, starting_point, (int)(getContinentSize()*0.1f), (int)(getContinentSize()*5f)));
@@ -249,6 +252,7 @@ public abstract class WorldGenerator {
         }
         
         PlayingState.loadLabel = loadLabelBase + "Cleaning singular hexes";
+        System.out.println(PlayingState.loadLabel);
         for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
             if (hex.getAllAdjacentOfTypes(GRID, hex.terrain).isEmpty()) {
                 Hex adj = hex.getRandomAdjacent(GRID);
@@ -257,6 +261,7 @@ public abstract class WorldGenerator {
         }
         
         PlayingState.loadLabel = loadLabelBase + "Adding transitional hexes";
+        System.out.println(PlayingState.loadLabel);
         for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
             TerrainTypeEnum transition = null;
             
@@ -292,6 +297,20 @@ public abstract class WorldGenerator {
                     adj.terrain = transition;
                 }
             }
+        }
+
+        PlayingState.loadLabel = loadLabelBase + "Adding points of interest";
+        System.out.println(PlayingState.loadLabel);
+        
+        int poi_count = 100;
+        List<Hex> potential_pois = GRID.getAllNotOfType(TerrainTypeEnum.SEA);
+        
+        for (int i=0;i<poi_count;i++) {
+            Hex hex = potential_pois.get(SlickUtils.randIndex(potential_pois.size()));
+            hex.poi = PointOfInterest.getRandom(hex.terrain);
+            
+            if (hex.poi!=null)
+                System.out.println("POI : "+hex.poi.name+" @ ("+hex.x+","+hex.y+")");
         }
         
         PlayingState.isLoading = false;

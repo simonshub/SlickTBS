@@ -17,15 +17,16 @@ import org.newdawn.slick.SlickException;
  * @author emil.simon
  */
 public enum TerrainTypeEnum {
-    OPEN,
-    GRASS, SAVANNA, TUNDRA,
-    FOREST, TROPICAL,
-    SEA, MARSHES,
-    HILLS, MOUNTAINS, 
-    DESERT, WASTES, ARID, 
+    OPEN(),
+    GRASS(), SAVANNA(), TUNDRA(),
+    FOREST(), TROPICAL(),
+    SEA(), MARSHES(),
+    HILLS(), MOUNTAINS(), 
+    DESERT(), WASTES(), ARID(), 
     
     ;
     
+    public int move_cost;
     public Image img;
     public String img_path;
     
@@ -34,6 +35,7 @@ public enum TerrainTypeEnum {
     TerrainTypeEnum () {
         this.img = null;
         this.img_path = "";
+        this.move_cost = 1;
         
         try {
             init();

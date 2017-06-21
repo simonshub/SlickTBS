@@ -213,11 +213,16 @@ public class Continent {
     
     
     public void generate (HexGrid grid) {
+        int retry_max_count = 20;
+        int retry = 0;
+        
         // generate mountain ranges
-        for (int mt=0;!satisfiesMountainPerc();mt++) {
+        retry = 0;
+        for (int mt=0;!satisfiesMountainPerc() && (retry < retry_max_count);mt++) {
             Hex mt_starting_point = hexes.get(SlickUtils.randIndex(hexes.size()));
             if (mt_starting_point.terrain!=TerrainTypeEnum.OPEN) {
                 --mt; // try again !
+                retry++;
                 continue;
             }
             
@@ -235,10 +240,12 @@ public class Continent {
         }
         
         // generate wastelands
-        for (int ws=0;!satisfiesWastesPerc();ws++) {
+        retry = 0;
+        for (int ws=0;!satisfiesWastesPerc() && (retry < retry_max_count);ws++) {
             Hex ws_starting_point = hexes.get(SlickUtils.randIndex(hexes.size()));
             if (ws_starting_point.terrain!=TerrainTypeEnum.OPEN) {
                 --ws; // try again !
+                retry++;
                 continue;
             }
 
@@ -250,10 +257,12 @@ public class Continent {
         }
         
         // generate forests
-        for (int fr=0;!satisfiesForestPerc();fr++) {
+        retry = 0;
+        for (int fr=0;!satisfiesForestPerc() && (retry < retry_max_count);fr++) {
             Hex fr_starting_point = hexes.get(SlickUtils.randIndex(hexes.size()));
             if (fr_starting_point.terrain!=TerrainTypeEnum.OPEN) {
                 --fr; // try again !
+                retry++;
                 continue;
             }
 
