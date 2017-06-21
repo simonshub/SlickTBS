@@ -13,6 +13,7 @@ public abstract class Consts {
     public static final String SETTINGS_FILE_PATH = "settings.cfg";
     
     public static final String TILES_PATH = "res/data/tiles/";
+    public static final String RACES_PATH = "res/data/races/";
     
     public static final boolean RENDER_DEBUG = true;
     public static final boolean RENDER_DEBUG_CAMERA_INFO = true;
