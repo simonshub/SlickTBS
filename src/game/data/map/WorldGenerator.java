@@ -24,6 +24,8 @@ public abstract class WorldGenerator {
     
     public static int CHAIN_PROPAGATION_RETRY_COUNT = 5;
     
+    public static int ADJACENT_HEX_THRESHOLD_FOR_ASSIMILATION = 3;
+    
     public static int MOUNTAIN_CHAIN_MIN_LEN = 3;
     public static int MOUNTAIN_CHAIN_MAX_LEN = 40;
     public static int FOREST_RADIAL_MIN_SIZE = 3;
@@ -295,6 +297,21 @@ public abstract class WorldGenerator {
                 if (!adj.terrain.equals(TerrainTypeEnum.SEA) && !adj.terrain.equals(TerrainTypeEnum.MOUNTAINS)
                         && !adj.terrain.equals(transition) && !adj.terrain.equals(hex.terrain)) {
                     adj.terrain = transition;
+                }
+            }
+        }
+        
+        PlayingState.loadLabel = loadLabelBase + "Removing excess grass, tundra and savanna";
+        System.out.println(PlayingState.loadLabel);
+        List<Hex> open_land = WorldGenerator.GRID.getAllOfTypes(TerrainTypeEnum.OPEN, TerrainTypeEnum.GRASS, TerrainTypeEnum.SAVANNA, TerrainTypeEnum.TUNDRA);
+        for (Hex hex : open_land) {
+            List<Hex> adj_list = hex.getAllAdjacent(GRID);
+            
+            for (Hex adj : adj_list) {
+                List<Hex> adj_of_type = hex.getAllAdjacentOfTypes(GRID, adj.terrain);
+                if (adj_of_type.size() >= ADJACENT_HEX_THRESHOLD_FOR_ASSIMILATION) {
+                    hex.terrain = adj.terrain;
+                    break;
                 }
             }
         }
