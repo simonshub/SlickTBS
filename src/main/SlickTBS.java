@@ -9,6 +9,7 @@ import game.states.MenuState;
 import game.states.PlayingState;
 import java.io.File;
 import java.io.IOException;
+import main.utils.Log;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -25,7 +26,7 @@ public class SlickTBS extends StateBasedGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println ("Starting ...");
+        Log.log("Starting ...");
         File file = new File ("natives");
         if (file.exists()) {
             switch(LWJGLUtil.getPlatform()) {
@@ -43,7 +44,7 @@ public class SlickTBS extends StateBasedGame {
                     break;
             }
             
-            System.out.println("LWJGL Natives : '"+file.getAbsolutePath()+"'");
+            Log.log("LWJGL Natives : '"+file.getAbsolutePath()+"'");
             System.setProperty("org.lwjgl.librarypath",file.getAbsolutePath());
         }
 
@@ -54,8 +55,8 @@ public class SlickTBS extends StateBasedGame {
             
             agc.start();
         } catch (SlickException ex) {
-            System.out.println("Couldn't start the game.");
-            ex.printStackTrace();
+            Log.err("Couldn't start the game!");
+            Log.err(ex);
             System.exit(-1);
         }
     }
@@ -68,9 +69,11 @@ public class SlickTBS extends StateBasedGame {
     public void initStatesList(GameContainer container) throws SlickException {
         try {
             ResMgr.init();
+            AppGameContainer app = (AppGameContainer) this.getContainer();
+            app.setTitle(ResMgr.title);
         } catch (IOException | IllegalArgumentException | IllegalAccessException ex) {
-            System.out.println("Couldn't start the game.");
-            ex.printStackTrace();
+            Log.err("Couldn't start the game!");
+            Log.err(ex);
             System.exit(-1);
         }
             

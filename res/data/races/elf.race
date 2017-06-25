@@ -1,0 +1,20 @@
+
+
+playable = true
+
+str_mod = -2
+agi_mod = 2
+dex_mod = 2
+vit_mod = -2
+int_mod = 2
+cha_mod = 0
+
+name = Elf
+plural = Elves
+adjective = Elven
+
+male_name_blocks = *-El|Loth|Leth|Vel|Elth|Than|Kael|Eth;;?-r;;*-ul|odil|oril|il|us|as|on|an;;?-ian|d|iath|iol|or|aeth|ial
+female_name_blocks = *-La|Lo|Le|El|Al|Val|Than|Molh|Milh|Eth;;?-than|ar|an|av;;*-a|aeth|eth
+place_name_blocks = *-Loth|Fol|Than|Mon|Mun|Leth|Lun;;*-lor|ver|don;;?-ie|ia;;/-n|l
+culture_name_blocks = ?-%plural of|;;/- %place;;!-%adjective %culture of;;/- %continent| %place
+faction_name_blocks = ?-%rule of|;;/- %place;;!-%place;;/- %rule

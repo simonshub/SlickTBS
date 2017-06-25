@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import main.utils.Log;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 
@@ -32,6 +33,7 @@ public class ResMgr {
     public static int screen_res_h = 600;
     
     public static boolean debug_mode = true;
+    public static boolean render_political_overlay = true;
     public static boolean render_continents = true;
     public static boolean render_grid = true;
     
@@ -60,7 +62,7 @@ public class ResMgr {
             
             
         } catch (SlickException ex) {
-            ex.printStackTrace();
+            Log.err(ex);
             System.exit(1);
         }
     }

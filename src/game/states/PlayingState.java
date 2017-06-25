@@ -5,9 +5,14 @@
  */
 package game.states;
 
+import game.data.game.NameGenerator;
+import game.data.game.Race;
 import game.data.map.Camera;
+import game.data.map.DifficultyLevel;
 import game.data.map.GameMap;
 import main.Consts;
+import main.utils.Log;
+import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -66,12 +71,17 @@ public class PlayingState extends BasicGameState {
                     g.drawString("Hex: "+gameMap.debug_hex.x+","+gameMap.debug_hex.y, 0, y); y+=24;
                     g.drawString("\tType: "+gameMap.debug_hex.terrain.name(), 0, y); y+=24;
                     if (gameMap.debug_hex.continent != null) {
-                        g.drawString("\tContinent: "+gameMap.debug_hex.continent.continent_type.name(), 0, y); y+=24;
+                        g.drawString("\tContinent: "+gameMap.debug_hex.continent.name+" ("+SlickUtils.beautifyString(gameMap.debug_hex.continent.continent_type.name())+")", 0, y); y+=24;
                         g.drawString("\tHt/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
                     }
                     if (gameMap.debug_hex.poi != null) {
                         g.drawString("\tPoint of Interest: "+gameMap.debug_hex.poi.name, 0, y); y+=24;
                         g.drawString("\tDescription: "+gameMap.debug_hex.poi.description, 0, y); y+=24;
+                    }
+                    if (gameMap.debug_hex.owner != null) {
+                        g.drawString("\tOwner: "+gameMap.debug_hex.owner.name, 0, y); y+=24;
+                        g.drawString("\tCulture: "+gameMap.debug_hex.owner.culture.name, 0, y); y+=24;
+                        g.drawString("\tTerritory: "+gameMap.debug_hex.owner.territory.size(), 0, y); y+=24;
                     }
                 }
             }
@@ -81,7 +91,7 @@ public class PlayingState extends BasicGameState {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         if (gameMap==null) {
-            this.gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+            this.gameMap = new GameMap (GameMap.MapSize.MEDIUM, DifficultyLevel.NORMAL);
             return;
         }
         
@@ -101,7 +111,25 @@ public class PlayingState extends BasicGameState {
         }
         
         if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
-            gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+            gameMap = new GameMap (GameMap.MapSize.MEDIUM, DifficultyLevel.NORMAL);
+        }
+        
+        if (container.getInput().isKeyPressed(Input.KEY_N)) {
+            String[] names = new String [10];
+            String[] places = new String [10];
+            
+            for (int i=0;i<10;i++) {
+                Race race = Race.random();
+                boolean female = Math.random()>=0.5;
+                names[i] = race.name+", "+(female?"female":"male")+" : "+NameGenerator.character(race, female);
+            }
+            for (int i=0;i<10;i++) {
+                Race race = Race.random();
+                places[i] = race.name+" : "+NameGenerator.place(race);
+            }
+            
+            Log.log("Character name examples:\n\t"+SlickUtils.getArrayAsStringList(names, "\n\t"));
+            Log.log("Place name examples:\n\t"+SlickUtils.getArrayAsStringList(places, "\n\t"));
         }
     }
     

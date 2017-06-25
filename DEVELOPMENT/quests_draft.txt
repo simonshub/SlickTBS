@@ -1,0 +1,43 @@
+QUESTS:
+
+Template;
+ - Requirements are required world map parameters for the generation of this quest. Description is the journal entry.
+
+ - Setup is what happens once the player has uncovered the quest. Discovery is how the player uncovers the quest.
+
+----------------------------------------------------------------
+
+Name;
+The Towers
+
+Requirements;
+ - Select Abandoned Tower POI with at least one other Abandoned Tower POI within 10 hexes
+
+Setup;
+ - Mark all Abandoned Tower POIs within 10 hexes of the selected Abandoned Tower. Mark all Abandoned Tower POIs within 10 hexes of all marked Abandoned Tower POIs, x2. Lock all except discovered Abandoned Tower POI.
+
+Discovery;
+ - Player party enters 10 hexes of any marked Abandoned Tower POI
+
+Description;
+A series of mysterious, ancient towers pierce the horizon. What secrets could these structures hold, or better yet, which treasures?
+
+Steps;
+
+Setup: Create random lich / wizard ghost? superboss character for current level + 2 as 'endboss', drops 200% loot, ends quest
+
+#1 - Repeatable
+Trig: Enter any of Abandoned Tower POIs marked
+Event: All other unvisited, marked Abandoned Tower POIs for the quest are locked. Several dialog options between fights, offering some data about the purpose of the towers - these are determined at random to offer variation. End level boss drops a Mysterious Scroll item.
+
+#2 - Repeatable
+Trig: Identify Mysterious Scroll item (difficulty: hard)
+Event: Dialog explaining the origin of the towers and the identity of their creator - these are determined at random to offer variation. A fight insues against an opened portal sending waves of various summoned creatures.
+
+#3 - Repeatable
+Trig: Identify Mysterious Scroll item (difficulty: hard)
+Event: Unlock a single unvisited, marked, locked Abandoned Tower POI. Dialog explaining where the tower is (requires system!) and explains how to open the tower which is via physical or magical means - these are determined at random to offer variation.
+
+#4
+Trig: Enter last marked Abandoned Tower POI
+Event: Set last boss for this POI to versus 'endboss'

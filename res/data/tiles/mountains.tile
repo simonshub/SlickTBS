@@ -1,5 +1,2 @@
 img_path = res/grfx/tiles/mountain.png
-soft_mod = 1.0f
-hard_mod = 1.0f
-atk_mod = 1.0f
-def_mod = 1.0f
+move_cost = 1

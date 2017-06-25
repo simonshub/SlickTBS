@@ -1,0 +1,20 @@
+
+
+playable = false
+
+str_mod = 4
+agi_mod = 0
+dex_mod = 0
+vit_mod = 4
+int_mod = -2
+cha_mod = -2
+
+name = Orc
+plural = Orcs
+adjective = Orcish
+
+male_name_blocks = *-Gor|Gro|Ghu|Rag|Rog;;*-';;*-d|g|gr|dr|kr|r|k;;?-ir|ur|ag|og|ug;;*-ash|ok|ak|osh|esh|ek|ir|or|og|ogg|orr
+female_name_blocks = *-Gor|Gro|Ghu|Rag|Rog;;*-';;*-d|g|gr|dr|kr|r|k;;?-ash|ok|ak|osh|esh|ek;;*-a|ana|ala
+place_name_blocks = *-Go|U|Gu;;*-x|l|k|n;;*--bro|-vro|gol|bah|pah;;?-tha|kra|cer|ered|er
+culture_name_blocks = ?-%plural of|;;/- the %culture of ;;/- %continent| %place;;!-%adjective %culture of ;;/- %continent| %place
+faction_name_blocks = ?-%rule of|;;/- %name;;!-%place;;/- %rule

@@ -5,14 +5,17 @@
  */
 package game.data.hex;
 
+import game.data.game.Culture;
 import game.data.map.Camera;
 import game.data.map.Continent;
 import game.data.map.TerrainTypeEnum;
 import static game.data.hex.Hex.HEX_GRID_SIZE_X;
 import static game.data.hex.Hex.HEX_GRID_SIZE_Y;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import main.ResMgr;
+import main.utils.Log;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -26,6 +29,7 @@ public final class HexGrid {
     public static final int DRAW_MARGIN_Y = 2;
     
     public List<Hex> land;
+    public List<Culture> cultures;
     public List<Continent> continents;
     
     public int render_counter;
@@ -37,7 +41,10 @@ public final class HexGrid {
     public HexGrid (int size_x, int size_y) {
         this.size_x = size_x;
         this.size_y = size_y;
-        render_counter = 0;
+        this.render_counter = 0;
+        
+        cultures = new ArrayList<> ();
+        continents = new ArrayList<> ();
         
         grid = new ArrayList <> ();
         for (int i=0;i<size_y;i++) {
@@ -57,6 +64,7 @@ public final class HexGrid {
             
             return grid.get(Math.abs(y%size_y)).get(Math.abs(x%size_x));
         } catch (ArrayIndexOutOfBoundsException ex) {
+            Log.err(ex);
             return null;
         }
     }
@@ -71,6 +79,15 @@ public final class HexGrid {
     
     
     
+    public List<Hex> getAll () {
+        List<Hex> result = new ArrayList<> ();
+        for (int y=0;y<size_y;y++) {
+            for (int x=0;x<size_x;x++) {
+                result.add(get(x,y));
+            }
+        }
+        return result;
+    }
     
     public List<Hex> getAllOfType (TerrainTypeEnum type) {
         List<Hex> result = new ArrayList<> ();
@@ -100,11 +117,9 @@ public final class HexGrid {
         List<Hex> result = new ArrayList<> ();
         for (int y=0;y<size_y;y++) {
             for (int x=0;x<size_x;x++) {
-                for (TerrainTypeEnum type : types) {
-                    if (get(x,y).terrain.equals(type)) {
-                        result.add(get(x,y));
-                        break;
-                    }
+                if (!Arrays.asList(types).contains(get(x,y).terrain)) {
+                    result.add(get(x,y));
+                    break;
                 }
             }
         }
@@ -115,11 +130,9 @@ public final class HexGrid {
         List<Hex> result = new ArrayList<> ();
         for (int y=0;y<size_y;y++) {
             for (int x=0;x<size_x;x++) {
-                for (TerrainTypeEnum type : types) {
-                    if (!get(x,y).terrain.equals(type)) {
-                        result.add(get(x,y));
-                        break;
-                    }
+                if (!Arrays.asList(types).contains(get(x,y).terrain)) {
+                    result.add(get(x,y));
+                    break;
                 }
             }
         }

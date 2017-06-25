@@ -8,6 +8,7 @@ package game.data.map;
 import java.io.File;
 import java.io.IOException;
 import main.Consts;
+import main.utils.Log;
 import main.utils.SlickUtils;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -16,7 +17,7 @@ import org.newdawn.slick.SlickException;
  *
  * @author emil.simon
  */
-public enum TerrainTypeEnum {
+ public enum TerrainTypeEnum {
     OPEN(),
     GRASS(), SAVANNA(), TUNDRA(),
     FOREST(), TROPICAL(),
@@ -40,7 +41,7 @@ public enum TerrainTypeEnum {
         try {
             init();
         } catch (IOException | SlickException ex) {
-            ex.printStackTrace();
+            Log.err(ex);
         }
     }
     

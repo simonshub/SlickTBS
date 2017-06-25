@@ -37,14 +37,14 @@ public class GameMap {
     
     
     
-    public GameMap (MapSize size) {
+    public GameMap (MapSize size, DifficultyLevel diff) {
         grid = new HexGrid (size.size*2, size.size);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
         debug_hex = null;
         
         WorldGenerator.setGrid(grid);
-        WorldGenerator.generateMap();
+        WorldGenerator.generateMap(1.0, 1.0);
     }
     
     public void render (Camera camera, GameContainer container, StateBasedGame game, Graphics g) {

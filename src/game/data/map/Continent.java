@@ -5,6 +5,7 @@
  */
 package game.data.map;
 
+import game.data.game.Race;
 import game.data.hex.HexGroup;
 import game.data.hex.HexGrid;
 import game.data.hex.Hex;
@@ -18,6 +19,7 @@ import static game.data.map.WorldGenerator.generateChain;
 import static game.data.map.WorldGenerator.generateRadial;
 import java.util.ArrayList;
 import java.util.List;
+import main.utils.Log;
 import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 
@@ -30,6 +32,8 @@ public class Continent {
     private Hex source;
     private HexGroup hexes;
     
+    public String name = "";
+    
     public ContinentTypeEnum continent_type;
     
     public List<HexGroup> mountain_list;
@@ -38,8 +42,6 @@ public class Continent {
     
     private static final double MAX_TARGET_TOTAL_COVERAGE = 1.25;
     private static final double MIN_TARGET_TOTAL_COVERAGE = 0.75;
-    
-    String name = "";
     
     private double target_total_coverage = 0.;
     private double target_mountain_percentage = 0.;
@@ -161,12 +163,9 @@ public class Continent {
         target_forest_percentage = (fr_factor / (mt_factor + fr_factor + ws_factor)) * target_total_coverage;
         target_wastes_percentage = (ws_factor / (mt_factor + fr_factor + ws_factor)) * target_total_coverage;
         
-        System.out.println("Continent "+name+
-                "\n | Source: "+source.x+","+source.y+
-                "\n | Size: "+hexes.size()+
-                "\n | Target coverage: "+target_total_coverage+
-                "\n | Mt:"+target_mountain_percentage+", Fr:"+target_forest_percentage+", Wl:"+target_wastes_percentage+
-                "\n | heat:"+heat+", wetness:"+wetness+", flatness:"+flatness+", corruption:"+corruption);
+        Log.log("Continent "+name, "Source: "+source.x+","+source.y, "Size: "+hexes.size(), "Target coverage: "+target_total_coverage, 
+                "Mt:"+target_mountain_percentage+", Fr:"+target_forest_percentage+", Wl:"+target_wastes_percentage,
+                "heat:"+heat+", wetness:"+wetness+", flatness:"+flatness+", corruption:"+corruption);
     }
     
     private void calculateFeaturePercentages () {
@@ -213,8 +212,7 @@ public class Continent {
     
     
     public void generate (HexGrid grid) {
-        int retry_max_count = 20;
-        int retry = 0;
+        int retry_max_count = WorldGenerator.MAX_RETRY_COUNT, retry;
         
         // generate mountain ranges
         retry = 0;

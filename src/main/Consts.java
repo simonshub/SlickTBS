@@ -5,6 +5,8 @@
  */
 package main;
 
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author emil.simon
@@ -16,10 +18,13 @@ public abstract class Consts {
     public static final String RACES_PATH = "res/data/races/";
     
     public static final boolean RENDER_DEBUG = true;
+    
+    public static final boolean RENDER_POIS = true;
+    public static final boolean RENDER_FOG_OF_WAR = false;
     public static final boolean RENDER_DEBUG_CAMERA_INFO = true;
     public static final boolean RENDER_DEBUG_RENDERED_HEXES = true;
     
-    public static final String NAME_LIST_DELIMITER = "|";
-    
-    public static final int MAX_PLAYERS = 16;
+    public static final String LOG_EXTENSION = ".log";
+    public static final SimpleDateFormat LOG_TIMESTAMP_FORM = new SimpleDateFormat ("HH:mm:ss");
+    public static final SimpleDateFormat LOG_DATE_FORM = new SimpleDateFormat ("dd_MM_");
 }

@@ -1,0 +1,20 @@
+
+
+playable = false
+
+str_mod = 0
+agi_mod = 4
+dex_mod = 2
+vit_mod = 2
+int_mod = 0
+cha_mod = -4
+
+name = Lizardfolk
+plural = Lizardfolk
+adjective = Lizardfolk
+
+male_name_blocks = *-K|Z|S;;*-a|o|i|e;;*-k|z|s;;*-a|o|i|e;;*-z|x|s;;?-al|ax;;\-ax|az
+female_name_blocks = *-K|Z|S;;*-a|o|i|e;;*-k|z|s;;*-a|o|i|e;;*-z|x|s;;?-al|ax;;\-ax|az;;*-a|ara|ana
+place_name_blocks = *-Kal|Azh|Lax|Zak|Kah|Tax;;*-ax|al|kol|kab|ahn;;*-atu|bo
+culture_name_blocks = ?-%plural of|;;/- %place;;!-%adjective %culture of;;/- %continent| %place
+faction_name_blocks = ?-%rule of|;;/- %place;;!-%place;;/- %rule

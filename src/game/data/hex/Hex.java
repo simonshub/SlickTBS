@@ -5,6 +5,7 @@
  */
 package game.data.hex;
 
+import game.data.game.Faction;
 import game.data.game.PointOfInterest;
 import game.data.map.Camera;
 import game.data.map.Continent;
@@ -12,7 +13,10 @@ import game.data.map.FogOfWar;
 import game.data.map.TerrainTypeEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import main.Consts;
 import main.ResMgr;
 import main.utils.Point;
 import main.utils.SlickUtils;
@@ -78,6 +82,7 @@ public final class Hex {
     public FogOfWar fog_of_war;
     public TerrainTypeEnum terrain;
     public PointOfInterest poi;
+    public Faction owner;
     
     
     
@@ -148,11 +153,14 @@ public final class Hex {
         if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN)
             terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
         
-        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0)
+        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0 && Consts.RENDER_FOG_OF_WAR)
             HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.level/3));
         
         if (HEX_GRID_IMG == null)
             return;
+        
+        if (ResMgr.render_political_overlay && owner!=null && owner.color!=null)
+            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, owner.color);
         
         if (ResMgr.render_continents && continent!=null && continent.getColor()!=null)
             HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, continent.getColor());
@@ -160,7 +168,7 @@ public final class Hex {
         if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
         
-        if (poi != null)
+        if (poi != null && Consts.RENDER_POIS)
             poi.render(x_draw, y_draw, x_scale, y_scale);
     }
     
@@ -170,6 +178,32 @@ public final class Hex {
     }
     
     
+    
+    public List<Hex> getAllInRange (HexGrid grid, int range) {
+        Set<Hex> results = new HashSet<> ();
+        range += 1;
+        
+        if (y%2==0)
+            for (int step_y=0;step_y<range;step_y++) {
+                for (int step_x=0;step_x<range - (int)Math.ceil(step_y/2);step_x++) {
+                    results.add(grid.get(x + step_x, y + step_y));
+                    results.add(grid.get(x + step_x, y - step_y));
+                    results.add(grid.get(x - step_x + (step_y%2), y + step_y));
+                    results.add(grid.get(x - step_x + (step_y%2), y - step_y));
+                }
+            }
+        else
+            for (int step_y=0;step_y<range;step_y++) {
+                for (int step_x=0;step_x<range - (int)Math.ceil(step_y/2);step_x++) {
+                    results.add(grid.get(x + step_x - (step_y%2), y + step_y));
+                    results.add(grid.get(x + step_x - (step_y%2), y - step_y));
+                    results.add(grid.get(x - step_x, y + step_y));
+                    results.add(grid.get(x - step_x, y - step_y));
+                }
+            }
+        
+        return new ArrayList<> (results);
+    }
     
     public Hex getAdjacent (HexGrid grid, DirEnum direction) {
         if (y%2==0)
