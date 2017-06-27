@@ -35,6 +35,8 @@ public abstract class WorldGenerator {
     public static float CONTINENT_SIZE_TO_POI_COUNT = 0.04f;
     public static float POI_COUNT_OFFSET = 0.01f;
     
+    public static float CONTINENT_CULTURES_PER_SIZE = 0.005f;
+    
     public static int MAX_RETRY_COUNT = 100000;
     
     public static int ADJACENT_HEX_THRESHOLD_FOR_ASSIMILATION = 3;
@@ -59,11 +61,6 @@ public abstract class WorldGenerator {
     
     public static int getContinentSize (double factor) {
         return (int)((Math.round((GRID.getSizeX()*GRID.getSizeY())/100)) * factor);
-    }
-    
-    public static int getNumberOfCultures (double factor) {
-        if (GRID==null || GRID.continents==null) return -1;
-        return (int)((GRID.continents.size() * (2 + (int)(Math.random()*2) - 1)) * factor);
     }
     
     public static boolean satisfiesLandPrecentage (List<Hex> land) {
@@ -380,19 +377,17 @@ public abstract class WorldGenerator {
         section_start = System.currentTimeMillis();
         Log.log(PlayingState.loadLabel);
         
-        int culture_count = WorldGenerator.getNumberOfCultures(culture_number_factor);
-        GRID.cultures = new ArrayList<> ();
-        List<Hex> available_hexes = GRID.getAllNotOfTypes(Faction.IMPASSABLE_TERRAIN_TYPES);
-        
-        for (int i=0;i<culture_count;i++) {
-            if (!available_hexes.isEmpty()) {
-                GRID.cultures.add(new Culture (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size()))));
-                available_hexes.removeAll(GRID.cultures.get(GRID.cultures.size()-1).source_hex.getAllInRange(GRID, CULTURE_NO_SETTLE_ZONE_RANGE));
-                if (GRID.cultures.get(GRID.cultures.size()-1).source_hex.poi==PointOfInterest.CULTURAL_CENTER && GRID.cultures.get(GRID.cultures.size()-1).source_hex.owner==null) {
-                    GRID.cultures.get(GRID.cultures.size()-1).source_hex.poi = null;
+        for (Continent continent : GRID.continents) {
+            int culture_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
+            GRID.cultures = new ArrayList<> ();
+            List<Hex> available_hexes = continent.getAll();
+
+            for (int i=0;i<culture_count;i++) {
+                if (!available_hexes.isEmpty()) {
+                    GRID.cultures.add(new Culture (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size()))));
+                } else {
+                    break;
                 }
-            } else {
-                break;
             }
         }
         Log.log("Cultures generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");

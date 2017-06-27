@@ -24,7 +24,7 @@ public class Culture {
         
         HEGEMONY        (1.5,   2.0,    0.5,    3.0,
                 new String[] { "Hegemony", "Independant States", "Free Cities", "Federation" },
-                new String[] { "Hegemony", "States", "Citites" },
+                new String[] { "Hegemony", "City-States", "Citites" },
                 new Race[]   { Race.DWARF, Race.HUMAN, Race.ELF, Race.HOBGOBLIN, Race.LIZARDFOLK }
             ),
         EMPIRE          (1.0,   1.0,    2.0,    0.5,
@@ -98,7 +98,7 @@ public class Culture {
         }
         
         public String getCultureName () {
-            return rule_names[SlickUtils.randIndex(culture_names.length)];
+            return culture_names[SlickUtils.randIndex(culture_names.length)];
         }
         
     }
