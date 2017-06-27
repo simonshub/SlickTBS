@@ -1,0 +1,8 @@
+available_races_name_list = orc;;human;;elf;;dwarf;;goblin;;hobgoblin;;lizardfolk
+
+expand_preference = 1.0
+enhance_preference = 1.0
+exterminate_preference = 1.0
+
+rule_titles = Republic;;Olegarchy
+ruler_titles = Representative;;Lord;;Lord Protector

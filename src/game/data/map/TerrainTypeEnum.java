@@ -46,7 +46,7 @@ import org.newdawn.slick.SlickException;
     }
     
     public void init () throws IOException, SlickException {
-        img_path = Consts.TILES_PATH+this.name().toLowerCase()+".tile";
+        img_path = Consts.TILES_PATH + this.name().toLowerCase() + Consts.TILES_EXT;
         File f = new File (img_path);
         SlickUtils.readObjectFromFile(f, this);
         this.img = new Image (this.img_path);

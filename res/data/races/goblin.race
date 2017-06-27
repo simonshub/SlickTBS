@@ -9,6 +9,8 @@ vit_mod = -2
 int_mod = 0
 cha_mod = -2
 
+allowed_types = barrens;;desert;;mountainous;;woodlands;;flat_steppes
+
 name = Goblin
 plural = Goblins
 adjective = Goblin
@@ -16,5 +18,3 @@ adjective = Goblin
 male_name_blocks = *-G|H|R|D|L|V|K;;*-o|a;;*-b|r|d|g|h|bb
 female_name_blocks = *-G|H|R|D|L|V|K;;*-o|a;;*-b|r|d|g|h|bb;;*-a
 place_name_blocks = *-Bol|Der|Hor|Vi|Mok;;?-';;*-kath|moth|vekk|ko;;*- Hold
-culture_name_blocks = ?-%plural of|;;/- %name;;!-%adjective %culture of;;/- %continent| %name
-faction_name_blocks = ?-%rule of|;;/- %name;;!-%name;;/- %rule

@@ -14,20 +14,19 @@ import java.util.List;
 import main.Consts;
 import main.utils.Log;
 import main.utils.SlickUtils;
-import org.newdawn.slick.SlickException;
 
 /**
  *
  * @author emil.simon
  */
 public enum Race {
-    ORC         (ContinentTypeEnum.BARRENS, ContinentTypeEnum.DESERT, ContinentTypeEnum.MOUNTAINOUS),
-    HUMAN       (ContinentTypeEnum.VALLEY, ContinentTypeEnum.WOODLANDS, ContinentTypeEnum.FLAT_STEPPES, ContinentTypeEnum.DESERT, ContinentTypeEnum.MOUNTAINOUS),
-    ELF         (ContinentTypeEnum.JUNGLE, ContinentTypeEnum.VALLEY, ContinentTypeEnum.WOODLANDS),
-    DWARF       (ContinentTypeEnum.BARRENS, ContinentTypeEnum.WOODLANDS, ContinentTypeEnum.MOUNTAINOUS, ContinentTypeEnum.VALLEY),
-    GOBLIN      (ContinentTypeEnum.BARRENS, ContinentTypeEnum.DESERT, ContinentTypeEnum.MOUNTAINOUS, ContinentTypeEnum.WOODLANDS, ContinentTypeEnum.FLAT_STEPPES),
-    HOBGOBLIN   (ContinentTypeEnum.FLAT_STEPPES, ContinentTypeEnum.BARRENS, ContinentTypeEnum.DESERT, ContinentTypeEnum.MOUNTAINOUS),
-    LIZARDFOLK  (ContinentTypeEnum.JUNGLE, ContinentTypeEnum.BARRENS, ContinentTypeEnum.VALLEY),
+    ORC         (),
+    HUMAN       (),
+    ELF         (),
+    DWARF       (),
+    GOBLIN      (),
+    HOBGOBLIN   (),
+    LIZARDFOLK  (),
     
     ;
     
@@ -47,31 +46,27 @@ public enum Race {
     public List<String> male_name_blocks;    // Format: [rule]-[possible letter]|[possible_letter]|[possible_letter] etc...
     public List<String> female_name_blocks;  // Format: [rule]-[possible letter]|[possible_letter]|[possible_letter] etc...
     public List<String> place_name_blocks;   // Format: [rule]-[possible letter]|[possible_letter]|[possible_letter] etc...
-    public List<String> faction_name_blocks; // Format: [rule]-[possible letter]|[possible_letter]|[possible_letter] etc...
-    public List<String> culture_name_blocks; // Format: [rule]-[possible letter]|[possible_letter]|[possible_letter] etc...
     
-    public ContinentTypeEnum[] allowed_types;
+    public List<ContinentTypeEnum> allowed_types;
     
-    Race (ContinentTypeEnum... allowed_types) {
-        this.allowed_types = allowed_types;
-        
+    Race () {
         male_name_blocks = new ArrayList<> ();
         female_name_blocks = new ArrayList<> ();
         place_name_blocks = new ArrayList<> ();
-        faction_name_blocks = new ArrayList<> ();
-        culture_name_blocks = new ArrayList<> ();
+        
+        allowed_types = new ArrayList<> ();
         
         try {
             init();
-        } catch (IOException | SlickException ex) {
+        } catch (IOException ex) {
             Log.err(ex);
         }
         
         Log.log("Loaded race enum "+this.name());
     }
     
-    public void init () throws IOException, SlickException {
-        String f_path = Consts.RACES_PATH+this.name().toLowerCase()+".race";
+    public void init () throws IOException {
+        String f_path = Consts.RACES_PATH + this.name().toLowerCase() + Consts.RACES_EXT;
         File f = new File (f_path);
         SlickUtils.readObjectFromFile(f, this);
     }
@@ -84,7 +79,7 @@ public enum Race {
         List<Race> possible_results = new ArrayList<> ();
         
         for (Race race : Race.values()) {
-            if (Arrays.asList(race.allowed_types).contains(continent))
+            if (race.allowed_types.contains(continent))
                 possible_results.add(race);
         }
         

@@ -1,19 +1,4 @@
-#    public boolean playable;
-#    
-#    public int str_mod;
-#    public int agi_mod;
-#    public int dex_mod;
-#    public int vit_mod;
-#    public int int_mod;
-#    public int cha_mod;
-#    
-#    public String name;
-#    public String plural;
-#    public String adjective;
-#    
-#    public List<String> last_names;
-#    public List<String> male_first_names;
-#    public List<String> female_first_names;
+
 
 playable = true
 
@@ -24,6 +9,8 @@ vit_mod = 4
 int_mod = 0
 cha_mod = -2
 
+allowed_types = barrens;;woodlands;;mountainous;;valley
+
 name = Dwarf
 plural = Dwarves
 adjective = Dwarven
@@ -31,5 +18,3 @@ adjective = Dwarven
 male_name_blocks = *-G|H|Kh|Wh|B|Br|D|T|Th|Gh|Gl;;*-ar|al|am|an|il|ir|im|in|om|on|or|ol|om|on|ur|ul|um|un;;?-h|d|b|m|l|st;;?-i|in|ir|an|ad|un|ud|oin|oid|ori
 female_name_blocks = *-G|H|Kh|K|Wh|B|Br|D|T|Th|Gh|Gl|L;;*-a|am|e|i|im|o|om|on|ol|or|u|ur|um|un;;*-h|d|b|m|l|st;;*-a;;?-n|d|r;;/-a
 place_name_blocks = ?-Stone|Deep|Iron|Steel|Mith|Dug|Der;;/-holme|holm|forge|hall|gred|hold|host;;!-%name's;;/- Doom| Deep| Hold| Hall| Keep| Host| Fortress| Down
-culture_name_blocks = ?-%plural of|;;/- %name;;!-%adjective %culture of;;/- %continent| %name
-faction_name_blocks = ?-%rule of|;;/- %place;;!-%place;;/- %rule

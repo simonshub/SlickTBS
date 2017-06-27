@@ -80,7 +80,6 @@ public class PlayingState extends BasicGameState {
                     }
                     if (gameMap.debug_hex.owner != null) {
                         g.drawString("\tOwner: "+gameMap.debug_hex.owner.name, 0, y); y+=24;
-                        g.drawString("\tCulture: "+gameMap.debug_hex.owner.culture.name, 0, y); y+=24;
                         g.drawString("\tTerritory: "+gameMap.debug_hex.owner.territory.size(), 0, y); y+=24;
                     }
                 }

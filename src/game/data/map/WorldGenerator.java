@@ -5,7 +5,7 @@
  */
 package game.data.map;
 
-import game.data.game.Culture;
+import game.data.game.Faction;
 import game.data.game.Faction;
 import game.data.game.NameGenerator;
 import game.data.game.PointOfInterest;
@@ -378,13 +378,13 @@ public abstract class WorldGenerator {
         Log.log(PlayingState.loadLabel);
         
         for (Continent continent : GRID.continents) {
-            int culture_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
-            GRID.cultures = new ArrayList<> ();
+            int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
+            GRID.factions = new ArrayList<> ();
             List<Hex> available_hexes = continent.getAll();
 
-            for (int i=0;i<culture_count;i++) {
+            for (int i=0;i<faction_count;i++) {
                 if (!available_hexes.isEmpty()) {
-                    GRID.cultures.add(new Culture (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size()))));
+                    GRID.factions.add(new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size()))));
                 } else {
                     break;
                 }

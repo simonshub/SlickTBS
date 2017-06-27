@@ -15,7 +15,13 @@ public abstract class Consts {
     public static final String SETTINGS_FILE_PATH = "settings.cfg";
     
     public static final String TILES_PATH = "res/data/tiles/";
+    public static final String TILES_EXT = ".tile";
+    
     public static final String RACES_PATH = "res/data/races/";
+    public static final String RACES_EXT = ".race";
+    
+    public static final String FACTIONS_PATH = "res/data/factions/";
+    public static final String FACTIONS_EXT = ".fact";
     
     public static final boolean RENDER_DEBUG = true;
     

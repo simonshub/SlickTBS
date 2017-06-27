@@ -5,7 +5,7 @@
  */
 package game.data.hex;
 
-import game.data.game.Culture;
+import game.data.game.Faction;
 import game.data.map.Camera;
 import game.data.map.Continent;
 import game.data.map.TerrainTypeEnum;
@@ -29,7 +29,7 @@ public final class HexGrid {
     public static final int DRAW_MARGIN_Y = 2;
     
     public List<Hex> land;
-    public List<Culture> cultures;
+    public List<Faction> factions;
     public List<Continent> continents;
     
     public int render_counter;
@@ -43,7 +43,7 @@ public final class HexGrid {
         this.size_y = size_y;
         this.render_counter = 0;
         
-        cultures = new ArrayList<> ();
+        factions = new ArrayList<> ();
         continents = new ArrayList<> ();
         
         grid = new ArrayList <> ();

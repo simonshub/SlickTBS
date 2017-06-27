@@ -56,9 +56,13 @@ public class PointOfInterest {
     public Color color;
     public String name;
     public String description;
+    public PointOfInterest parent;
     public List<TerrainTypeEnum> allowed_terrain_types;
     
+    
+    
     public PointOfInterest (PointOfInterest parent) {
+        this.parent = parent;
         this.can_be_generated = parent.can_be_generated;
         this.icon = parent.icon;
         this.color = parent.color;
@@ -67,8 +71,15 @@ public class PointOfInterest {
         this.allowed_terrain_types = new ArrayList<> (parent.allowed_terrain_types);
     }
     
+    public PointOfInterest (PointOfInterest parent, String name) {
+        this(parent);
+        this.name = name;
+    }
+    
     private PointOfInterest (boolean can_be_generated, String name, String icon, float r, float g, float b, String description, TerrainTypeEnum... not_allowed_terrains) {
         try {
+            this.parent = null;
+            
             this.can_be_generated = can_be_generated;
             this.color = new Color (r,g,b,1.0f);
             this.icon = new Image (ResMgr.POI_GRFX_PATH + icon);
@@ -85,6 +96,8 @@ public class PointOfInterest {
             Log.err(ex);
         }
     }
+    
+    
     
     public static PointOfInterest[] values () {
         List<PointOfInterest> result = new ArrayList<> ();
@@ -118,6 +131,13 @@ public class PointOfInterest {
         if (potential.isEmpty()) return null;
         
         return potential.get(SlickUtils.randIndex(potential.size()));
+    }
+    
+    public boolean is (PointOfInterest parent) {
+        if (this.parent == null)
+            return this == parent;
+        
+        return this.parent == parent;
     }
     
     public void render (float x, float y, float scale_x, float scale_y) {

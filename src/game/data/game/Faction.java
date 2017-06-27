@@ -5,15 +5,12 @@
  */
 package game.data.game;
 
-import game.data.hex.DirEnum;
 import game.data.hex.Hex;
 import game.data.hex.HexGrid;
 import game.data.map.TerrainTypeEnum;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import main.utils.Log;
 import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 
@@ -23,11 +20,8 @@ import org.newdawn.slick.Color;
  */
 public final class Faction {
     
-    public static final int MAX_SETTLE_RETRIES = 20;
-    public static final int MAX_STARTING_POSITION_MOVES = 60;
-    public static final int MIN_STARTING_POSITION_MOVES = 20;
-    
-    public static final int MAX_MOVE_TRIES = 100;
+    public static final int MAX_SETTLE_RETRIES = 200;
+    public static final int MIN_RANGE_BETWEEN_SETTLEMENTS = 4;
     
     public static final TerrainTypeEnum[] ALLOWED_TERRAIN_TYPES = {
                 TerrainTypeEnum.GRASS, TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT,
@@ -41,49 +35,50 @@ public final class Faction {
     
     
     
-    public int income;
+    public String name;
     
+    public Race race;
     public Hex capital;
     public Color color;
-    public String name;
-    public Culture culture;
     public List<Hex> territory;
+    public FactionTypeEnum type;
     
     
     
-    public Faction (HexGrid grid, Culture culture) {
-        Hex loc = culture.source_hex;
+    public Faction (HexGrid grid, Hex source) {
+        race = Race.random(source.continent.continent_type);
+        type = FactionTypeEnum.random(race);
+        
+        String name_place = NameGenerator.place(race);
+        name = NameGenerator.faction(name_place, type);
         
         for (int retry=0;retry < MAX_SETTLE_RETRIES;retry++) {
-            int moves = SlickUtils.rand(MIN_STARTING_POSITION_MOVES, MAX_STARTING_POSITION_MOVES);
-            DirEnum direction = DirEnum.getRandom();
-            int dir_mod = 0;
-
-            for (int i=0,tries=0 ; i<moves && tries<MAX_MOVE_TRIES ; tries++) {
-                Hex adj = loc.getAdjacent(grid, direction);
-
-                if (adj==null || Arrays.asList(IMPASSABLE_TERRAIN_TYPES).contains(adj.terrain))
-                    adj = loc;
-
-                loc = adj;
-                i += loc.terrain.move_cost;
-                dir_mod = SlickUtils.rand(-2, 2);
-
-                if (dir_mod == -2)
-                    direction = DirEnum.getAdjacentClockwise(direction, 1);
-                else if (dir_mod == 2)
-                    direction = DirEnum.getAdjacentCounterClockwise(direction, 1);
+            List<Hex> in_range = source.getAllInRange(grid, MIN_RANGE_BETWEEN_SETTLEMENTS);
+            boolean is_settleable = true;
+            
+            for (Hex hex : in_range) {
+                if (hex!=null && hex.poi!=null && hex.poi.is(PointOfInterest.CAPITOL)) {
+                    is_settleable = false;
+                    break;
+                }
             }
             
-            this.capital = loc;
+            if (is_settleable)
+                break;
+            else
+                source = source.continent.getAll().get(SlickUtils.randIndex(source.continent.size()));
         }
         
-        this.capital.poi = new PointOfInterest(PointOfInterest.CAPITOL);
-        this.culture = culture;
-        this.addTerritory(this.capital.getAllInRange(grid, 1));
+        capital = source;
+        capital.poi = new PointOfInterest(PointOfInterest.CAPITOL);
+        capital.poi.name = name_place;
+        this.addTerritory(this.capital.getAllInRange(grid, 2));
         
         this.color = new Color ((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.3f);
+        
     }
+    
+    
     
     public void resetTerritory () {
         this.territory = new ArrayList<> ();

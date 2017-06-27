@@ -9,12 +9,12 @@ vit_mod = 0
 int_mod = 0
 cha_mod = 2
 
+allowed_types = valley;;woodlands;;flat_steppes;;desert;;mountainous
+
 name = Human
 plural = Men
 adjective = Human
 
 male_name_blocks = *-Aldous|Alistair|Bennett|Conrad|Constantine|Dietrich|Drake|Everard|Gawain|Godwin|Jeffery|Joachim|Ladislas|Luther|Milo|Odo|Percival|Randall|Robin|Theobald|Wade|Warner|Wolfgang
 female_name_blocks = *-Aethelu|Agnes|Alba|Ava|Beatrice|Beverly|Cecily|Daisy|Edith|Ella|Emma|Heloise|Isabella|Margery|Matilda|Merry|Odilia|Reina|Rhoslyn|Sigourney|Trea
-place_name_blocks = ?-%name's;;/- Doom| Hold| Hall| Keep| Hamlet| Torch| Grace| Rest| Light| Stead| Field| Down| Hope| Wake| Dale| Vale| Hill;;!-Bed|Red|Green|Clear|Gren|Gold|Shrops|Sharps|Col|Black|White|Strath|Gol|Timber;;/-way|shire|ford|holm|holme|helm|field|water|ton|ville|chester|law|burg|rush|stead|berg|wake|dale|vale;;\- Hill| Town| Way| Field| Downs| Wake| Dale| Vale
-culture_name_blocks = ?-%plural of;;/- %place;;!-%adjective %culture of;;/- %continent| %place
-faction_name_blocks = ?-%rule of|;;/- %place;;!-%place;;/- %rule
+place_name_blocks = ?-%name's;;/- Doom| Hold| Hall| Keep| Hamlet| Torch| Grace| Rest| Light| Stead| Field| Down| Hope| Wake| Dale| Vale| Hill;;!-%name|Bed|Red|Green|Clear|Gren|Gold|Shrops|Sharps|Col|Black|White|Strath|Gol|Timber;;/-way|shire|ford|holm|holme|helm|field|water|ton|ville|chester|law|burg|rush|stead|berg|wake|dale|vale;;\- Hill| Town| Way| Field| Downs| Wake| Dale| Vale

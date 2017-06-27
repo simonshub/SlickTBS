@@ -24,6 +24,7 @@ import java.util.Random;
  * @author emil.simon
  */
 public abstract class SlickUtils {
+    
     public static final String COMMENT = "#";
     public static final String ARG_DELIMITER = "=";
     public static final String LIST_DELIMITER = ";;";
@@ -99,7 +100,11 @@ public abstract class SlickUtils {
                                 list.add(Boolean.parseBoolean(element));
                             } else if (elementClass.equals(Character.class)) {
                                 list.add(element.charAt(0));
-                            } else if (elementClass.isPrimitive()) {
+                            } else if (elementClass.isEnum()) {
+                                // is an enum
+                                list.add(Enum.valueOf((Class<Enum>) elementClass, element.toUpperCase()));
+                            }  else if (elementClass.isPrimitive()) {
+                                // is a primitive
                                 if (elementClass.equals(int.class)) {
                                     list.add(Integer.parseInt(element));
                                 } else if (elementClass.equals(float.class)) {
@@ -116,7 +121,10 @@ public abstract class SlickUtils {
                         aField.set(obj, list);
                     }
                     // is not an array
-                    else if (fieldClass.equals(String.class)) {
+                    else if (fieldClass.isEnum()) {
+                        // is an enum
+                        aField.set(obj, Enum.valueOf((Class<Enum>) aField.getType(), args[1].toUpperCase()));
+                    } else if (fieldClass.equals(String.class)) {
                         aField.set(obj, args[1]);
                     } else if (fieldClass.equals(Integer.class)) {
                         aField.set(obj, Integer.parseInt(args[1]));
@@ -170,6 +178,9 @@ public abstract class SlickUtils {
                             } else if (fieldClass.equals(char.class)) {
                                 array[i] = elements[i].charAt(0);
                             }
+                        } else if (fieldClass.isEnum()) {
+                            // is an enum
+                            array[i] =  Enum.valueOf((Class<Enum>) aField.getType(), args[1].toUpperCase());
                         }
                     }
                     aField.set(obj, array);
@@ -179,7 +190,7 @@ public abstract class SlickUtils {
         }
         br.close();
         reportContent += "]";
-        Log.log(reportContent);
+//        Log.log(reportContent);
     }
     
     public static void writeObjectToFile (File f, Object obj) throws IOException, IllegalArgumentException, IllegalAccessException {
