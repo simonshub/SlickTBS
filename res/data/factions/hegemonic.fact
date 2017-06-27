@@ -1,8 +1,21 @@
-available_races_name_list = orc;;human;;elf;;dwarf;;goblin;;hobgoblin;;lizardfolk
+available_races = elf;;human;;hobgoblin;;dwarf;;lizardfolk
 
-expand_preference = 1.0
-enhance_preference = 1.0
-exterminate_preference = 1.0
+capital_type_name = city
 
-rule_titles = City-States;;Free States;;Federation
-ruler_titles = Lord Protector;;Lord Commander
+# 80% civilian -> 30% hamlet, 30% village, 5% town, 35% city
+# 20% military -> 50% outpost, 40% fort, 10% stronghold, 0% castle
+
+composition_civilian = 80
+composition_hamlet = 30
+composition_village = 30
+composition_town = 5
+composition_city = 35
+
+composition_military = 20
+composition_outpost = 50
+composition_fort = 40
+composition_stronghold = 10
+composition_castle = 0
+
+rule_titles = City-States;;Free Cities;;Free States;;Commonwealth
+ruler_titles = Lord Protector;;Lord Commander;;Master

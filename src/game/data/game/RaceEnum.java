@@ -19,7 +19,7 @@ import main.utils.SlickUtils;
  *
  * @author emil.simon
  */
-public enum Race {
+public enum RaceEnum {
     ORC         (),
     HUMAN       (),
     ELF         (),
@@ -49,7 +49,7 @@ public enum Race {
     
     public List<ContinentTypeEnum> allowed_types;
     
-    Race () {
+    RaceEnum () {
         male_name_blocks = new ArrayList<> ();
         female_name_blocks = new ArrayList<> ();
         place_name_blocks = new ArrayList<> ();
@@ -71,14 +71,14 @@ public enum Race {
         SlickUtils.readObjectFromFile(f, this);
     }
     
-    public static Race random () {
-        return Race.values()[SlickUtils.randIndex(Race.values().length)];
+    public static RaceEnum random () {
+        return RaceEnum.values()[SlickUtils.randIndex(RaceEnum.values().length)];
     }
     
-    public static Race random (ContinentTypeEnum continent) {
-        List<Race> possible_results = new ArrayList<> ();
+    public static RaceEnum random (ContinentTypeEnum continent) {
+        List<RaceEnum> possible_results = new ArrayList<> ();
         
-        for (Race race : Race.values()) {
+        for (RaceEnum race : RaceEnum.values()) {
             if (race.allowed_types.contains(continent))
                 possible_results.add(race);
         }

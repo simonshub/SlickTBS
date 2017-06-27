@@ -52,7 +52,7 @@ public class NameGenerator {
         return SlickUtils.capitalizeWords(result);
     }
     
-    public static String character (Race race, boolean is_female) {
+    public static String character (RaceEnum race, boolean is_female) {
         String result = "";
         boolean to_add = false;
         
@@ -114,7 +114,7 @@ public class NameGenerator {
         return result;
     }
     
-    public static String place (Race race) {
+    public static String place (RaceEnum race) {
         String result = "";
         boolean to_add = false;
         

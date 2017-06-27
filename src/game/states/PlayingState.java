@@ -6,7 +6,7 @@
 package game.states;
 
 import game.data.game.NameGenerator;
-import game.data.game.Race;
+import game.data.game.RaceEnum;
 import game.data.map.Camera;
 import game.data.map.DifficultyLevel;
 import game.data.map.GameMap;
@@ -75,12 +75,14 @@ public class PlayingState extends BasicGameState {
                         g.drawString("\tHt/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
                     }
                     if (gameMap.debug_hex.poi != null) {
-                        g.drawString("\tPoint of Interest: "+gameMap.debug_hex.poi.name, 0, y); y+=24;
+                        g.drawString("\tPoint of Interest: "+gameMap.debug_hex.poi.name+((gameMap.debug_hex.poi.parent!=null) ? " ("+gameMap.debug_hex.poi.parent.name+")" : ""), 0, y); y+=24;
                         g.drawString("\tDescription: "+gameMap.debug_hex.poi.description, 0, y); y+=24;
                     }
                     if (gameMap.debug_hex.owner != null) {
                         g.drawString("\tOwner: "+gameMap.debug_hex.owner.name, 0, y); y+=24;
-                        g.drawString("\tTerritory: "+gameMap.debug_hex.owner.territory.size(), 0, y); y+=24;
+                        g.drawString("\t\tRace: "+gameMap.debug_hex.owner.race.name, 16, y); y+=24;
+                        g.drawString("\t\tType: "+gameMap.debug_hex.owner.type.name(), 16, y); y+=24;
+                        g.drawString("\t\tOwner Territory: "+gameMap.debug_hex.owner.territory.size(), 16, y); y+=24;
                     }
                 }
             }
@@ -118,12 +120,12 @@ public class PlayingState extends BasicGameState {
             String[] places = new String [10];
             
             for (int i=0;i<10;i++) {
-                Race race = Race.random();
+                RaceEnum race = RaceEnum.random();
                 boolean female = Math.random()>=0.5;
                 names[i] = race.name+", "+(female?"female":"male")+" : "+NameGenerator.character(race, female);
             }
             for (int i=0;i<10;i++) {
-                Race race = Race.random();
+                RaceEnum race = RaceEnum.random();
                 places[i] = race.name+" : "+NameGenerator.place(race);
             }
             

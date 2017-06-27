@@ -5,7 +5,7 @@
  */
 package game.data.map;
 
-import game.data.game.Race;
+import game.data.game.RaceEnum;
 import game.data.hex.HexGroup;
 import game.data.hex.HexGrid;
 import game.data.hex.Hex;
@@ -82,7 +82,7 @@ public class Continent {
     
     
     public List<Hex> getAll () {
-        return hexes.getAll();
+        return hexes.toList();
     }
     
     public HexGroup getAllAsGroup () {
@@ -177,7 +177,7 @@ public class Continent {
         flatness = Math.random();
         corruption = Math.random();
         
-        color = new Color ((float)corruption, (float)heat, (float)wetness, 0.1f);
+        color = new Color ((float)corruption, (float)heat, (float)wetness, 0.2f);
     }
     
     
@@ -231,7 +231,7 @@ public class Continent {
         }
         // propagate some hills
         Hex[] mt = new Hex [mountains().size()];
-        mountains().getAll().toArray(mt);
+        mountains().toList().toArray(mt);
         SlickUtils.shuffleArray(mt);
         for (Hex hex : mt) {
             hex.propagate(grid, TerrainTypeEnum.OPEN, TerrainTypeEnum.HILLS);

@@ -30,15 +30,22 @@ public enum FactionTypeEnum {
     
     public static final int RANDOM_TYPE_MAX_RETRY_COUNT = 200;
     
-    public List<Race> available_races;
-    public List<String> available_races_name_list;
+    public List<RaceEnum> available_races;
     
-    public double create_village;
-    public double create_town;
-    public double create_city;
-    public double create_outpost;
-    public double create_stronghold;
-    public double create_castle;
+    public String capital_type_name;
+    public PointOfInterest capital_type;
+    
+    public int composition_civilian;
+    public int composition_hamlet;
+    public int composition_village;
+    public int composition_town;
+    public int composition_city;
+    
+    public int composition_military;
+    public int composition_outpost;
+    public int composition_fort;
+    public int composition_stronghold;
+    public int composition_castle;
     
     public List<String> rule_titles;
     public List<String> ruler_titles;
@@ -54,6 +61,8 @@ public enum FactionTypeEnum {
             Log.err(ex);
         }
         
+        capital_type = PointOfInterest.valueOf(capital_type_name);
+        
         Log.log("Loaded faction type enum "+this.name());
     }
     
@@ -67,7 +76,7 @@ public enum FactionTypeEnum {
     
     
 
-    public static FactionTypeEnum random (Race race) {
+    public static FactionTypeEnum random (RaceEnum race) {
         FactionTypeEnum result = FactionTypeEnum.TRIBAL;
 
         for (int i=0;i<RANDOM_TYPE_MAX_RETRY_COUNT;i++) {

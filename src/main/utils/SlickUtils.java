@@ -30,6 +30,9 @@ public abstract class SlickUtils {
     public static final String LIST_DELIMITER = ";;";
     
     public static String[] splitArgs (String line, String delimiter) {
+        if (line.contains(COMMENT))
+            line = line.substring(0, line.indexOf(COMMENT));
+        
         String[] args = line.split(delimiter);
         
         for (int i=0;i<args.length;i++) {

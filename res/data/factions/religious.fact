@@ -1,8 +1,21 @@
-available_races_name_list = orc;;human;;elf;;dwarf;;goblin;;hobgoblin;;lizardfolk
+available_races = elf;;human;;hobgoblin;;dwarf;;lizardfolk
 
-expand_preference = 1.0
-enhance_preference = 1.0
-exterminate_preference = 1.0
+capital_type_name = city
+
+# 70% civilian -> 30% hamlet, 40% village, 20% town, 10% city
+# 30% military -> 50% outpost, 25% fort, 15% stronghold, 10% castle
+
+composition_civilian = 70
+composition_hamlet = 30
+composition_village = 40
+composition_town = 20
+composition_city = 10
+
+composition_military = 30
+composition_outpost = 50
+composition_fort = 25
+composition_stronghold = 15
+composition_castle = 10
 
 rule_titles = Order;;Temple
 ruler_titles = High Inquisitor;;Grand Master;;Elder;;Lord Commander;;Overseer

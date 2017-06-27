@@ -37,7 +37,7 @@ public final class Faction {
     
     public String name;
     
-    public Race race;
+    public RaceEnum race;
     public Hex capital;
     public Color color;
     public List<Hex> territory;
@@ -46,7 +46,7 @@ public final class Faction {
     
     
     public Faction (HexGrid grid, Hex source) {
-        race = Race.random(source.continent.continent_type);
+        race = RaceEnum.random(source.continent.continent_type);
         type = FactionTypeEnum.random(race);
         
         String name_place = NameGenerator.place(race);
@@ -57,7 +57,7 @@ public final class Faction {
             boolean is_settleable = true;
             
             for (Hex hex : in_range) {
-                if (hex!=null && hex.poi!=null && hex.poi.is(PointOfInterest.CAPITOL)) {
+                if (hex!=null && hex.poi!=null && hex.poi.isSettlement()) {
                     is_settleable = false;
                     break;
                 }
@@ -70,11 +70,11 @@ public final class Faction {
         }
         
         capital = source;
-        capital.poi = new PointOfInterest(PointOfInterest.CAPITOL);
+        capital.poi = new PointOfInterest(type.capital_type);
         capital.poi.name = name_place;
         this.addTerritory(this.capital.getAllInRange(grid, 2));
         
-        this.color = new Color ((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.3f);
+        this.color = new Color ((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f);
         
     }
     

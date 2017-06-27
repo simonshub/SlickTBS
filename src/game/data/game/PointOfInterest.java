@@ -11,8 +11,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import main.ResMgr;
 import main.utils.Log;
 import main.utils.SlickUtils;
@@ -26,6 +24,8 @@ import org.newdawn.slick.SlickException;
  */
 public class PointOfInterest {
     
+    // HOSTILE DUNGEONS
+    
     public static final PointOfInterest OLD_CRYPT = new PointOfInterest
                         (true,  "Old Crypt",       "dungeon_crypt.png",        1.0f,1.0f,1.0f,     "An abandoned crypt. Level 2 dungeon.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA, TerrainTypeEnum.TROPICAL);
@@ -38,9 +38,64 @@ public class PointOfInterest {
                         (true,  "Ruined Fort",     "dungeon_ruins.png",        1.0f,1.0f,1.0f,     "A forgotten fortress or stronghold. Level 4 dungeon.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA);
     
-    public static final PointOfInterest CAPITOL = new PointOfInterest
-                        (false, "Capitol",         "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+    public static final PointOfInterest HAUNTED_HOUSE = new PointOfInterest
+                        (true,  "Ruined Fort",     "dungeon_haunted_house.png",1.0f,1.0f,1.0f,     "A haunted house. Highly randomized event chain with end boss.",
+                         TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA);
+    
+    
+    
+    
+    // CIVILIAN SETTLEMENTS
+    
+    public static final PointOfInterest HAMLET = new PointOfInterest
+                        (false, "Hamlet",           "human_town.png",           1.0f,1.0f,1.0f,     "This is a small hamlet, consisting of sparse rough housing and a few services..",
                          TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest VILLAGE = new PointOfInterest
+                        (false, "Village",          "human_town.png",           1.0f,1.0f,1.0f,     "This is a village.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest TOWN = new PointOfInterest
+                        (false, "Town",             "human_town.png",           1.0f,1.0f,1.0f,     "This is a town.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest CITY = new PointOfInterest
+                        (false, "City",             "human_town.png",           1.0f,1.0f,1.0f,     "This is a city.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest CAPITOL = new PointOfInterest
+                        (false, "Capitol",          "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         TerrainTypeEnum.WASTES);
+    
+    
+    
+    
+    // MILITARY SETTLEMENTS
+    
+    public static final PointOfInterest OUTPOST = new PointOfInterest
+                        (false, "Outpost",          "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest FORT = new PointOfInterest
+                        (false, "Fort",             "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest STRONGHOLD = new PointOfInterest
+                        (false, "Stronghold",       "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         null);
+    
+    public static final PointOfInterest CASTLE = new PointOfInterest
+                        (false, "Castle",           "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         TerrainTypeEnum.WASTES);
+    
+    public static final PointOfInterest CITADEL = new PointOfInterest
+                        (false, "Citadel",          "human_town.png",           1.0f,1.0f,1.0f,     "This is the ruling seat of a faction, a center of great power.",
+                         TerrainTypeEnum.WASTES);
+    
+    
+    
+    
+    // OTHER
     
     public static final PointOfInterest CULTURAL_CENTER = new PointOfInterest
                         (false, "Cultural Center", "black_flag.png",           1.0f,1.0f,1.0f,     "This is the birthplace of an entire culture.",
@@ -90,8 +145,10 @@ public class PointOfInterest {
             allowed_terrain_types.add(TerrainTypeEnum.SEA);
             allowed_terrain_types.add(TerrainTypeEnum.MOUNTAINS);
             allowed_terrain_types.addAll(Arrays.asList(TerrainTypeEnum.values()));
-            for (TerrainTypeEnum not_allowed : not_allowed_terrains)
-                allowed_terrain_types.remove(not_allowed);
+            
+            if (not_allowed_terrains != null)
+                for (TerrainTypeEnum not_allowed : not_allowed_terrains)
+                    allowed_terrain_types.remove(not_allowed);
         } catch (SlickException ex) {
             Log.err(ex);
         }
@@ -117,6 +174,16 @@ public class PointOfInterest {
         return result_array;
     }
     
+    public static PointOfInterest valueOf (String name) {
+        try {
+            return (PointOfInterest) PointOfInterest.class.getField(name.toUpperCase()).get(null);
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            Log.err(ex);
+        }
+        
+        return null;
+    }
+    
     public static PointOfInterest getRandom (TerrainTypeEnum for_terrain) {
         List<PointOfInterest> potential = new ArrayList<> ();
         potential.addAll(Arrays.asList(PointOfInterest.values()));
@@ -138,6 +205,19 @@ public class PointOfInterest {
             return this == parent;
         
         return this.parent == parent;
+    }
+    
+    public boolean isSettlement () {
+        return this.is(PointOfInterest.HAMLET) ||
+                this.is(PointOfInterest.VILLAGE) || 
+                this.is(PointOfInterest.TOWN) || 
+                this.is(PointOfInterest.CITY) || 
+                this.is(PointOfInterest.CAPITOL) || 
+                this.is(PointOfInterest.OUTPOST) || 
+                this.is(PointOfInterest.FORT) || 
+                this.is(PointOfInterest.STRONGHOLD) || 
+                this.is(PointOfInterest.CASTLE) || 
+                this.is(PointOfInterest.CITADEL);
     }
     
     public void render (float x, float y, float scale_x, float scale_y) {

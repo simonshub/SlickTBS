@@ -1,8 +1,21 @@
-available_races_name_list = orc;;human;;elf;;dwarf;;goblin;;hobgoblin;;lizardfolk
+available_races = elf;;human;;hobgoblin;;dwarf;;lizardfolk
 
-expand_preference = 1.0
-enhance_preference = 1.0
-exterminate_preference = 1.0
+capital_type_name = city
+
+# 60% civilian -> 10% hamlet, 35% village, 35% town, 20% city
+# 40% military -> 20% outpost, 30% fort, 50% stronghold, 0% castle
+
+composition_civilian = 60
+composition_hamlet = 10
+composition_village = 35
+composition_town = 35
+composition_city = 20
+
+composition_military = 40
+composition_outpost = 20
+composition_fort = 30
+composition_stronghold = 50
+composition_castle = 0
 
 rule_titles = Republic;;Olegarchy
 ruler_titles = Representative;;Lord;;Lord Protector

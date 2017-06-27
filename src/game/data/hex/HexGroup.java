@@ -50,7 +50,7 @@ public final class HexGroup {
         return hex_list.get(index);
     }
     
-    public List<Hex> getAll() {
+    public List<Hex> toList() {
         return hex_list;
     }
     
@@ -66,6 +66,19 @@ public final class HexGroup {
         return results;
     }
     
+    public HexGroup removeAllOfTypes(TerrainTypeEnum... types) {
+        List<TerrainTypeEnum> type_list = Arrays.asList(types);
+        
+        for (int i=0;i<hex_list.size();i++) {
+            if (type_list.contains(hex_list.get(i).terrain)) {
+                hex_list.remove(i);
+                --i;
+            }
+        }
+        
+        return this;
+    }
+    
     
     
     public void add (List<Hex> hexes) {
@@ -77,7 +90,7 @@ public final class HexGroup {
     }
     
     public void add (HexGroup hexes) {
-        hex_list.addAll(hexes.getAll());
+        hex_list.addAll(hexes.toList());
     }
     
     

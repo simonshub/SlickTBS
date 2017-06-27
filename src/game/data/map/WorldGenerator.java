@@ -6,10 +6,8 @@
 package game.data.map;
 
 import game.data.game.Faction;
-import game.data.game.Faction;
 import game.data.game.NameGenerator;
 import game.data.game.PointOfInterest;
-import game.data.game.Race;
 import main.utils.SlickUtils;
 import game.data.hex.DirEnum;
 import game.data.hex.HexGrid;
@@ -32,7 +30,7 @@ public abstract class WorldGenerator {
     public static int CULTURE_NO_SETTLE_ZONE_RANGE = 6;
     public static int CHAIN_PROPAGATION_RETRY_COUNT = 10;
     
-    public static float CONTINENT_SIZE_TO_POI_COUNT = 0.04f;
+    public static float CONTINENT_SIZE_TO_POI_COUNT = 0.03f;
     public static float POI_COUNT_OFFSET = 0.01f;
     
     public static float CONTINENT_CULTURES_PER_SIZE = 0.005f;
@@ -235,14 +233,14 @@ public abstract class WorldGenerator {
         GRID.land = new ArrayList<> ();
         
         // set the entire grid to sea, initialization
-        PlayingState.loadLabel = loadLabelBase + "Initializing";
-        Log.log(PlayingState.loadLabel);
+        Log.log("Initializing...");
         for (int y=0;y<GRID.getSizeY();y++) {
             for (int x=0;x<GRID.getSizeX();x++) {
                 GRID.get(x, y).terrain = TerrainTypeEnum.SEA;
             }
         }
         
+        Log.log("Generating landmasses");
         for (int i=0;!satisfiesLandPrecentage(GRID.land);i++) {
             Hex starting_point = GRID.get(SlickUtils.randIndex(GRID.getSizeX()), SlickUtils.randIndex(GRID.getSizeY()));
             
@@ -259,9 +257,8 @@ public abstract class WorldGenerator {
                 continue;
             }
             
-            PlayingState.loadLabel = loadLabelBase + "Generating landmass #" + String.valueOf(i+1);
+            Log.log("Generating landmass #" + String.valueOf(i+1));
             section_start = System.currentTimeMillis();
-            Log.log(PlayingState.loadLabel);
             
             starting_point.terrain = TerrainTypeEnum.OPEN;
             int size = getContinentSize(continent_size_factor);
@@ -274,20 +271,8 @@ public abstract class WorldGenerator {
             Log.log("Landmass generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         }
         
-        PlayingState.loadLabel = loadLabelBase + "Cleaning singular hexes";
+        Log.log("Adding transitional hexes");
         section_start = System.currentTimeMillis();
-        Log.log(PlayingState.loadLabel);
-        for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
-            if (hex.getAllAdjacentOfTypes(GRID, hex.terrain).isEmpty()) {
-                Hex adj = hex.getRandomAdjacent(GRID);
-                if (adj!=null) hex.terrain = adj.terrain;
-            }
-        }
-        Log.log("Cleaning done in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
-        
-        PlayingState.loadLabel = loadLabelBase + "Adding transitional hexes";
-        section_start = System.currentTimeMillis();
-        Log.log(PlayingState.loadLabel);
         for (Hex hex : WorldGenerator.GRID.getAllNotOfType(TerrainTypeEnum.SEA)) {
             TerrainTypeEnum transition = null;
             
@@ -326,9 +311,8 @@ public abstract class WorldGenerator {
         }
         Log.log("Transitional hexes done in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         
-        PlayingState.loadLabel = loadLabelBase + "Assimilating adjacent hexes";
+        Log.log("Assimilating adjacent hexes");
         section_start = System.currentTimeMillis();
-        Log.log(PlayingState.loadLabel);
         List<TerrainTypeEnum> non_spread_types = Arrays.asList(ASSIMILATION_NON_SPREAD_TYPES);
         
         for (int i=0;i < ASSIMILATION_COUNT;i++) {
@@ -358,24 +342,25 @@ public abstract class WorldGenerator {
             GRID.land.addAll(continent.getAll());
         Log.log("Assimilation done in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
 
-        PlayingState.loadLabel = loadLabelBase + "Adding points of interest";
+        Log.log("Adding points of interest");
         section_start = System.currentTimeMillis();
-        Log.log(PlayingState.loadLabel);
-        
         for (Continent continent : GRID.continents) {
             int poi_count = SlickUtils.randPlusMinus((int) (continent.size() * CONTINENT_SIZE_TO_POI_COUNT), (int) (continent.size() * POI_COUNT_OFFSET), -(int) (continent.size() * POI_COUNT_OFFSET));
-            List<Hex> potential_pois = continent.getAll();
-
+            List<Hex> potential_pois = continent.getAllAsGroup().removeAllOfTypes(Faction.IMPASSABLE_TERRAIN_TYPES).toList();
+            
             for (int i=0;i<poi_count;i++) {
                 Hex hex = potential_pois.get(SlickUtils.randIndex(potential_pois.size()));
+                if (hex.terrain.equals(TerrainTypeEnum.MOUNTAINS) || hex.terrain.equals(TerrainTypeEnum.SEA))
+                    Log.err("POI being added to mountains?");
                 hex.poi = PointOfInterest.getRandom(hex.terrain);
+                if ((hex.terrain.equals(TerrainTypeEnum.MOUNTAINS) || hex.terrain.equals(TerrainTypeEnum.SEA)) && hex.poi!=null)
+                    Log.err("POI added to mountains!!! Hex @ "+hex.x+","+hex.y+" has "+hex.poi.name);
             }
         }
         Log.log("Points of interested added in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         
-        PlayingState.loadLabel = loadLabelBase + "Generating cultures";
         section_start = System.currentTimeMillis();
-        Log.log(PlayingState.loadLabel);
+        Log.log("Generating factions");
         
         for (Continent continent : GRID.continents) {
             int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
@@ -384,13 +369,15 @@ public abstract class WorldGenerator {
 
             for (int i=0;i<faction_count;i++) {
                 if (!available_hexes.isEmpty()) {
-                    GRID.factions.add(new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size()))));
+                    Faction f = new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size())));
+                    GRID.factions.add(f);
+                    Log.log("Generated faction '"+f.name+"' at "+f.capital.x+","+f.capital.y+" as a "+f.race.name+" "+f.type.getRuleName());
                 } else {
                     break;
                 }
             }
         }
-        Log.log("Cultures generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
+        Log.log("Factions generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         
         PlayingState.isLoading = false;
         Log.log("Map generated in "+(System.currentTimeMillis()-start)/1000f+" sec");
