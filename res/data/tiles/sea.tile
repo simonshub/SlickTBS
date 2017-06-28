@@ -1,2 +1,4 @@
 img_path = res/grfx/tiles/sea.png
+military_land_value = 20
+civilian_land_value = 40
 move_cost = 1

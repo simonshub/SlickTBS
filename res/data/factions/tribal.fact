@@ -1,21 +1,12 @@
 available_races = human;;hobgoblin;;lizardfolk;;orc;;goblin
 
-capital_type_name = stronghold
+military_capital = true
 
-# 50% civilian -> 20% hamlet, 75% village, 5% town, 0% city
-# 50% military -> 40% outpost, 30% fort, 30% stronghold, 0% castle
+preference_spread = 85
+preference_upgrade = 15
 
 composition_civilian = 50
-composition_hamlet = 20
-composition_village = 75
-composition_town = 5
-composition_city = 0
-
 composition_military = 50
-composition_outpost = 40
-composition_fort = 30
-composition_stronghold = 30
-composition_castle = 0
 
 rule_titles = Tribes;;Clans;;Nation;;Warbands
 ruler_titles = Warlord;;Chieftain;;Elder

@@ -1,2 +1,4 @@
 img_path = res/grfx/tiles/savanna.png
+military_land_value = 5
+civilian_land_value = 10
 move_cost = 1

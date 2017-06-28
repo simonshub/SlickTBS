@@ -1,2 +1,4 @@
 img_path = res/grfx/tiles/grass.png
+military_land_value = 5
+civilian_land_value = 15
 move_cost = 1

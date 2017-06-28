@@ -1,21 +1,12 @@
 available_races = elf;;human;;dwarf;;lizardfolk
 
-capital_type_name = castle
+military_capital = true
 
-# 75% civilian -> 20% hamlet, 30% village, 30% town, 20% city
-# 25% military -> 40% outpost, 40% fort, 0% stronghold, 20% castle
+preference_spread = 35
+preference_upgrade = 65
 
-composition_civilian = 75
-composition_hamlet = 20
-composition_village = 30
-composition_town = 30
-composition_city = 20
-
-composition_military = 25
-composition_outpost = 40
-composition_fort = 40
-composition_stronghold = 0
-composition_castle = 20
+composition_civilian = 70
+composition_military = 30
 
 rule_titles = Empire;;Imperium
 ruler_titles = Emperor

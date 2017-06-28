@@ -5,6 +5,7 @@
  */
 package game.states;
 
+import game.data.game.Faction;
 import game.data.game.NameGenerator;
 import game.data.game.RaceEnum;
 import game.data.map.Camera;
@@ -69,20 +70,27 @@ public class PlayingState extends BasicGameState {
                 }
                 if (gameMap.debug_hex != null) {
                     g.drawString("Hex: "+gameMap.debug_hex.x+","+gameMap.debug_hex.y, 0, y); y+=24;
-                    g.drawString("\tType: "+gameMap.debug_hex.terrain.name(), 0, y); y+=24;
+                    g.drawString("Type: "+gameMap.debug_hex.terrain.name(), 0, y); y+=24;
+                    g.drawString("Military Land Value: "+Faction.getLandValue(gameMap.grid, gameMap.debug_hex, true), 0, y); y+=24;
+                    g.drawString("Civilian Land Value: "+Faction.getLandValue(gameMap.grid, gameMap.debug_hex, false), 0, y); y+=24;
                     if (gameMap.debug_hex.continent != null) {
-                        g.drawString("\tContinent: "+gameMap.debug_hex.continent.name+" ("+SlickUtils.beautifyString(gameMap.debug_hex.continent.continent_type.name())+")", 0, y); y+=24;
-                        g.drawString("\tHt/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
+                         y+=24;
+                        g.drawString("Continent: "+gameMap.debug_hex.continent.name+" ("+SlickUtils.beautifyString(gameMap.debug_hex.continent.continent_type.name())+")", 0, y); y+=24;
+                        g.drawString("Ht/Wt/Cr: "+gameMap.debug_hex.continent.getColor().r+"/"+gameMap.debug_hex.continent.getColor().g+"/"+gameMap.debug_hex.continent.getColor().b, 0, y); y+=24;
                     }
                     if (gameMap.debug_hex.poi != null) {
-                        g.drawString("\tPoint of Interest: "+gameMap.debug_hex.poi.name+((gameMap.debug_hex.poi.parent!=null) ? " ("+gameMap.debug_hex.poi.parent.name+")" : ""), 0, y); y+=24;
-                        g.drawString("\tDescription: "+gameMap.debug_hex.poi.description, 0, y); y+=24;
+                         y+=24;
+                        g.drawString("Point of Interest: "+gameMap.debug_hex.poi.name+((gameMap.debug_hex.poi.parent!=null) ? " ("+gameMap.debug_hex.poi.parent.name+")" : ""), 0, y); y+=24;
+                        g.drawString("Description: "+gameMap.debug_hex.poi.description, 0, y); y+=24;
                     }
                     if (gameMap.debug_hex.owner != null) {
-                        g.drawString("\tOwner: "+gameMap.debug_hex.owner.name, 0, y); y+=24;
-                        g.drawString("\t\tRace: "+gameMap.debug_hex.owner.race.name, 16, y); y+=24;
-                        g.drawString("\t\tType: "+gameMap.debug_hex.owner.type.name(), 16, y); y+=24;
-                        g.drawString("\t\tOwner Territory: "+gameMap.debug_hex.owner.territory.size(), 16, y); y+=24;
+                         y+=24;
+                        g.drawString("Owner: "+gameMap.debug_hex.owner.name, 0, y); y+=24;
+                        g.drawString("Race: "+gameMap.debug_hex.owner.race.name, 0, y); y+=24;
+                        g.drawString("Type: "+gameMap.debug_hex.owner.type.name(), 0, y); y+=24;
+                        g.drawString("Settlements: "+gameMap.debug_hex.owner.settlements.size(), 0, y); y+=24;
+                        g.drawString("Civilian: "+gameMap.debug_hex.owner.getCivilianSettlements().size()+" | Military: "+gameMap.debug_hex.owner.getMilitarySettlements().size(), 24, y); y+=24;
+                        g.drawString("Owner Territory: "+gameMap.debug_hex.owner.territory.size(), 0, y); y+=24;
                     }
                 }
             }

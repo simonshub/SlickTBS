@@ -28,6 +28,8 @@ import org.newdawn.slick.SlickException;
     ;
     
     public int move_cost;
+    public int military_land_value;
+    public int civilian_land_value;
     public Image img;
     public String img_path;
     

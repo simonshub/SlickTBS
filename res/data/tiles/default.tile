@@ -1,2 +1,4 @@
 img_path = res/grfx/tiles/default.png
+military_land_value = 1
+civilian_land_value = 1
 move_cost = 1

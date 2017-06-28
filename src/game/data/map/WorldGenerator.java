@@ -363,9 +363,10 @@ public abstract class WorldGenerator {
         section_start = System.currentTimeMillis();
         Log.log("Generating factions");
         
+        GRID.factions = new ArrayList<> ();
+        
         for (Continent continent : GRID.continents) {
             int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
-            GRID.factions = new ArrayList<> ();
             List<Hex> available_hexes = continent.getAll();
 
             for (int i=0;i<faction_count;i++) {
@@ -376,6 +377,17 @@ public abstract class WorldGenerator {
                 } else {
                     break;
                 }
+            }
+        }
+        
+        for (Faction f : GRID.factions) {
+            int actions = SlickUtils.rand(Faction.MIN_ACTIONS, Faction.MAX_ACTIONS);
+            
+            for (int i=0;i<actions;i++) {
+                if (f.type.spreadOrUpgrade())
+                    f.spread(GRID, f.randomSettlement());
+                else
+                    f.upgrade(GRID, f.randomSettlement());
             }
         }
         Log.log("Factions generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
