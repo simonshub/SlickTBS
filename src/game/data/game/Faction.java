@@ -5,12 +5,15 @@
  */
 package game.data.game;
 
+import game.data.hex.DirEnum;
 import game.data.hex.Hex;
 import game.data.hex.HexGrid;
 import game.data.map.TerrainTypeEnum;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 
@@ -41,6 +44,8 @@ public final class Faction {
     public Hex capital;
     public Color color;
     public List<Hex> territory;
+    public List<Hex> settlements;
+    
     public FactionTypeEnum type;
     
     
@@ -74,6 +79,9 @@ public final class Faction {
         capital.poi.name = name_place;
         this.addTerritory(this.capital.getAllInRange(grid, 2));
         
+        settlements = new ArrayList<> ();
+        settlements.add(capital);
+        
         this.color = new Color ((float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f);
         
     }
@@ -102,6 +110,29 @@ public final class Faction {
             territory.add(hex);
             hex.owner = this;
         }
+    }
+    
+    public void spread (Hex source) {
+        List<Hex> path = new ArrayList<> ();
+        DirEnum direction;
+        int land_value;
+        PointOfInterest type;
+        
+    }
+    
+    public PointOfInterest nextSettlementType () {
+        Map<PointOfInterest, Integer> chanceMap = new HashMap<> ();
+        List<PointOfInterest> settlementTypes = new ArrayList<> ();
+        
+        for (PointOfInterest poi : PointOfInterest.values())
+            if (poi.isSettlement())
+                settlementTypes.add(poi);
+        
+        for (PointOfInterest poi : settlementTypes) {
+            chanceMap.put(poi, type.getComposition(this, poi));
+        }
+        
+        return null;
     }
     
 }

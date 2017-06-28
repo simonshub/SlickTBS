@@ -350,11 +350,12 @@ public abstract class WorldGenerator {
             
             for (int i=0;i<poi_count;i++) {
                 Hex hex = potential_pois.get(SlickUtils.randIndex(potential_pois.size()));
-                if (hex.terrain.equals(TerrainTypeEnum.MOUNTAINS) || hex.terrain.equals(TerrainTypeEnum.SEA))
-                    Log.err("POI being added to mountains?");
-                hex.poi = PointOfInterest.getRandom(hex.terrain);
-                if ((hex.terrain.equals(TerrainTypeEnum.MOUNTAINS) || hex.terrain.equals(TerrainTypeEnum.SEA)) && hex.poi!=null)
-                    Log.err("POI added to mountains!!! Hex @ "+hex.x+","+hex.y+" has "+hex.poi.name);
+                PointOfInterest poi_parent = PointOfInterest.getRandom(hex.terrain);
+                if (poi_parent != null) {
+                    hex.poi = new PointOfInterest (poi_parent);
+                } else {
+                    i--;
+                }
             }
         }
         Log.log("Points of interested added in "+(System.currentTimeMillis()-section_start)/1000f+" sec");

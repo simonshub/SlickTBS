@@ -5,6 +5,7 @@
  */
 package game.data.game;
 
+import game.data.hex.Hex;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,17 +36,17 @@ public enum FactionTypeEnum {
     public String capital_type_name;
     public PointOfInterest capital_type;
     
-    public int composition_civilian;
-    public int composition_hamlet;
-    public int composition_village;
-    public int composition_town;
-    public int composition_city;
+    public double composition_civilian;
+    public double composition_hamlet;
+    public double composition_village;
+    public double composition_town;
+    public double composition_city;
     
-    public int composition_military;
-    public int composition_outpost;
-    public int composition_fort;
-    public int composition_stronghold;
-    public int composition_castle;
+    public double composition_military;
+    public double composition_outpost;
+    public double composition_fort;
+    public double composition_stronghold;
+    public double composition_castle;
     
     public List<String> rule_titles;
     public List<String> ruler_titles;
@@ -90,6 +91,24 @@ public enum FactionTypeEnum {
 
     public String getRuleName () {
         return rule_titles.get(SlickUtils.randIndex(rule_titles.size()));
+    }
+    
+    public Integer getComposition (Faction f, PointOfInterest poi) {
+        double mil_count=0.0;
+        double civ_count=0.0;
+        
+        for (Hex hex : f.settlements) {
+            if (hex.poi.isMilitary())
+                mil_count+=1.0;
+            else if (hex.poi.isCivilian())
+                civ_count+=1.0;
+        }
+        
+        // check whether the ratio dictates a next military or civilian settlement
+        boolean military = (mil_count / civ_count) < (f.type.composition_military / f.type.composition_civilian);
+        PointOfInterest poi_to_add = null;
+        
+        return 0;
     }
     
 }
