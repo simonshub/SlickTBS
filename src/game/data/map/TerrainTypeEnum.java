@@ -7,6 +7,9 @@ package game.data.map;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import main.Consts;
 import main.utils.Log;
 import main.utils.SlickUtils;
@@ -52,5 +55,19 @@ import org.newdawn.slick.SlickException;
         File f = new File (img_path);
         SlickUtils.readObjectFromFile(f, this);
         this.img = new Image (this.img_path);
+    }
+    
+    
+    
+    public static TerrainTypeEnum[] valuesWithout (TerrainTypeEnum... without) {
+        List<TerrainTypeEnum> values = new ArrayList<> (Arrays.asList(TerrainTypeEnum.values()));
+        
+        for (TerrainTypeEnum type : without) {
+            values.remove(type);
+        }
+        
+        TerrainTypeEnum[] results = new TerrainTypeEnum [values.size()];
+        values.toArray(results);
+        return results;
     }
 }

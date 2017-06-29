@@ -26,21 +26,33 @@ public class PointOfInterest {
     
     // HOSTILE DUNGEONS
     
-    public static final PointOfInterest OLD_CRYPT = new PointOfInterest
-                        (true,  "Old Crypt",       "dungeon_crypt.png",        1.0f,1.0f,1.0f,     "An abandoned crypt. Level 2 dungeon.",
+    public static final PointOfInterest GRAVEYARD = new PointOfInterest
+                        (true,  "Graveyard",        "dungeon_crypt.png",        1.0f,1.0f,1.0f,     "A haunted graveyard.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA, TerrainTypeEnum.TROPICAL);
     
     public static final PointOfInterest ABANDONED_TOWER = new PointOfInterest
-                        (true,  "Dungeon",          "dungeon_dungeon.png",      1.0f,1.0f,1.0f,     "An old, ruined tower. Level 3 dungeon.",
+                        (true,  "Dungeon",          "dungeon_dungeon.png",      1.0f,1.0f,1.0f,     "An old, ruined tower.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.SAVANNA);
     
     public static final PointOfInterest RUINED_FORT = new PointOfInterest
-                        (true,  "Ruined Fort",     "dungeon_ruins.png",        1.0f,1.0f,1.0f,     "A forgotten fortress or stronghold. Level 4 dungeon.",
+                        (true,  "Ruined Fort",      "dungeon_ruins.png",        1.0f,1.0f,1.0f,     "A forgotten fortress or stronghold.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA);
     
-    public static final PointOfInterest HAUNTED_HOUSE = new PointOfInterest
-                        (true,  "Haunted House",   "dungeon_haunted_house.png",1.0f,1.0f,1.0f,     "A haunted house. Highly randomized event chain with end boss.",
+    public static final PointOfInterest GHOST_TOWN = new PointOfInterest
+                        (true,  "Ghost Town",       "dungeon_haunted_house.png",1.0f,1.0f,1.0f,     "An abandoned town, village or hamlet.",
                          TerrainTypeEnum.ARID, TerrainTypeEnum.DESERT, TerrainTypeEnum.SAVANNA);
+    
+    public static final PointOfInterest CAVE = new PointOfInterest
+                        (true,  "Cave",             "dungeon_cave.png",         1.0f,1.0f,1.0f,     "A shallow cave, sometimes leading underground.",
+                         TerrainTypeEnum.valuesWithout(TerrainTypeEnum.HILLS, TerrainTypeEnum.TROPICAL, TerrainTypeEnum.SAVANNA));
+    
+    public static final PointOfInterest CAVERN = new PointOfInterest
+                        (true,  "Cavern",           "dungeon_cave.png",         1.0f,1.0f,1.0f,     "A huge system of caves, sometimes leading underground.",
+                         TerrainTypeEnum.valuesWithout(TerrainTypeEnum.HILLS));
+    
+    public static final PointOfInterest ABANDONED_MINE = new PointOfInterest
+                        (true,  "Abandoned Mine",   "dungeon_mine.png",         1.0f,1.0f,1.0f,     "An abandoned mine.",
+                         TerrainTypeEnum.SAVANNA);
     
     
     

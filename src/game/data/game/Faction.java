@@ -24,6 +24,7 @@ public final class Faction {
     public static final int MAX_SETTLE_RETRIES = 100;
     
     public static final int MIN_RANGE_BETWEEN_SETTLEMENTS = 4;
+    public static final int SETTLEMENT_TERRITORY_RANGE = 2;
     public static final int SPREAD_CANDIDATE_COUNT = 10;
     public static final int LAND_VALUE_SCAN_RANGE = 2;
     public static final int SETTLE_SCAN_RANGE = 10;
@@ -90,7 +91,7 @@ public final class Faction {
         capital = source;
         capital.poi = new PointOfInterest(type.military_capital ? Faction.MILITARY_POIS_BY_LEVEL[1] : Faction.CIVILIAN_POIS_BY_LEVEL[1]);
         capital.poi.name = name_place;
-        this.addTerritory(this.capital.getAllInRange(grid, 2));
+        this.addTerritory(this.capital.getAllInRange(grid, SETTLEMENT_TERRITORY_RANGE));
         
         settlements = new ArrayList<> ();
         settlements.add(capital);
@@ -102,12 +103,18 @@ public final class Faction {
     
     
     public void resetTerritory () {
+        for (Hex hex : territory) {
+            hex.owner = null;
+        }
+        
         this.territory = new ArrayList<> ();
     }
     
     public void addTerritory (Hex hex) {
         if (this.territory == null)
             this.territory = new ArrayList<> ();
+        
+        if (hex==null || hex.owner==this) return;
         
         this.territory.add(hex);
         hex.owner = this;
@@ -118,7 +125,7 @@ public final class Faction {
             this.territory = new ArrayList<> ();
         
         for (Hex hex : hexes) {
-            if (hex==null) continue;
+            if (hex==null || hex.owner==this) continue;
             
             territory.add(hex);
             hex.owner = this;
@@ -176,8 +183,10 @@ public final class Faction {
         if (candidates.isEmpty())
             return;
         
-        candidates.get(SlickUtils.randIndex(candidates.size())).poi = settlement;
-        this.addTerritory(candidates.get(SlickUtils.randIndex(candidates.size())).getAllInRange(grid, 2));
+        Hex candidate = candidates.get(SlickUtils.randIndex(candidates.size()));
+        candidate.poi = settlement;
+        this.settlements.add(candidate);
+        this.addTerritory(candidate.getAllInRange(grid, SETTLEMENT_TERRITORY_RANGE));
     }
     
     public void upgrade (HexGrid grid, Hex source) {
@@ -196,10 +205,12 @@ public final class Faction {
         }
         
         Hex target = potential.get(SlickUtils.randIndex(potential.size()));
+        int new_level = getSettlementLevel(target)+1;
         if (target.poi.isMilitary())
-            target.poi = new PointOfInterest (Faction.MILITARY_POIS_BY_LEVEL[ getSettlementLevel(target)+1 ]);
+            target.poi = new PointOfInterest (Faction.MILITARY_POIS_BY_LEVEL[ new_level ]);
         else
-            target.poi = new PointOfInterest (Faction.CIVILIAN_POIS_BY_LEVEL[ getSettlementLevel(target)+1 ]);
+            target.poi = new PointOfInterest (Faction.CIVILIAN_POIS_BY_LEVEL[ new_level ]);
+        this.addTerritory(target.getAllInRange(grid, SETTLEMENT_TERRITORY_RANGE+new_level));
     }
     
     

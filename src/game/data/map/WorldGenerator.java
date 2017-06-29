@@ -30,7 +30,7 @@ public abstract class WorldGenerator {
     public static int CULTURE_NO_SETTLE_ZONE_RANGE = 6;
     public static int CHAIN_PROPAGATION_RETRY_COUNT = 10;
     
-    public static float CONTINENT_SIZE_TO_POI_COUNT = 0.03f;
+    public static float CONTINENT_SIZE_TO_POI_COUNT = 0.01f;
     public static float POI_COUNT_OFFSET = 0.01f;
     
     public static float CONTINENT_CULTURES_PER_SIZE = 0.005f;
@@ -344,6 +344,7 @@ public abstract class WorldGenerator {
 
         Log.log("Adding points of interest");
         section_start = System.currentTimeMillis();
+        PointOfInterest p = PointOfInterest.ABANDONED_MINE;
         for (Continent continent : GRID.continents) {
             int poi_count = SlickUtils.randPlusMinus((int) (continent.size() * CONTINENT_SIZE_TO_POI_COUNT), (int) (continent.size() * POI_COUNT_OFFSET), -(int) (continent.size() * POI_COUNT_OFFSET));
             List<Hex> potential_pois = continent.getAllAsGroup().removeAllOfTypes(Faction.IMPASSABLE_TERRAIN_TYPES).toList();
