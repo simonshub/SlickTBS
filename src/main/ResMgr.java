@@ -6,7 +6,7 @@
 package main;
 
 import main.utils.SlickUtils;
-import game.data.hex.Hex;
+import game.data.world.map.hex.Hex;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -5,12 +5,12 @@
  */
 package game.states;
 
-import game.data.game.Faction;
-import game.data.game.NameGenerator;
-import game.data.game.RaceEnum;
-import game.data.map.Camera;
-import game.data.map.DifficultyLevel;
-import game.data.map.GameMap;
+import game.data.world.Faction;
+import game.data.world.NameGenerator;
+import game.data.world.RaceEnum;
+import game.data.world.map.Camera;
+import game.data.world.map.DifficultyLevel;
+import game.data.world.map.GameMap;
 import main.Consts;
 import main.utils.Log;
 import main.utils.SlickUtils;

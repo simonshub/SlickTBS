@@ -23,6 +23,9 @@ public abstract class Consts {
     public static final String FACTIONS_PATH = "res/data/factions/";
     public static final String FACTIONS_EXT = ".fact";
     
+    public static final String DAMAGE_TYPE_PATH = "res/data/attacks/";
+    public static final String DAMAGE_TYPE_EXT = ".atk";
+    
     public static final boolean RENDER_DEBUG = true;
     
     public static final boolean RENDER_POIS = true;
