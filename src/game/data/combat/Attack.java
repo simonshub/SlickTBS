@@ -5,6 +5,8 @@
  */
 package game.data.combat;
 
+import java.util.Map;
+
 /**
  *
  * @author emil.simon
@@ -12,9 +14,9 @@ package game.data.combat;
 public class Attack {
     
     public String name;
-    public String description;
+    public String text;
     
-    public int[] damage;
+    public Map<DamageType, Integer> damage;
     
     
 }

@@ -17,5 +17,4 @@ public class CombatCard {
     public int health_max, health_cur;
     public int stamina_max, stamina_cur;
     
-    public 
 }
