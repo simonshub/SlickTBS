@@ -32,6 +32,9 @@ public class PlayingState extends BasicGameState {
     public static String loadLabel;
     public static boolean isLoading;
     
+    public static boolean is_night=false;
+    public static float night_overlay=0f;
+    
     public GameMap gameMap;
     public Camera camera;
     
@@ -55,6 +58,11 @@ public class PlayingState extends BasicGameState {
             g.drawString(loadLabel, (container.getWidth()/2) - (g.getFont().getWidth(loadLabel)/2), (container.getHeight()/2) - (g.getFont().getHeight(loadLabel)/2));
         } else {
             gameMap.render(camera, container, game, g);
+            
+            if (is_night) {
+                g.setColor(new Color (0f, 0f, .5f, night_overlay));
+                g.fillRect(0, 0, container.getWidth(), container.getHeight());
+            }
 
             if (Consts.RENDER_DEBUG) {
                 int y = 32;
@@ -106,6 +114,12 @@ public class PlayingState extends BasicGameState {
         
         gameMap.update(camera, container, game);
         
+        if (is_night && night_overlay<0.3f) {
+            night_overlay = Math.min(night_overlay + (delta/10000f), 0.3f);
+        } else if (!is_night && night_overlay>0f) {
+            night_overlay = Math.max(night_overlay - (delta/10000f), 0f);
+        }
+        
         if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
             camera.x--;
         }
@@ -120,10 +134,17 @@ public class PlayingState extends BasicGameState {
         }
         
         if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            // MAP GENERATOR TEST
             gameMap = new GameMap (GameMap.MapSize.MEDIUM, DifficultyLevel.NORMAL);
         }
         
+        if (container.getInput().isKeyPressed(Input.KEY_X)) {
+            // NIGHT TIME TEST
+            is_night = !is_night;
+        }
+        
         if (container.getInput().isKeyPressed(Input.KEY_N)) {
+            // NAME GENERATOR TEST
             String[] names = new String [10];
             String[] places = new String [10];
             
