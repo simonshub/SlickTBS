@@ -26,6 +26,10 @@ public abstract class Consts {
     public static final String DAMAGE_TYPE_PATH = "res/data/attacks/";
     public static final String DAMAGE_TYPE_EXT = ".atk";
     
+    public static final String COMBAT_INIT_PATH = "res/data/combat.data";
+    
+    public static final int MAX_ABILITIES_PER_CHARACTER = 5;
+    
     public static final boolean RENDER_DEBUG = true;
     
     public static final boolean RENDER_POIS = true;

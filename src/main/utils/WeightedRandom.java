@@ -17,7 +17,7 @@ import java.util.Map;
 public class WeightedRandom {
     
     private class WeightedRegion {
-        public List<Point> region;
+        public List<Location> region;
         public Object value;
         
         public WeightedRegion () {
@@ -25,7 +25,7 @@ public class WeightedRandom {
             value = null;
         }
         
-        public void add (Point p) {
+        public void add (Location p) {
             region.add(p);
         }
         
@@ -48,8 +48,8 @@ public class WeightedRandom {
             if (region.size()<2) return 0;
             
             for (int i=0;i<region.size()-1;i++) {
-                Point p1 = region.get(i);
-                Point p2 = region.get(i+1);
+                Location p1 = region.get(i);
+                Location p2 = region.get(i+1);
                 if (p1==null || p2==null) continue;
                 
                 if (p1.x > x && p2.x <= x) {
@@ -76,8 +76,8 @@ public class WeightedRandom {
     public WeightedRandom add (int from_x, int to_x, int y) {
         if (region_to_add == null) region_to_add = new WeightedRegion ();
         
-        Point p1 = new Point (from_x, region_to_add.getYOfLastPoint());
-        Point p2 = new Point (to_x, y);
+        Location p1 = new Location (from_x, region_to_add.getYOfLastPoint());
+        Location p2 = new Location (to_x, y);
         
         region_to_add.add(p1);
         region_to_add.add(p2);
@@ -88,7 +88,7 @@ public class WeightedRandom {
     public WeightedRandom add (int x, int y) {
         if (region_to_add == null) region_to_add = new WeightedRegion ();
         
-        Point p = new Point (x,y);
+        Location p = new Location (x,y);
         region_to_add.add(p);
         
         return this;

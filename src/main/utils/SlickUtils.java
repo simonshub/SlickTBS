@@ -326,6 +326,14 @@ public abstract class SlickUtils {
         return (int)(Math.floor(Math.random()*size));
     }
     
+    public static Object randArrayObject (Object[] array) {
+        return array[randIndex(array.length)];
+    }
+    
+    public static Object randListObject (List<?> list) {
+        return list.get(randIndex(list.size()));
+    }
+    
     public static boolean chanceRoll (double chance) {
         return (Math.random()<=chance);
     }
@@ -334,5 +342,55 @@ public abstract class SlickUtils {
         int offset = rand(minus,plus);
         return num+offset;
     }
+    
+    public static final String capitalizeFirstChar (String str) {
+        if (str.isEmpty())
+            return "";
+        return Character.toString(str.charAt(0)).toUpperCase() + str.substring(1);
+    }
+    
+    
+    
+    public class Strings {
+        
+        public final String[] listToArray (List<String> list) {
+            return Arrays.copyOf(list.toArray(), list.size(), String[].class);
+        }
+
+        public final String[] removeEmpty (String... list) {
+            List<String> result = new ArrayList<> ();
+            for (String s : list) {
+                if (!s.isEmpty())
+                    result.add(s);
+            }
+            return result.toArray(new String [result.size()]);
+        }
+
+        public final String[] trimAll (String... list) {
+            String[] result = new String [list.length];
+            for (int i=0;i<list.length;i++) {
+                result[i] = list[i].trim();
+            }
+            return result;
+        }
+
+        public final String concatList (List<String> lines, String separator) {
+            String res = "";
+            for (String line : lines) {
+                res += line + separator;
+            }
+            return res;
+        }
+
+        public final String concatArray (String[] lines, String separator) {
+            String res = "";
+            for (String line : lines) {
+                res += line + separator;
+            }
+            return res;
+        }
+        
+    }
+    public static Strings Strings;
     
 }

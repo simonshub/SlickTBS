@@ -5,6 +5,7 @@
  */
 package main;
 
+import game.data.combat.CombatMgr;
 import main.utils.SlickUtils;
 import game.data.world.map.hex.Hex;
 import java.awt.Font;
@@ -25,9 +26,12 @@ public class ResMgr {
     public static final String UI_GRFX_PATH = "res/grfx/ui/";
     public static final String POI_GRFX_PATH = "res/grfx/tokens/specials/";
     
+    public static final String TOOLTIP_BACKGROUND_IMAGE = "tooltip_bkg.png";
+    
     public static TrueTypeFont font_dialog_title;
     public static TrueTypeFont font_dialog_text;
     public static TrueTypeFont font_dialog_response;
+    public static TrueTypeFont font_tooltip_text;
     
     public static int screen_res_w = 800;
     public static int screen_res_h = 600;
@@ -50,6 +54,8 @@ public class ResMgr {
         font_dialog_text = new TrueTypeFont (f, true);
         f = new Font("Verdana", Font.ITALIC, 12);
         font_dialog_response = new TrueTypeFont (f, true);
+        f = new Font("Verdana", Font.PLAIN, 8);
+        font_tooltip_text = new TrueTypeFont (f, true);
     }
     
     public static void init () throws IOException, FileNotFoundException, IllegalArgumentException, IllegalAccessException {
@@ -58,9 +64,9 @@ public class ResMgr {
         try {
             Hex.init();
             
+            CombatMgr.init();
+            
             instance.readSettings();
-            
-            
         } catch (SlickException ex) {
             Log.err(ex);
             System.exit(1);

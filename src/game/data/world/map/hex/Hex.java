@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 import main.Consts;
 import main.ResMgr;
-import main.utils.Point;
+import main.utils.Location;
 import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -135,15 +135,15 @@ public final class Hex {
         this.poi = poi;
     }
     
-    public Point getMapCoordsCenter () {
-        Point p = new Point ();
+    public Location getMapCoordsCenter () {
+        Location p = new Location ();
         p.x = x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0) + (int)(HEX_GRID_SIZE_X/2);
         p.y = y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y) + (int)(HEX_GRID_SIZE_Y/2);
         return p;
     }
     
-    public Point getScreenCoordsCenter (Camera cam) {
-        Point p = new Point ();
+    public Location getScreenCoordsCenter (Camera cam) {
+        Location p = new Location ();
         p.x = (int) ((x*HEX_GRID_SIZE_X+(y%2==0?HEX_GRID_SIZE_X/2:0)-cam.x + (int)(HEX_GRID_SIZE_X/2))*cam.zoom);
         p.y = (int) ((y*HEX_GRID_SIZE_Y-(HEX_GRID_SIZE_Y/4*y)-cam.y + (int)(HEX_GRID_SIZE_Y/2))*cam.zoom);
         return p;
