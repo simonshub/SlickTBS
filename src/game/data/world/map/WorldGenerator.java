@@ -47,6 +47,9 @@ public abstract class WorldGenerator {
     public static int WASTELAND_RADIAL_MIN_SIZE = 10;
     public static int WASTELAND_RADIAL_MAX_SIZE = 30;
     
+    public static int MIN_HISTORY_ITERATIONS = 3000;
+    public static int MAX_HISTORY_ITERATIONS = 4000;
+    
     public static HexGrid GRID;
     
     
@@ -366,31 +369,39 @@ public abstract class WorldGenerator {
         
         GRID.factions = new ArrayList<> ();
         
-        for (Continent continent : GRID.continents) {
-            int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
-            List<Hex> available_hexes = continent.getAll();
-
-            for (int i=0;i<faction_count;i++) {
-                if (!available_hexes.isEmpty()) {
-                    Faction f = new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size())));
-                    GRID.factions.add(f);
-                    Log.log("Generated faction '"+f.name+"' at "+f.capital.x+","+f.capital.y+" as a "+f.race.name+" "+f.type.getRuleName());
-                } else {
-                    break;
-                }
-            }
+//        // OLD FACTION GENERATION ALGORITHM !
+//        for (Continent continent : GRID.continents) {
+//            int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
+//            List<Hex> available_hexes = continent.getAll();
+//
+//            for (int i=0;i<faction_count;i++) {
+//                if (!available_hexes.isEmpty()) {
+//                    Faction f = new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size())));
+//                    GRID.factions.add(f);
+//                    Log.log("Generated faction '"+f.name+"' at "+f.capital.x+","+f.capital.y+" as a "+f.race.name+" "+f.type.getRuleName());
+//                } else {
+//                    break;
+//                }
+//            }
+//        }
+//        
+//        for (Faction f : GRID.factions) {
+//            int actions = SlickUtils.rand(Faction.MIN_ACTIONS, Faction.MAX_ACTIONS);
+//            
+//            for (int i=0;i<actions;i++) {
+//                if (f.type.spreadOrUpgrade())
+//                    f.spread(GRID, f.randomSettlement());
+//                else
+//                    f.upgrade(GRID, f.randomSettlement());
+//            }
+//        }
+        
+        // NEW FACTION GENERATION ALGORITHM !
+        int iterations = SlickUtils.rand(MIN_HISTORY_ITERATIONS, MAX_HISTORY_ITERATIONS);
+        for (int i=0;i<iterations;i++) {
+            
         }
         
-        for (Faction f : GRID.factions) {
-            int actions = SlickUtils.rand(Faction.MIN_ACTIONS, Faction.MAX_ACTIONS);
-            
-            for (int i=0;i<actions;i++) {
-                if (f.type.spreadOrUpgrade())
-                    f.spread(GRID, f.randomSettlement());
-                else
-                    f.upgrade(GRID, f.randomSettlement());
-            }
-        }
         Log.log("Factions generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         
         PlayingState.isLoading = false;

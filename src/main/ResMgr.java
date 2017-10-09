@@ -36,9 +36,9 @@ public class ResMgr {
     public static int screen_res_h = 600;
     
     public static boolean debug_mode = true;
-    public static boolean render_political_overlay = false;
-    public static boolean render_continents = true;
-    public static boolean render_grid = false;
+    public static boolean render_political_overlay = true;
+    public static boolean render_continents = false;
+    public static boolean render_grid = true;
     
     public static String title = "??? WHAT ARE YOU ???";
     

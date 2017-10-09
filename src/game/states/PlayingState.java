@@ -59,10 +59,9 @@ public class PlayingState extends BasicGameState {
         } else {
             gameMap.render(camera, container, game, g);
             
-            if (is_night) {
-                g.setColor(new Color (0f, 0f, .5f, night_overlay));
-                g.fillRect(0, 0, container.getWidth(), container.getHeight());
-            }
+            // draw night-time overlay
+            g.setColor(new Color (0f, 0f, .5f, night_overlay));
+            g.fillRect(0, 0, container.getWidth(), container.getHeight());
 
             if (Consts.RENDER_DEBUG) {
                 int y = 32;
