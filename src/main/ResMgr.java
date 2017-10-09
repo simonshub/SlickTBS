@@ -5,7 +5,6 @@
  */
 package main;
 
-import game.data.combat.CombatMgr;
 import main.utils.SlickUtils;
 import game.data.world.map.hex.Hex;
 import java.awt.Font;
@@ -63,8 +62,6 @@ public class ResMgr {
         
         try {
             Hex.init();
-            
-            CombatMgr.init();
             
             instance.readSettings();
         } catch (SlickException ex) {
