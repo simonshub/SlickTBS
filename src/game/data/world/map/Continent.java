@@ -5,7 +5,6 @@
  */
 package game.data.world.map;
 
-import game.data.world.RaceEnum;
 import game.data.world.map.hex.HexGroup;
 import game.data.world.map.hex.HexGrid;
 import game.data.world.map.hex.Hex;
@@ -19,9 +18,9 @@ import static game.data.world.map.WorldGenerator.generateChain;
 import static game.data.world.map.WorldGenerator.generateRadial;
 import java.util.ArrayList;
 import java.util.List;
-import main.utils.Log;
-import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
+import org.simon.utils.Log;
+import org.simon.utils.SlickUtils;
 
 /**
  *
@@ -40,8 +39,8 @@ public class Continent {
     public List<HexGroup> forest_list;
     public List<HexGroup> wastes_list;
     
-    private static final double MAX_TARGET_TOTAL_COVERAGE = 1.25;
-    private static final double MIN_TARGET_TOTAL_COVERAGE = 0.75;
+    private static final float MAX_TARGET_TOTAL_COVERAGE = 1.25f;
+    private static final float MIN_TARGET_TOTAL_COVERAGE = 0.75f;
     
     private double target_total_coverage = 0.;
     private double target_mountain_percentage = 0.;

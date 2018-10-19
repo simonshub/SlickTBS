@@ -5,11 +5,8 @@
  */
 package game.data.world.map.hex;
 
-import game.data.world.Faction;
-import game.data.world.PointOfInterest;
 import game.data.world.map.Camera;
 import game.data.world.map.Continent;
-import game.data.world.map.FogOfWar;
 import game.data.world.map.TerrainTypeEnum;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,14 +15,14 @@ import java.util.List;
 import java.util.Set;
 import main.Consts;
 import main.ResMgr;
-import main.utils.Location;
-import main.utils.SlickUtils;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.simon.utils.Location;
+import org.simon.utils.SlickUtils;
 
 /**
  *
@@ -81,8 +78,6 @@ public final class Hex {
     public Continent continent;
     public FogOfWar fog_of_war;
     public TerrainTypeEnum terrain;
-    public PointOfInterest poi;
-    public Faction owner;
     
     
     
@@ -114,7 +109,6 @@ public final class Hex {
         terrain = TerrainTypeEnum.OPEN;
         river = false;
         fog_of_war = FogOfWar.VISIBLE;
-        poi = null;
         
         coastal_ul = false;
         coastal_ur = false;
@@ -129,10 +123,6 @@ public final class Hex {
     public void setLocation (int x, int y) {
         this.x = x;
         this.y = y;
-    }
-    
-    public void setPointOfInterest (PointOfInterest poi) {
-        this.poi = poi;
     }
     
     public Location getMapCoordsCenter () {
@@ -153,23 +143,17 @@ public final class Hex {
         if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN)
             terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
         
-        if (HEX_FOG_OF_WAR_IMG != null && fog_of_war.level != 0 && Consts.RENDER_FOG_OF_WAR)
-            HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.level/3));
+        if (HEX_FOG_OF_WAR_IMG != null && Consts.RENDER_FOG_OF_WAR)
+            HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.LEVEL));
         
         if (HEX_GRID_IMG == null)
             return;
-        
-        if (ResMgr.render_political_overlay && owner!=null && owner.color!=null)
-            HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, owner.color);
         
         if (ResMgr.render_continents && continent!=null && continent.getColor()!=null)
             HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, continent.getColor());
         
         if (ResMgr.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
-        
-        if (poi != null && Consts.RENDER_POIS)
-            poi.render(x_draw, y_draw, x_scale, y_scale);
     }
     
     public void renderMouseShadow (float x_draw, float y_draw, float x_scale, float y_scale) {
@@ -207,9 +191,9 @@ public final class Hex {
     
     public Hex getAdjacent (HexGrid grid, DirEnum direction) {
         if (y%2==0)
-            return grid.get(x+direction.even_x_offset, y+direction.even_y_offset);
+            return grid.get(x+direction.getEvenX(), y+direction.getEvenY());
         else
-            return grid.get(x+direction.odd_x_offset, y+direction.odd_y_offset);
+            return grid.get(x+direction.getOddX(), y+direction.getOddY());
     }
     
     public Hex getRandomAdjacent (HexGrid grid) {

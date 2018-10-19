@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import main.Consts;
-import main.utils.Log;
-import main.utils.SlickUtils;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.simon.utils.Log;
+import org.simon.utils.SlickUtils;
 
 /**
  *

@@ -37,7 +37,7 @@ public class GameMap {
     
     
     
-    public GameMap (MapSize size, DifficultyLevel diff) {
+    public GameMap (MapSize size) {
         grid = new HexGrid (size.size*2, size.size);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;

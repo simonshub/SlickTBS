@@ -33,7 +33,7 @@ public abstract class Consts {
     public static final boolean RENDER_DEBUG = true;
     
     public static final boolean RENDER_POIS = true;
-    public static final boolean RENDER_FOG_OF_WAR = false;
+    public static final boolean RENDER_FOG_OF_WAR = true;
     public static final boolean RENDER_DEBUG_CAMERA_INFO = true;
     public static final boolean RENDER_DEBUG_RENDERED_HEXES = true;
     

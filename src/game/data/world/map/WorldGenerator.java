@@ -5,10 +5,7 @@
  */
 package game.data.world.map;
 
-import game.data.world.Faction;
 import game.data.world.NameGenerator;
-import game.data.world.PointOfInterest;
-import main.utils.SlickUtils;
 import game.data.world.map.hex.DirEnum;
 import game.data.world.map.hex.HexGrid;
 import game.data.world.map.hex.Hex;
@@ -16,7 +13,9 @@ import game.states.PlayingState;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import main.utils.Log;
+
+import org.simon.utils.Log;
+import org.simon.utils.SlickUtils;
 
 /**
  *
@@ -344,65 +343,6 @@ public abstract class WorldGenerator {
         for (Continent continent : GRID.continents)
             GRID.land.addAll(continent.getAll());
         Log.log("Assimilation done in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
-
-        Log.log("Adding points of interest");
-        section_start = System.currentTimeMillis();
-        PointOfInterest p = PointOfInterest.ABANDONED_MINE;
-        for (Continent continent : GRID.continents) {
-            int poi_count = SlickUtils.randPlusMinus((int) (continent.size() * CONTINENT_SIZE_TO_POI_COUNT), (int) (continent.size() * POI_COUNT_OFFSET), -(int) (continent.size() * POI_COUNT_OFFSET));
-            List<Hex> potential_pois = continent.getAllAsGroup().removeAllOfTypes(Faction.IMPASSABLE_TERRAIN_TYPES).toList();
-            
-            for (int i=0;i<poi_count;i++) {
-                Hex hex = potential_pois.get(SlickUtils.randIndex(potential_pois.size()));
-                PointOfInterest poi_parent = PointOfInterest.getRandom(hex.terrain);
-                if (poi_parent != null) {
-                    hex.poi = new PointOfInterest (poi_parent);
-                } else {
-                    i--;
-                }
-            }
-        }
-        Log.log("Points of interested added in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
-        
-        section_start = System.currentTimeMillis();
-        Log.log("Generating factions");
-        
-        GRID.factions = new ArrayList<> ();
-        
-//        // OLD FACTION GENERATION ALGORITHM !
-//        for (Continent continent : GRID.continents) {
-//            int faction_count = SlickUtils.rand(0, (int) (continent.size() * CONTINENT_CULTURES_PER_SIZE));
-//            List<Hex> available_hexes = continent.getAll();
-//
-//            for (int i=0;i<faction_count;i++) {
-//                if (!available_hexes.isEmpty()) {
-//                    Faction f = new Faction (GRID, available_hexes.get(SlickUtils.randIndex(available_hexes.size())));
-//                    GRID.factions.add(f);
-//                    Log.log("Generated faction '"+f.name+"' at "+f.capital.x+","+f.capital.y+" as a "+f.race.name+" "+f.type.getRuleName());
-//                } else {
-//                    break;
-//                }
-//            }
-//        }
-//        
-//        for (Faction f : GRID.factions) {
-//            int actions = SlickUtils.rand(Faction.MIN_ACTIONS, Faction.MAX_ACTIONS);
-//            
-//            for (int i=0;i<actions;i++) {
-//                if (f.type.spreadOrUpgrade())
-//                    f.spread(GRID, f.randomSettlement());
-//                else
-//                    f.upgrade(GRID, f.randomSettlement());
-//            }
-//        }
-        
-        // NEW FACTION GENERATION ALGORITHM !
-        int iterations = SlickUtils.rand(MIN_HISTORY_ITERATIONS, MAX_HISTORY_ITERATIONS);
-        for (int i=0;i<iterations;i++) {
-            
-        }
-        
-        Log.log("Factions generated in "+(System.currentTimeMillis()-section_start)/1000f+" sec");
         
         PlayingState.isLoading = false;
         Log.log("Map generated in "+(System.currentTimeMillis()-start)/1000f+" sec");

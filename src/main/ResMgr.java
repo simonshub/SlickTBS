@@ -5,15 +5,15 @@
  */
 package main;
 
-import main.utils.SlickUtils;
 import game.data.world.map.hex.Hex;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import main.utils.Log;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.simon.utils.Log;
+import org.simon.utils.SlickUtils;
 
 /**
  *

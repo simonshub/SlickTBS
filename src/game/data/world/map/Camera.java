@@ -55,7 +55,7 @@ public class Camera {
     }
     
     public void update (Camera cam, GameContainer gc, StateBasedGame sbg) {
-        if (!gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && grip) {
+        if (!gc.getInput().isMouseButtonDown(Input.MOUSE_MIDDLE_BUTTON) && grip) {
             grip = false;
             click_x = 0;
             click_y = 0;
@@ -63,7 +63,7 @@ public class Camera {
             freeze_y = 0;
         }
         
-        if (gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON) && !grip) {
+        if (gc.getInput().isMouseButtonDown(Input.MOUSE_MIDDLE_BUTTON) && !grip) {
             grip = true;
             click_x = gc.getInput().getMouseX();
             click_y = gc.getInput().getMouseY();
@@ -71,7 +71,7 @@ public class Camera {
             freeze_y = this.y;
         }
         
-        if (grip && gc.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
+        if (grip && gc.getInput().isMouseButtonDown(Input.MOUSE_MIDDLE_BUTTON)) {
             this.x = (int) (freeze_x + (click_x - gc.getInput().getMouseX())/zoom);
             this.y = (int) (freeze_y + (click_y - gc.getInput().getMouseY())/zoom);
         }

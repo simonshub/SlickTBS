@@ -5,7 +5,6 @@
  */
 package game.data.world.map.hex;
 
-import game.data.world.Faction;
 import game.data.world.map.Camera;
 import game.data.world.map.Continent;
 import game.data.world.map.TerrainTypeEnum;
@@ -15,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import main.ResMgr;
-import main.utils.Log;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
+import org.simon.utils.Log;
 
 /**
  *
@@ -29,7 +28,6 @@ public final class HexGrid {
     public static final int DRAW_MARGIN_Y = 2;
     
     public List<Hex> land;
-    public List<Faction> factions;
     public List<Continent> continents;
     
     public int render_counter;
@@ -43,7 +41,6 @@ public final class HexGrid {
         this.size_y = size_y;
         this.render_counter = 0;
         
-        factions = new ArrayList<> ();
         continents = new ArrayList<> ();
         
         grid = new ArrayList <> ();

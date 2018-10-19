@@ -9,12 +9,12 @@ import game.states.MenuState;
 import game.states.PlayingState;
 import java.io.File;
 import java.io.IOException;
-import main.utils.Log;
 import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.simon.utils.Log;
 
 /**
  *
