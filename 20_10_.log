@@ -1,0 +1,145 @@
+LOG : 18:19:28  ----  Starting ...
+LOG : 18:19:31  ----  Generating map...
+LOG : 18:19:31  ----  Initializing...
+LOG : 18:19:31  ----  Generating landmasses
+LOG : 18:19:31  ----  Generating landmass #1
+LOG : 18:19:31  ----  Continent Siofa
+LOG : 18:19:31  ----  Source: 93,50
+LOG : 18:19:31  ----  Size: 471
+LOG : 18:19:31  ----  Target coverage: 0.8186553955078125
+LOG : 18:19:31  ----  Mt:0.45480855305989587, Fr:0.36384684244791665, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.5380375035055449, flatness:0.05857232589735095, corruption:0.9211859645520215
+LOG : 18:19:31  ----  Landmass generated in 0.029 sec
+LOG : 18:19:31  ----  Generating landmass #2
+LOG : 18:19:31  ----  Continent Feuma
+LOG : 18:19:31  ----  Source: 161,118
+LOG : 18:19:31  ----  Size: 995
+LOG : 18:19:31  ----  Target coverage: 0.26341406822204594
+LOG : 18:19:31  ----  Mt:0.10975586175918581, Fr:0.04390234470367432, Wl:0.10975586175918581
+LOG : 18:19:31  ----  heat:0.5, wetness:0.9260561001474452, flatness:0.5469476296071253, corruption:0.39995232694506666
+LOG : 18:19:31  ----  Landmass generated in 0.066 sec
+LOG : 18:19:31  ----  Generating landmass #3
+LOG : 18:19:31  ----  Continent Iaghiokha
+LOG : 18:19:31  ----  Source: 192,106
+LOG : 18:19:31  ----  Size: 1208
+LOG : 18:19:31  ----  Target coverage: 0.5160961151123047
+LOG : 18:19:31  ----  Mt:0.23819820697490987, Fr:0.23819820697490987, Wl:0.03969970116248498
+LOG : 18:19:31  ----  heat:0.5, wetness:0.5848768725948957, flatness:0.3050537752663336, corruption:0.9683893282091942
+LOG : 18:19:31  ----  Landmass generated in 0.054 sec
+LOG : 18:19:31  ----  Generating landmass #4
+LOG : 18:19:31  ----  Continent Uadea
+LOG : 18:19:31  ----  Source: 143,59
+LOG : 18:19:31  ----  Size: 1609
+LOG : 18:19:31  ----  Target coverage: 0.7650401115417481
+LOG : 18:19:31  ----  Mt:0.17654771804809574, Fr:0.5884923934936525, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.9934639133447688, flatness:0.8899595698039665, corruption:0.8420079509630259
+LOG : 18:19:31  ----  Landmass generated in 0.098 sec
+LOG : 18:19:31  ----  Generating landmass #5
+LOG : 18:19:31  ----  Continent Anta
+LOG : 18:19:31  ----  Source: 226,49
+LOG : 18:19:31  ----  Size: 865
+LOG : 18:19:31  ----  Target coverage: 0.8969815909862519
+LOG : 18:19:31  ----  Mt:0.2803067471832037, Fr:0.05606134943664074, Wl:0.5606134943664074
+LOG : 18:19:31  ----  heat:0.5, wetness:0.8934187790157171, flatness:0.32940974999571093, corruption:0.460080979009723
+LOG : 18:19:31  ----  Landmass generated in 0.029 sec
+LOG : 18:19:31  ----  Generating landmass #6
+LOG : 18:19:31  ----  Continent Ontaeba
+LOG : 18:19:31  ----  Source: 244,109
+LOG : 18:19:31  ----  Size: 1047
+LOG : 18:19:31  ----  Target coverage: 0.6456613540649414
+LOG : 18:19:31  ----  Mt:0.2017691731452942, Fr:0.04035383462905884, Wl:0.4035383462905884
+LOG : 18:19:31  ----  heat:0.5, wetness:0.10979870784759949, flatness:0.25478920642164415, corruption:0.2730194873629801
+LOG : 18:19:31  ----  Landmass generated in 0.069 sec
+LOG : 18:19:31  ----  Generating landmass #7
+LOG : 18:19:31  ----  Continent Beudra
+LOG : 18:19:31  ----  Source: 136,10
+LOG : 18:19:31  ----  Size: 330
+LOG : 18:19:31  ----  Target coverage: 0.7700168609619141
+LOG : 18:19:31  ----  Mt:0.17769619868351866, Fr:0.5923206622783955, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.29306257380288137, flatness:0.9450564257647848, corruption:0.35713161434546215
+LOG : 18:19:31  ----  Landmass generated in 0.015 sec
+LOG : 18:19:31  ----  Generating landmass #8
+LOG : 18:19:31  ----  Continent Eochoa
+LOG : 18:19:31  ----  Source: 207,95
+LOG : 18:19:31  ----  Size: 555
+LOG : 18:19:31  ----  Target coverage: 0.7608712673187257
+LOG : 18:19:31  ----  Mt:0.17558567707355208, Fr:0.5852855902451737, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.29071979082019395, flatness:0.2783387596487463, corruption:0.9556784122676014
+LOG : 18:19:31  ----  Landmass generated in 0.017 sec
+LOG : 18:19:31  ----  Generating landmass #9
+LOG : 18:19:31  ----  Continent Ikienta
+LOG : 18:19:31  ----  Source: 196,82
+LOG : 18:19:31  ----  Size: 1303
+LOG : 18:19:31  ----  Target coverage: 0.7124241828918457
+LOG : 18:19:31  ----  Mt:0.3957912127176921, Fr:0.31663297017415365, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.3648711124209699, flatness:0.5562004123928247, corruption:0.22921419525690045
+LOG : 18:19:31  ----  Landmass generated in 0.072 sec
+LOG : 18:19:31  ----  Generating landmass #10
+LOG : 18:19:31  ----  Continent Aebaofa
+LOG : 18:19:31  ----  Source: 44,64
+LOG : 18:19:31  ----  Size: 168
+LOG : 18:19:31  ----  Target coverage: 0.8868727684020996
+LOG : 18:19:31  ----  Mt:0.20466294655433068, Fr:0.682209821847769, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.8636749686468671, flatness:0.034369924153182185, corruption:0.6911780498144561
+LOG : 18:19:31  ----  Landmass generated in 0.015 sec
+LOG : 18:19:31  ----  Generating landmass #11
+LOG : 18:19:31  ----  Continent Niepha
+LOG : 18:19:31  ----  Source: 136,115
+LOG : 18:19:31  ----  Size: 833
+LOG : 18:19:31  ----  Target coverage: 0.7859182357788086
+LOG : 18:19:31  ----  Mt:0.18136574671818662, Fr:0.604552489060622, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.34486142001202147, flatness:0.4127847226820738, corruption:0.4613754552785587
+LOG : 18:19:31  ----  Landmass generated in 0.031 sec
+LOG : 18:19:31  ----  Generating landmass #12
+LOG : 18:19:31  ----  Continent Guatua
+LOG : 18:19:31  ----  Source: 188,28
+LOG : 18:19:31  ----  Size: 964
+LOG : 18:19:31  ----  Target coverage: 0.30219664335250856
+LOG : 18:19:31  ----  Mt:0.12591526806354525, Fr:0.050366107225418094, Wl:0.12591526806354525
+LOG : 18:19:31  ----  heat:0.5, wetness:0.10492420609727471, flatness:0.43257898021073804, corruption:0.6254390278500521
+LOG : 18:19:31  ----  Landmass generated in 0.032 sec
+LOG : 18:19:31  ----  Generating landmass #13
+LOG : 18:19:31  ----  Continent Siema
+LOG : 18:19:31  ----  Source: 78,25
+LOG : 18:19:31  ----  Size: 696
+LOG : 18:19:31  ----  Target coverage: 0.6811212539672852
+LOG : 18:19:31  ----  Mt:0.3784006966484918, Fr:0.3027205573187934, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.6365170962516005, flatness:0.6047921809966016, corruption:0.5284023731795081
+LOG : 18:19:31  ----  Landmass generated in 0.019 sec
+LOG : 18:19:31  ----  Generating landmass #14
+LOG : 18:19:31  ----  Continent Outea
+LOG : 18:19:31  ----  Source: 29,52
+LOG : 18:19:31  ----  Size: 136
+LOG : 18:19:31  ----  Target coverage: 1.0164664328098296
+LOG : 18:19:31  ----  Mt:0.3176457602530718, Fr:0.06352915205061435, Wl:0.6352915205061436
+LOG : 18:19:31  ----  heat:0.5, wetness:0.8262874939870763, flatness:0.7383104222810182, corruption:0.18940435799687427
+LOG : 18:19:31  ----  Landmass generated in 0.013 sec
+LOG : 18:19:31  ----  Generating landmass #15
+LOG : 18:19:31  ----  Continent Aewuvra
+LOG : 18:19:31  ----  Source: 42,74
+LOG : 18:19:31  ----  Size: 102
+LOG : 18:19:31  ----  Target coverage: 1.0458356142044067
+LOG : 18:19:31  ----  Mt:0.3268236294388771, Fr:0.06536472588777542, Wl:0.6536472588777542
+LOG : 18:19:31  ----  heat:0.5, wetness:0.6299631692041573, flatness:0.5945515376788594, corruption:0.5816496497226984
+LOG : 18:19:31  ----  Landmass generated in 0.005 sec
+LOG : 18:19:31  ----  Generating landmass #16
+LOG : 18:19:31  ----  Continent Teubia
+LOG : 18:19:31  ----  Source: 108,20
+LOG : 18:19:31  ----  Size: 555
+LOG : 18:19:31  ----  Target coverage: 0.7932967185974121
+LOG : 18:19:31  ----  Mt:0.13221611976623535, Fr:0.0, Wl:0.6610805988311768
+LOG : 18:19:31  ----  heat:0.5, wetness:0.3241604762609339, flatness:0.05024147115680855, corruption:0.21218801822313604
+LOG : 18:19:31  ----  Landmass generated in 0.012 sec
+LOG : 18:19:31  ----  Generating landmass #17
+LOG : 18:19:31  ----  Continent Eikhiaba
+LOG : 18:19:31  ----  Source: 227,112
+LOG : 18:19:31  ----  Size: 1314
+LOG : 18:19:31  ----  Target coverage: 0.9303686141967774
+LOG : 18:19:31  ----  Mt:0.21470044943002556, Fr:0.7156681647667519, Wl:0.0
+LOG : 18:19:31  ----  heat:0.5, wetness:0.12441994318560812, flatness:0.26451943003359757, corruption:0.6806621703072314
+LOG : 18:19:31  ----  Landmass generated in 0.06 sec
+LOG : 18:19:31  ----  Adding transitional hexes
+LOG : 18:19:31  ----  Transitional hexes done in 0.007 sec
+LOG : 18:19:31  ----  Assimilating adjacent hexes
+LOG : 18:19:31  ----  Assimilation done in 0.0 sec
+LOG : 18:19:31  ----  Map generated in 0.661 sec

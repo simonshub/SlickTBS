@@ -5,7 +5,6 @@
  */
 package game.states;
 
-import game.data.world.NameGenerator;
 import game.data.world.map.Camera;
 import game.data.world.map.GameMap;
 import main.Consts;

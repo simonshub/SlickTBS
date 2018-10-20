@@ -76,7 +76,7 @@ public final class Hex {
     
     public int x, y;
     public Continent continent;
-    public FogOfWar fog_of_war;
+    public FogOfWarEnum fog_of_war;
     public TerrainTypeEnum terrain;
     
     
@@ -108,7 +108,7 @@ public final class Hex {
         
         terrain = TerrainTypeEnum.OPEN;
         river = false;
-        fog_of_war = FogOfWar.VISIBLE;
+        fog_of_war = FogOfWarEnum.VISIBLE;
         
         coastal_ul = false;
         coastal_ur = false;
@@ -140,7 +140,7 @@ public final class Hex {
     }
     
     public void render (float x_draw, float y_draw, float x_scale, float y_scale, GameContainer container, StateBasedGame game, Graphics g) {
-        if (terrain != null && terrain.img != null && fog_of_war!=FogOfWar.HIDDEN)
+        if (terrain != null && terrain.img != null && fog_of_war!=FogOfWarEnum.HIDDEN)
             terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
         
         if (HEX_FOG_OF_WAR_IMG != null && Consts.RENDER_FOG_OF_WAR)
