@@ -1,0 +1,155 @@
+LOG : 16:27:11  ----  Starting ...
+LOG : 16:27:18  ----  Generating map...
+LOG : 16:27:18  ----  Initializing...
+LOG : 16:27:18  ----  Generating landmasses
+LOG : 16:27:18  ----  Generating landmass #1
+LOG : 16:27:19  ----  Continent Ionia
+LOG : 16:27:19  ----  Source: 107,41
+LOG : 16:27:19  ----  Size: 1091
+LOG : 16:27:19  ----  Target coverage: 0.7835859128423559
+LOG : 16:27:19  ----  Mt:0.180827518348236, Fr:0.6027583944941199, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.21883387554589018, flatness:0.35493024755067026, corruption:0.7355745761358785
+LOG : 16:27:19  ----  Landmass generated in 0.084 sec
+LOG : 16:27:19  ----  Generating landmass #2
+LOG : 16:27:19  ----  Continent Oavroa
+LOG : 16:27:19  ----  Source: 169,47
+LOG : 16:27:19  ----  Size: 529
+LOG : 16:27:19  ----  Target coverage: 0.29107132892937027
+LOG : 16:27:19  ----  Mt:0.12127972038723761, Fr:0.048511888154895044, Wl:0.12127972038723761
+LOG : 16:27:19  ----  heat:0.5, wetness:0.7969784241781666, flatness:0.6855967127882341, corruption:0.6614405827836418
+LOG : 16:27:19  ----  Landmass generated in 0.012 sec
+LOG : 16:27:19  ----  Generating landmass #3
+LOG : 16:27:19  ----  Continent Uva
+LOG : 16:27:19  ----  Source: 111,73
+LOG : 16:27:19  ----  Size: 1432
+LOG : 16:27:19  ----  Target coverage: 0.8166506560871701
+LOG : 16:27:19  ----  Mt:0.18845784371242388, Fr:0.6281928123747463, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.4585793827831367, flatness:0.47837017249890623, corruption:0.9043834366608781
+LOG : 16:27:19  ----  Landmass generated in 0.077 sec
+LOG : 16:27:19  ----  Generating landmass #4
+LOG : 16:27:19  ----  Continent Coga
+LOG : 16:27:19  ----  Source: 51,45
+LOG : 16:27:19  ----  Size: 1629
+LOG : 16:27:19  ----  Target coverage: 0.9591165539950073
+LOG : 16:27:19  ----  Mt:0.29972392312343976, Fr:0.059944784624687955, Wl:0.5994478462468795
+LOG : 16:27:19  ----  heat:0.5, wetness:0.0805826294199179, flatness:0.16007582978522794, corruption:0.6160718007546373
+LOG : 16:27:19  ----  Landmass generated in 0.098 sec
+LOG : 16:27:19  ----  Generating landmass #5
+LOG : 16:27:19  ----  Continent Oka
+LOG : 16:27:19  ----  Source: 145,28
+LOG : 16:27:19  ----  Size: 1428
+LOG : 16:27:19  ----  Target coverage: 0.2946229490055161
+LOG : 16:27:19  ----  Mt:0.12275956208563171, Fr:0.049103824834252685, Wl:0.12275956208563171
+LOG : 16:27:19  ----  heat:0.5, wetness:0.4236210736534365, flatness:0.765863569675585, corruption:0.43723068678563215
+LOG : 16:27:19  ----  Landmass generated in 0.092 sec
+LOG : 16:27:19  ----  Generating landmass #6
+LOG : 16:27:19  ----  Continent Ghaewrea
+LOG : 16:27:19  ----  Source: 217,103
+LOG : 16:27:19  ----  Size: 522
+LOG : 16:27:19  ----  Target coverage: 0.9389745507727956
+LOG : 16:27:19  ----  Mt:0.21668643479372207, Fr:0.7222881159790736, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.25676187295846864, flatness:0.8399843295362439, corruption:0.685605340503908
+LOG : 16:27:19  ----  Landmass generated in 0.021 sec
+LOG : 16:27:19  ----  Generating landmass #7
+LOG : 16:27:19  ----  Continent Droda
+LOG : 16:27:19  ----  Source: 65,108
+LOG : 16:27:19  ----  Size: 1226
+LOG : 16:27:19  ----  Target coverage: 0.8935530881822391
+LOG : 16:27:19  ----  Mt:0.20620455881128597, Fr:0.6873485293709531, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.6427402611252966, flatness:0.7167851117797515, corruption:0.48170181365318654
+LOG : 16:27:19  ----  Landmass generated in 0.066 sec
+LOG : 16:27:19  ----  Generating landmass #8
+LOG : 16:27:19  ----  Continent Oavrabra
+LOG : 16:27:19  ----  Source: 100,9
+LOG : 16:27:19  ----  Size: 1379
+LOG : 16:27:19  ----  Target coverage: 0.8682116687477617
+LOG : 16:27:19  ----  Mt:0.20035653894179117, Fr:0.6678551298059705, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.5699670633856309, flatness:0.5266410672886966, corruption:0.9710257579364802
+LOG : 16:27:19  ----  Landmass generated in 0.084 sec
+LOG : 16:27:19  ----  Generating landmass #9
+LOG : 16:27:19  ----  Continent Eogioda
+LOG : 16:27:19  ----  Source: 23,46
+LOG : 16:27:19  ----  Size: 1257
+LOG : 16:27:19  ----  Target coverage: 0.36391968054414875
+LOG : 16:27:19  ----  Mt:0.15163320022672866, Fr:0.06065328009069146, Wl:0.15163320022672866
+LOG : 16:27:19  ----  heat:0.5, wetness:0.5067470904791213, flatness:0.20506016556610396, corruption:0.5615794989103035
+LOG : 16:27:19  ----  Landmass generated in 0.065 sec
+LOG : 16:27:19  ----  Generating landmass #10
+LOG : 16:27:19  ----  Continent Shuava
+LOG : 16:27:19  ----  Source: 45,18
+LOG : 16:27:19  ----  Size: 203
+LOG : 16:27:19  ----  Target coverage: 0.7247025368848107
+LOG : 16:27:19  ----  Mt:0.4026125204915615, Fr:0.3220900163932492, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.012739005116417013, flatness:0.6801618978499895, corruption:0.5934129755108312
+LOG : 16:27:19  ----  Landmass generated in 0.004 sec
+LOG : 16:27:19  ----  Generating landmass #11
+LOG : 16:27:19  ----  Continent Staopha
+LOG : 16:27:19  ----  Source: 74,37
+LOG : 16:27:19  ----  Size: 1245
+LOG : 16:27:19  ----  Target coverage: 0.9447789977479053
+LOG : 16:27:19  ----  Mt:0.2952434367962204, Fr:0.05904868735924408, Wl:0.5904868735924408
+LOG : 16:27:19  ----  heat:0.5, wetness:0.5481998570658291, flatness:0.6835426169813497, corruption:0.7579508488801482
+LOG : 16:27:19  ----  Landmass generated in 0.055 sec
+LOG : 16:27:19  ----  Generating landmass #12
+LOG : 16:27:19  ----  Continent Brena
+LOG : 16:27:19  ----  Source: 249,6
+LOG : 16:27:19  ----  Size: 612
+LOG : 16:27:19  ----  Target coverage: 0.9702368719177408
+LOG : 16:27:19  ----  Mt:0.22390081659640174, Fr:0.7463360553213391, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.9209930759932763, flatness:0.45594182427689345, corruption:0.31920810125804866
+LOG : 16:27:19  ----  Landmass generated in 0.023 sec
+LOG : 16:27:19  ----  Generating landmass #13
+LOG : 16:27:19  ----  Continent Eiva
+LOG : 16:27:19  ----  Source: 158,3
+LOG : 16:27:19  ----  Size: 1361
+LOG : 16:27:19  ----  Target coverage: 0.9617453091471287
+LOG : 16:27:19  ----  Mt:0.22194122518779896, Fr:0.7398040839593298, Wl:0.0
+LOG : 16:27:19  ----  heat:0.5, wetness:0.4413154126582831, flatness:0.1848022887238172, corruption:0.17778069450724587
+LOG : 16:27:19  ----  Landmass generated in 0.088 sec
+LOG : 16:27:19  ----  Adding transitional hexes
+LOG : 16:27:19  ----  Transitional hexes done in 0.012 sec
+LOG : 16:27:19  ----  Assimilating adjacent hexes
+LOG : 16:27:19  ----  Assimilation done in 0.001 sec
+LOG : 16:27:19  ----  Adding points of interest
+LOG : 16:27:19  ----  Points of interested added in 0.022 sec
+LOG : 16:27:19  ----  Generating factions
+LOG : 16:27:19  ----  Loaded race enum ORC
+LOG : 16:27:19  ----  Loaded race enum HUMAN
+LOG : 16:27:19  ----  Loaded race enum ELF
+LOG : 16:27:19  ----  Loaded race enum DWARF
+LOG : 16:27:19  ----  Loaded race enum GOBLIN
+LOG : 16:27:19  ----  Loaded race enum HOBGOBLIN
+LOG : 16:27:19  ----  Loaded race enum LIZARDFOLK
+LOG : 16:27:19  ----  Loaded faction type enum DESPOTIC
+LOG : 16:27:19  ----  Loaded faction type enum HEGEMONIC
+LOG : 16:27:19  ----  Loaded faction type enum IMPERIAL
+LOG : 16:27:19  ----  Loaded faction type enum OLEGARCHIC
+LOG : 16:27:19  ----  Loaded faction type enum RELIGIOUS
+LOG : 16:27:19  ----  Loaded faction type enum TRIBAL
+LOG : 16:27:19  ----  Generated faction 'Realm of Lunlor' at 122,38 as a Elf Kingdom
+LOG : 16:27:19  ----  Generated faction 'Temple of Follor' at 101,56 as a Elf Order
+LOG : 16:27:19  ----  Generated faction 'Kingdom of Wadot's Hold' at 158,44 as a Hobgoblin Kingdom
+LOG : 16:27:19  ----  Generated faction 'Free States of Taxkabatu' at 117,78 as a Lizardfolk Free States
+LOG : 16:27:19  ----  Generated faction 'Clans of Laxkabatu' at 104,79 as a Lizardfolk Warbands
+LOG : 16:27:19  ----  Generated faction 'Free States of Taxalatu' at 120,89 as a Lizardfolk City-States
+LOG : 16:27:19  ----  Generated faction 'Republic of Laxaxatu' at 89,70 as a Lizardfolk Olegarchy
+LOG : 16:27:19  ----  Generated faction 'City-States of Zakalatu' at 109,64 as a Lizardfolk Free States
+LOG : 16:27:19  ----  Generated faction 'Order of Vikath Hold' at 67,26 as a Hobgoblin Order
+LOG : 16:27:19  ----  Generated faction 'Temple of Wahgog's Hold' at 68,34 as a Hobgoblin Order
+LOG : 16:27:19  ----  Generated faction 'Tribes of Gux-brocer' at 61,28 as a Orc Warbands
+LOG : 16:27:19  ----  Generated faction 'Order of Deephold' at 218,94 as a Dwarf Temple
+LOG : 16:27:19  ----  Generated faction 'Temple of Tonh's Down' at 52,114 as a Dwarf Temple
+LOG : 16:27:19  ----  Generated faction 'Kingdom of Mondoniel' at 56,93 as a Elf Realm
+LOG : 16:27:19  ----  Generated faction 'Realm of Lethlor' at 120,9 as a Elf Kingdom
+LOG : 16:27:19  ----  Generated faction 'Empire of Monverial' at 86,21 as a Elf Empire
+LOG : 16:27:19  ----  Generated faction 'Temple of Horvekk' at 5,33 as a Hobgoblin Temple
+LOG : 16:27:19  ----  Generated faction 'Realm of Percival's Stead' at 20,47 as a Human Kingdom
+LOG : 16:27:19  ----  Generated faction 'Nation of Everard's Vale' at 11,64 as a Human Clans
+LOG : 16:27:19  ----  Generated faction 'Tribes of Mokmoth Hold' at 81,57 as a Goblin Warbands
+LOG : 16:27:19  ----  Generated faction 'Warbands of Ulgol' at 67,45 as a Orc Tribes
+LOG : 16:27:19  ----  Generated faction 'Nation of Gulbahcer' at 83,72 as a Orc Nation
+LOG : 16:27:19  ----  Generated faction 'Imperium of Brur's Down' at 249,15 as a Dwarf Imperium
+LOG : 16:27:19  ----  Generated faction 'Olegarchy of Taxahnatu' at 186,1 as a Lizardfolk Republic
+LOG : 16:27:19  ----  Generated faction 'Republic of Taxaxbo' at 161,15 as a Lizardfolk Olegarchy
+LOG : 16:27:20  ----  Factions generated in 0.725 sec
+LOG : 16:27:20  ----  Map generated in 1.547 sec

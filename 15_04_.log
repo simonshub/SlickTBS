@@ -1,0 +1,210 @@
+LOG : 22:38:18  ----  Starting ...
+LOG : 22:38:43  ----  Starting ...
+LOG : 22:38:46  ----  Generating map...
+LOG : 22:38:46  ----  Initializing...
+LOG : 22:38:46  ----  Generating landmasses
+LOG : 22:38:46  ----  Generating landmass #1
+LOG : 22:38:46  ----  Continent Eipea
+LOG : 22:38:46  ----  Source: 10,2
+LOG : 22:38:46  ----  Size: 1226
+LOG : 22:38:46  ----  Target coverage: 0.8508561468851987
+LOG : 22:38:46  ----  Mt:0.1418093578141998, Fr:0.0, Wl:0.7090467890709989
+LOG : 22:38:46  ----  heat:0.5, wetness:0.9108590740705454, flatness:0.41680142315551405, corruption:0.7900691044494345
+LOG : 22:38:46  ----  Landmass generated in 0.117 sec
+LOG : 22:38:46  ----  Generating landmass #2
+LOG : 22:38:46  ----  Continent Ofaka
+LOG : 22:38:46  ----  Source: 31,53
+LOG : 22:38:46  ----  Size: 772
+LOG : 22:38:46  ----  Target coverage: 0.8529744165520413
+LOG : 22:38:46  ----  Mt:0.19684024997354801, Fr:0.6561341665784933, Wl:0.0
+LOG : 22:38:46  ----  heat:0.5, wetness:0.39873229693891576, flatness:0.2093516463641627, corruption:0.47424400478069295
+LOG : 22:38:46  ----  Landmass generated in 0.024 sec
+LOG : 22:38:46  ----  Generating landmass #3
+LOG : 22:38:46  ----  Continent Iopounha
+LOG : 22:38:46  ----  Source: 234,5
+LOG : 22:38:46  ----  Size: 1601
+LOG : 22:38:46  ----  Target coverage: 0.6363951174834719
+LOG : 22:38:46  ----  Mt:0.3535528430463733, Fr:0.2828422744370986, Wl:0.0
+LOG : 22:38:46  ----  heat:0.5, wetness:0.6486507752718854, flatness:0.8053171089181139, corruption:0.47542312162511435
+LOG : 22:38:46  ----  Landmass generated in 0.094 sec
+LOG : 22:38:46  ----  Generating landmass #4
+LOG : 22:38:46  ----  Continent Ouvia
+LOG : 22:38:46  ----  Source: 78,73
+LOG : 22:38:46  ----  Size: 1320
+LOG : 22:38:46  ----  Target coverage: 0.9056286833178162
+LOG : 22:38:46  ----  Mt:0.20899123461180374, Fr:0.6966374487060125, Wl:0.0
+LOG : 22:38:46  ----  heat:0.5, wetness:0.28540260502026793, flatness:0.6680605766689413, corruption:0.4034847635215709
+LOG : 22:38:46  ----  Landmass generated in 0.067 sec
+LOG : 22:38:46  ----  Generating landmass #5
+LOG : 22:38:46  ----  Continent Opiokha
+LOG : 22:38:46  ----  Source: 101,9
+LOG : 22:38:46  ----  Size: 127
+LOG : 22:38:46  ----  Target coverage: 0.9910124143545844
+LOG : 22:38:46  ----  Mt:0.16516873572576407, Fr:0.0, Wl:0.8258436786288204
+LOG : 22:38:46  ----  heat:0.5, wetness:0.9415545582179522, flatness:0.6158284033636507, corruption:0.07234724599443787
+LOG : 22:38:46  ----  Landmass generated in 0.012 sec
+LOG : 22:38:46  ----  Generating landmass #6
+LOG : 22:38:47  ----  Continent Iaghia
+LOG : 22:38:47  ----  Source: 141,65
+LOG : 22:38:47  ----  Size: 1437
+LOG : 22:38:47  ----  Target coverage: 0.34130999033447157
+LOG : 22:38:47  ----  Mt:0.1422124959726965, Fr:0.056884998389078595, Wl:0.1422124959726965
+LOG : 22:38:47  ----  heat:0.5, wetness:0.07944723947316501, flatness:0.6778968622732958, corruption:0.3916127994462364
+LOG : 22:38:47  ----  Landmass generated in 0.072 sec
+LOG : 22:38:47  ----  Generating landmass #7
+LOG : 22:38:47  ----  Continent Eigea
+LOG : 22:38:47  ----  Source: 16,84
+LOG : 22:38:47  ----  Size: 302
+LOG : 22:38:47  ----  Target coverage: 0.4688060807564994
+LOG : 22:38:47  ----  Mt:0.2163720372722305, Fr:0.2163720372722305, Wl:0.036062006212038415
+LOG : 22:38:47  ----  heat:0.5, wetness:0.8289616724247745, flatness:0.3207207984093564, corruption:0.8022341736140214
+LOG : 22:38:47  ----  Landmass generated in 0.007 sec
+LOG : 22:38:47  ----  Generating landmass #8
+LOG : 22:38:47  ----  Continent Gieca
+LOG : 22:38:47  ----  Source: 42,2
+LOG : 22:38:47  ----  Size: 1350
+LOG : 22:38:47  ----  Target coverage: 0.6528671154682805
+LOG : 22:38:47  ----  Mt:0.3627039530379336, Fr:0.29016316243034684, Wl:0.0
+LOG : 22:38:47  ----  heat:0.5, wetness:0.6406434433885977, flatness:0.2361373738875714, corruption:0.33710336291588694
+LOG : 22:38:47  ----  Landmass generated in 0.071 sec
+LOG : 22:38:47  ----  Generating landmass #9
+LOG : 22:38:47  ----  Continent Eineiwra
+LOG : 22:38:47  ----  Source: 181,3
+LOG : 22:38:47  ----  Size: 889
+LOG : 22:38:47  ----  Target coverage: 0.6060335662739591
+LOG : 22:38:47  ----  Mt:0.2797077998187504, Fr:0.2797077998187504, Wl:0.0466179666364584
+LOG : 22:38:47  ----  heat:0.5, wetness:0.40189849649764064, flatness:0.14404985260502912, corruption:0.8223802286110938
+LOG : 22:38:47  ----  Landmass generated in 0.031 sec
+LOG : 22:38:47  ----  Generating landmass #10
+LOG : 22:38:47  ----  Continent Nitia
+LOG : 22:38:47  ----  Source: 246,55
+LOG : 22:38:47  ----  Size: 540
+LOG : 22:38:47  ----  Target coverage: 0.6618125403454718
+LOG : 22:38:47  ----  Mt:0.11030209005757863, Fr:0.0, Wl:0.5515104502878931
+LOG : 22:38:47  ----  heat:0.5, wetness:0.607217781431238, flatness:0.2270586462990699, corruption:0.4388816717188494
+LOG : 22:38:47  ----  Landmass generated in 0.016 sec
+LOG : 22:38:47  ----  Generating landmass #11
+LOG : 22:38:47  ----  Continent Asiowra
+LOG : 22:38:47  ----  Source: 161,15
+LOG : 22:38:47  ----  Size: 1629
+LOG : 22:38:47  ----  Target coverage: 0.9696667714447863
+LOG : 22:38:47  ----  Mt:0.22376925494879685, Fr:0.7458975164959895, Wl:0.0
+LOG : 22:38:47  ----  heat:0.5, wetness:0.9328584435182313, flatness:0.9825893375950542, corruption:0.4716484443312394
+LOG : 22:38:47  ----  Landmass generated in 0.098 sec
+LOG : 22:38:47  ----  Generating landmass #12
+LOG : 22:38:47  ----  Continent Eusova
+LOG : 22:38:47  ----  Source: 137,124
+LOG : 22:38:47  ----  Size: 1425
+LOG : 22:38:47  ----  Target coverage: 0.4683180318151179
+LOG : 22:38:47  ----  Mt:0.2161467839146698, Fr:0.2161467839146698, Wl:0.0360244639857783
+LOG : 22:38:47  ----  heat:0.5, wetness:0.027989272193433723, flatness:0.7478048706570993, corruption:0.5713762848033356
+LOG : 22:38:47  ----  Landmass generated in 0.097 sec
+LOG : 22:38:47  ----  Generating landmass #13
+LOG : 22:38:47  ----  Continent Oamoama
+LOG : 22:38:47  ----  Source: 4,101
+LOG : 22:38:47  ----  Size: 868
+LOG : 22:38:47  ----  Target coverage: 0.704644694496861
+LOG : 22:38:47  ----  Mt:0.16261031411466023, Fr:0.5420343803822008, Wl:0.0
+LOG : 22:38:47  ----  heat:0.5, wetness:0.9598230041927809, flatness:0.9821789927193263, corruption:0.03098457950729161
+LOG : 22:38:47  ----  Landmass generated in 0.034 sec
+LOG : 22:38:47  ----  Adding transitional hexes
+LOG : 22:38:47  ----  Transitional hexes done in 0.012 sec
+LOG : 22:38:47  ----  Assimilating adjacent hexes
+LOG : 22:38:47  ----  Assimilation done in 0.0 sec
+LOG : 22:38:47  ----  Adding points of interest
+LOG : 22:38:47  ----  Points of interested added in 0.02 sec
+LOG : 22:38:47  ----  Generating factions
+LOG : 22:38:47  ----  Loaded race enum ORC
+LOG : 22:38:47  ----  Loaded race enum HUMAN
+LOG : 22:38:47  ----  Loaded race enum ELF
+LOG : 22:38:47  ----  Loaded race enum DWARF
+LOG : 22:38:47  ----  Loaded race enum GOBLIN
+LOG : 22:38:47  ----  Loaded race enum HOBGOBLIN
+LOG : 22:38:47  ----  Loaded race enum LIZARDFOLK
+LOG : 22:38:47  ----  Loaded faction type enum DESPOTIC
+LOG : 22:38:47  ----  Loaded faction type enum HEGEMONIC
+LOG : 22:38:47  ----  Loaded faction type enum IMPERIAL
+LOG : 22:38:47  ----  Loaded faction type enum OLEGARCHIC
+LOG : 22:38:47  ----  Loaded faction type enum RELIGIOUS
+LOG : 22:38:47  ----  Loaded faction type enum TRIBAL
+LOG : 22:38:47  ----  Generated faction 'Nation of Mok'moth Hold' at 20,10 as a Goblin Clans
+LOG : 22:38:47  ----  Generated faction 'Temple of Bolko' at 250,3 as a Hobgoblin Order
+LOG : 22:38:47  ----  Generated faction 'Tribes of Hor'moth Hold' at 251,15 as a Goblin Tribes
+LOG : 22:38:47  ----  Generated faction 'Tribes of Ux-bro' at 4,8 as a Orc Clans
+LOG : 22:38:47  ----  Generated faction 'Warbands of Gokbah' at 15,20 as a Orc Nation
+LOG : 22:38:47  ----  Generated faction 'Olegarchy of Lothver' at 26,57 as a Elf Republic
+LOG : 22:38:47  ----  Generated faction 'Warbands of Zakalbo' at 19,44 as a Lizardfolk Nation
+LOG : 22:38:47  ----  Generated faction 'Temple of Ironhall' at 242,5 as a Dwarf Temple
+LOG : 22:38:47  ----  Generated faction 'Warbands of Der'vekk Hold' at 93,58 as a Goblin Clans
+LOG : 22:38:47  ----  Generated faction 'Republic of Dolob's Hold' at 145,52 as a Hobgoblin Olegarchy
+LOG : 22:38:47  ----  Generated faction 'Tribes of Derkath Keep' at 140,78 as a Hobgoblin Warbands
+LOG : 22:38:47  ----  Generated faction 'Republic of Godwin's Dale' at 132,75 as a Human Olegarchy
+LOG : 22:38:47  ----  Generated faction 'Free States of Goldow's Hold' at 51,12 as a Hobgoblin Free States
+LOG : 22:38:47  ----  Generated faction 'Warbands of Goxgol' at 50,31 as a Orc Nation
+LOG : 22:38:47  ----  Generated faction 'Warbands of Gok-vro' at 51,41 as a Orc Clans
+LOG : 22:38:47  ----  Generated faction 'Nation of Blackburg Way' at 46,21 as a Human Clans
+LOG : 22:38:47  ----  Generated faction 'Republic of Everardford Way' at 189,5 as a Human Olegarchy
+LOG : 22:38:47  ----  Generated faction 'Order of Steelforge' at 175,23 as a Dwarf Temple
+LOG : 22:38:47  ----  Generated faction 'Realm of Golfield' at 175,18 as a Human Kingdom
+LOG : 22:38:47  ----  Generated faction 'Warbands of Golpah' at 0,57 as a Orc Nation
+LOG : 22:38:47  ----  Generated faction 'Clans of Un-vro' at 3,61 as a Orc Nation
+LOG : 22:38:47  ----  Generated faction 'Olegarchy of Wade's Field' at 139,26 as a Human Olegarchy
+LOG : 22:38:47  ----  Generated faction 'Nation of Taxkolatu' at 247,90 as a Lizardfolk Clans
+LOG : 22:38:47  ----  Generated faction 'Nation of Kahaxbo' at 250,107 as a Lizardfolk Clans
+LOG : 22:38:48  ----  Factions generated in 0.646 sec
+LOG : 22:38:48  ----  Map generated in 1.438 sec
+LOG : 22:47:34  ----  Starting ...
+LOG : 22:54:31  ----  Starting ...
+LOG : 23:03:46  ----  Starting ...
+LOG : 23:04:03  ----  Starting ...
+LOG : 23:04:19  ----  Starting ...
+LOG : 23:04:48  ----  Starting ...
+LOG : 23:05:15  ----  Starting ...
+LOG : 23:05:28  ----  Starting ...
+LOG : 23:05:36  ----  Starting ...
+LOG : 23:06:00  ----  Starting ...
+LOG : 23:06:43  ----  Starting ...
+LOG : 23:07:09  ----  Starting ...
+LOG : 23:07:24  ----  Starting ...
+LOG : 23:07:53  ----  Starting ...
+LOG : 23:08:29  ----  Starting ...
+LOG : 23:09:12  ----  Starting ...
+LOG : 23:09:46  ----  Starting ...
+LOG : 23:10:32  ----  Starting ...
+LOG : 23:16:20  ----  Starting ...
+LOG : 23:17:11  ----  Starting ...
+LOG : 23:17:22  ----  Starting ...
+LOG : 23:17:35  ----  Starting ...
+LOG : 23:19:34  ----  Starting ...
+LOG : 23:22:38  ----  Starting ...
+LOG : 23:23:16  ----  Starting ...
+LOG : 23:23:51  ----  Starting ...
+LOG : 23:25:30  ----  Starting ...
+LOG : 23:25:46  ----  Starting ...
+LOG : 23:25:54  ----  Starting ...
+LOG : 23:26:15  ----  Starting ...
+LOG : 23:26:23  ----  Starting ...
+LOG : 23:26:42  ----  Starting ...
+LOG : 23:29:11  ----  Starting ...
+LOG : 23:29:36  ----  Starting ...
+LOG : 23:43:16  ----  Starting ...
+LOG : 23:43:44  ----  Starting ...
+LOG : 23:44:04  ----  Starting ...
+LOG : 23:44:45  ----  Starting ...
+LOG : 23:45:14  ----  Starting ...
+LOG : 23:46:40  ----  Starting ...
+LOG : 23:47:01  ----  Starting ...
+LOG : 23:47:38  ----  Starting ...
+LOG : 23:47:45  ----  Starting ...
+LOG : 23:50:35  ----  Starting ...
+LOG : 23:50:42  ----  Starting ...
+LOG : 23:51:47  ----  Starting ...
+LOG : 23:52:24  ----  Starting ...
+LOG : 23:52:50  ----  Starting ...
+LOG : 23:53:09  ----  Starting ...
+LOG : 23:53:31  ----  Starting ...
+LOG : 23:54:09  ----  Starting ...
+LOG : 23:54:59  ----  Starting ...
+LOG : 23:56:51  ----  Starting ...
+LOG : 23:57:06  ----  Starting ...
+LOG : 23:58:12  ----  Starting ...
