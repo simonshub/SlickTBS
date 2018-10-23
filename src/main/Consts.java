@@ -10,16 +10,33 @@ package main;
  * @author emil.simon
  */
 public abstract class Consts {
-    public static final String SETTINGS_FILE_PATH = "settings.cfg";
     
-    public static final String TILES_PATH = "res/data/tiles/";
-    public static final String TILES_EXT = ".tile";
+    public static final String APP_TITLE = "Some Game";
+    public static final String APP_SETTINGS_FILE_PATH = "settings.cfg";
     
-    public static final boolean RENDER_DEBUG = true;
+    public static final String APP_PROPERTY_DELIMITER = "=";
+    public static final String APP_COMMENT_DELIMITER = "//";
     
-    public static final boolean RENDER_POIS = true;
-    public static final boolean RENDER_FOG_OF_WAR = false;
-    public static final boolean RENDER_DEBUG_CAMERA_INFO = true;
-    public static final boolean RENDER_DEBUG_RENDERED_HEXES = true;
+    public static final String GRFX_FILE_EXTENSION = ".png";
+    public static final String SOUND_FILE_EXTENSION = ".wav";
+    public static final String FONT_FILE_EXTENSION = ".ttf";
+    
+    public static final String SCRIPT_FILE_EXTENSION = ".js";
+    public static final String OBJECT_FILE_EXTENSION = ".json";
+    public static final String DATABASE_FILE_EXTENSION = ".db";
+    
+    public static final String DEFAULT_FONT = "note_this";
+    public static final int DEFAULT_FONT_SIZE = 20;
+    
+    public static final int ENTITY_OFFSCREEN_DRAW_MARGIN = 128;
+    public static final int TILESET_WIDTH = 32;
+    public static final int TILESET_HEIGHT = 32;
+    
+    public static final String CURRENT_VERSION = "DEV";
+    public static final String[] SUPPORTED_VERSIONS = { "DEV", "0.1a" };
+    
+    
+    
+    private Consts () { }
     
 }

@@ -20,6 +20,7 @@ import org.simon.utils.SlickUtils;
  * @author emil.simon
  */
 public class ResMgr {
+	
     public static ResMgr instance;
     
     public static final String UI_GRFX_PATH = "res/grfx/ui/";
@@ -73,7 +74,7 @@ public class ResMgr {
     
     
     public void readSettings () throws FileNotFoundException, IOException, IllegalArgumentException, IllegalAccessException {
-        File settings = new File (Consts.SETTINGS_FILE_PATH);
+        File settings = new File (Consts.APP_SETTINGS_FILE_PATH);
         
         if (!settings.exists())
             SlickUtils.writeObjectToFile(settings, this);
