@@ -52,6 +52,7 @@ public class Settings {
     public static String fonts_path = "res/fonts/";
     
     public static String tiles_path = "res/data/tiles/";
+    public static String save_path = "saves/";
     
     public static int default_font_size = Consts.DEFAULT_FONT_SIZE;
     public static int default_tooltip_font_size = Consts.DEFAULT_FONT_SIZE;

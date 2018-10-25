@@ -10,6 +10,8 @@ import game.data.world.map.GameMap;
 import main.Consts;
 import main.Settings;
 
+import java.util.Random;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -85,7 +87,7 @@ public class PlayingState extends BasicGameState {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         if (gameMap==null) {
-            this.gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+            this.gameMap = new GameMap (GameMap.MapSize.MEDIUM, 100);
             return;
         }
         
@@ -112,7 +114,17 @@ public class PlayingState extends BasicGameState {
         
         if (container.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             // MAP GENERATOR TEST
-            gameMap = new GameMap (GameMap.MapSize.MEDIUM);
+            gameMap = new GameMap (GameMap.MapSize.MEDIUM, new Random().nextInt());
+        }
+        
+        if (container.getInput().isKeyPressed(Input.KEY_SPACE)) {
+            // MAP GENERATOR TEST
+            gameMap = new GameMap (GameMap.MapSize.MEDIUM, 100);
+        }
+        
+        if (container.getInput().isKeyPressed(Input.KEY_S)) {
+            // MAP GENERATOR TEST
+            gameMap.save("save");
         }
         
         if (container.getInput().isKeyPressed(Input.KEY_X)) {

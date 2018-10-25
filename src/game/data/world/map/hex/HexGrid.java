@@ -20,19 +20,25 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 import org.simon.utils.Log;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author emil.simon
  */
 public final class HexGrid {
+	
     public static final int DRAW_MARGIN_X = 2;
     public static final int DRAW_MARGIN_Y = 2;
     
-    public List<Hex> land;
-    public List<Continent> continents;
+    public transient List<Hex> land;
     
-    public int render_counter;
-    public int not_render_counter;
+    public transient List<Continent> continents;
+
+    public transient int render_counter;
+
+    public transient int not_render_counter;
+    
     private final int size_x;
     private final int size_y;
     private final List<List<Hex>> grid;

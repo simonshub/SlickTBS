@@ -91,6 +91,8 @@ public class ResourceManager {
                             .substring(path.indexOf(Settings.grfx_path) + Settings.grfx_path.length())
                             .replaceAll(Consts.GRFX_FILE_EXTENSION, "");
                     
+                    Log.log("Loading graphics with name '"+key+"' at path '"+path+"'");
+                    
                     Image value = new Image (path, false, Image.FILTER_LINEAR);
                     value.setFilter(Image.FILTER_NEAREST);
                     graphics_lib.put(key, value);

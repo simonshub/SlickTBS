@@ -6,13 +6,22 @@
 package game.data.world.map;
 
 import game.data.world.map.hex.HexGrid;
+import main.Settings;
 import game.data.world.map.hex.Hex;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_X;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_Y;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
+import org.simon.utils.Log;
+
+import com.google.gson.Gson;
 
 /**
  *
@@ -33,6 +42,8 @@ public class GameMap {
     
     
     
+    public static Gson gson = new Gson ();
+    
     public HexGrid grid;
     
     public int mouse_shadow_x, mouse_shadow_y;
@@ -49,6 +60,34 @@ public class GameMap {
         
         WorldGenerator.setGrid(grid);
         WorldGenerator.generateMap(1.0, seed);
+    }
+    
+    
+    
+    public boolean save (String filename) {
+    	String complete_path = Settings.save_path + filename;
+    	
+    	try {
+    		File f = new File (complete_path);
+    		
+    		if (!f.exists())
+    			f.createNewFile();
+    		
+    		if (!f.exists() || (f.exists() && !f.canWrite()))
+    			throw new IOException ("Cannot save map because file-write permission has been denied");
+    		
+    		String json = gson.toJson(grid);
+    		
+    		FileWriter writer = new FileWriter (f);
+    		writer.write(json);
+    		writer.flush();
+    		writer.close();
+    	} catch (Exception ex) {
+    		Log.err(ex);
+    		return false;
+    	}
+    	
+    	return true;
     }
     
     public void render (Camera camera, GameContainer container, StateBasedGame game, Graphics g) {

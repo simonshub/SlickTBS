@@ -24,6 +24,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.simon.utils.Location;
 import org.simon.utils.SlickUtils;
 
+import com.google.gson.annotations.Expose;
+
 /**
  *
  * @author emil.simon
@@ -36,48 +38,52 @@ public final class Hex {
     public static Image HEX_FOG_OF_WAR_IMG;
     public static Image HEX_OVERLAY_IMG;
     public static Image HEX_GRID_IMG;
+    
     public static final String HEX_FOG_OF_WAR_IMG_PATH = "res/grfx/fog.png";
     public static final String HEX_OVERLAY_IMG_PATH = "res/grfx/overlay.png";
     public static final String HEX_GRID_IMG_PATH = "res/grfx/hex_blue.png";
     
-    public static Image HEX_COAST_SANDY_UL_IMG;
-    public static Image HEX_COAST_SANDY_UR_IMG;
-    public static Image HEX_COAST_SANDY_L_IMG;
-    public static Image HEX_COAST_SANDY_R_IMG;
-    public static Image HEX_COAST_SANDY_DL_IMG;
-    public static Image HEX_COAST_SANDY_DR_IMG;
-    public static Image HEX_COAST_CLIFF_UL_IMG;
-    public static Image HEX_COAST_CLIFF_UR_IMG;
-    public static Image HEX_COAST_CLIFF_L_IMG;
-    public static Image HEX_COAST_CLIFF_R_IMG;
-    public static Image HEX_COAST_CLIFF_DL_IMG;
-    public static Image HEX_COAST_CLIFF_DR_IMG;
-    public static String HEX_COAST_SANDY_UL_IMG_PATH = "res/grfx/coast/coast_sandy_ul.png";
-    public static String HEX_COAST_SANDY_UR_IMG_PATH = "res/grfx/coast/coast_sandy_ur.png";
-    public static String HEX_COAST_SANDY_L_IMG_PATH = "res/grfx/coast/coast_sandy_l.png";
-    public static String HEX_COAST_SANDY_R_IMG_PATH = "res/grfx/coast/coast_sandy_r.png";
-    public static String HEX_COAST_SANDY_DL_IMG_PATH = "res/grfx/coast/coast_sandy_dl.png";
-    public static String HEX_COAST_SANDY_DR_IMG_PATH = "res/grfx/coast/coast_sandy_dr.png";
-    public static String HEX_COAST_CLIFF_UL_IMG_PATH = "res/grfx/coast/coast_cliff_ul.png";
-    public static String HEX_COAST_CLIFF_UR_IMG_PATH = "res/grfx/coast/coast_cliff_ur.png";
-    public static String HEX_COAST_CLIFF_L_IMG_PATH = "res/grfx/coast/coast_cliff_l.png";
-    public static String HEX_COAST_CLIFF_R_IMG_PATH = "res/grfx/coast/coast_cliff_r.png";
-    public static String HEX_COAST_CLIFF_DL_IMG_PATH = "res/grfx/coast/coast_cliff_dl.png";
-    public static String HEX_COAST_CLIFF_DR_IMG_PATH = "res/grfx/coast/coast_cliff_dr.png";
+//    public static Image HEX_COAST_SANDY_UL_IMG;
+//    public static Image HEX_COAST_SANDY_UR_IMG;
+//    public static Image HEX_COAST_SANDY_L_IMG;
+//    public static Image HEX_COAST_SANDY_R_IMG;
+//    public static Image HEX_COAST_SANDY_DL_IMG;
+//    public static Image HEX_COAST_SANDY_DR_IMG;
+//    public static Image HEX_COAST_CLIFF_UL_IMG;
+//    public static Image HEX_COAST_CLIFF_UR_IMG;
+//    public static Image HEX_COAST_CLIFF_L_IMG;
+//    public static Image HEX_COAST_CLIFF_R_IMG;
+//    public static Image HEX_COAST_CLIFF_DL_IMG;
+//    public static Image HEX_COAST_CLIFF_DR_IMG;
+//    public static String HEX_COAST_SANDY_UL_IMG_PATH = "res/grfx/coast/coast_sandy_ul.png";
+//    public static String HEX_COAST_SANDY_UR_IMG_PATH = "res/grfx/coast/coast_sandy_ur.png";
+//    public static String HEX_COAST_SANDY_L_IMG_PATH = "res/grfx/coast/coast_sandy_l.png";
+//    public static String HEX_COAST_SANDY_R_IMG_PATH = "res/grfx/coast/coast_sandy_r.png";
+//    public static String HEX_COAST_SANDY_DL_IMG_PATH = "res/grfx/coast/coast_sandy_dl.png";
+//    public static String HEX_COAST_SANDY_DR_IMG_PATH = "res/grfx/coast/coast_sandy_dr.png";
+//    public static String HEX_COAST_CLIFF_UL_IMG_PATH = "res/grfx/coast/coast_cliff_ul.png";
+//    public static String HEX_COAST_CLIFF_UR_IMG_PATH = "res/grfx/coast/coast_cliff_ur.png";
+//    public static String HEX_COAST_CLIFF_L_IMG_PATH = "res/grfx/coast/coast_cliff_l.png";
+//    public static String HEX_COAST_CLIFF_R_IMG_PATH = "res/grfx/coast/coast_cliff_r.png";
+//    public static String HEX_COAST_CLIFF_DL_IMG_PATH = "res/grfx/coast/coast_cliff_dl.png";
+//    public static String HEX_COAST_CLIFF_DR_IMG_PATH = "res/grfx/coast/coast_cliff_dr.png";
     
-    public boolean river;
-    public boolean coast_is_cliff;
-    public boolean coastal_ul;
-    public boolean coastal_ur;
-    public boolean coastal_l;
-    public boolean coastal_r;
-    public boolean coastal_dl;
-    public boolean coastal_dr;
+//    public boolean river;
+//    public boolean coast_is_cliff;
+//    public boolean coastal_ul;
+//    public boolean coastal_ur;
+//    public boolean coastal_l;
+//    public boolean coastal_r;
+//    public boolean coastal_dl;
+//    public boolean coastal_dr;
     
     public int x, y;
-    public Continent continent;
-    public FogOfWarEnum fog_of_war;
+    
     public TerrainTypeEnum terrain;
+    
+    public transient Continent continent;
+
+    public transient FogOfWarEnum fog_of_war;
     
     
     
@@ -106,16 +112,16 @@ public final class Hex {
         this.y = y;
         this.continent = null;
 
-        river = false;
+//        river = false;
         terrain = TerrainTypeEnum.OPEN;
         fog_of_war = FogOfWarEnum.VISIBLE;
         
-        coastal_ul = false;
-        coastal_ur = false;
-        coastal_l = false;
-        coastal_r = false;
-        coastal_dl = false;
-        coastal_dr = false;
+//        coastal_ul = false;
+//        coastal_ur = false;
+//        coastal_l = false;
+//        coastal_r = false;
+//        coastal_dl = false;
+//        coastal_dr = false;
     }
     
     
