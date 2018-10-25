@@ -8,6 +8,10 @@ package game.gui;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.simon.utils.Log;
+
+import main.Settings;
+import main.SlickTBS;
+
 import org.newdawn.slick.Color;
 
 /**
@@ -312,7 +316,7 @@ public class GuiActionHandler {
         if (Settings.debug_gui) Log.log("enter_state ["+source.getName()+"]");
         if (source.hasProperty("enter_state")) {
             int new_state_id = (Integer) source.getProperty("enter_state");
-            Main.instance.enterState(new_state_id);
+            SlickTBS.instance.enterState(new_state_id);
         }
     }
     

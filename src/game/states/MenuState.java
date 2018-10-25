@@ -8,7 +8,8 @@ package game.states;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import main.ResMgr;
+import main.Settings;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -58,11 +59,11 @@ public class MenuState extends BasicGameState {
     
     public void generatePoly () {
         road_points = new ArrayList<> ();
-        Point start = new Point (rand.nextInt(ResMgr.screen_res_w), 0);
+        Point start = new Point (rand.nextInt(Settings.screen_width), 0);
         Point prev = start;
         prev.angle_of_next = (float) (3/2 * Math.PI);
         road_points.add(start);
-        for (;road_points.get(road_points.size()-1).y < ResMgr.screen_res_h && road_points.size() < 10;) {
+        for (;road_points.get(road_points.size()-1).y < Settings.screen_height && road_points.size() < 10;) {
             Point p = prev.polarOffset(prev.angle_of_next+(rand.nextFloat()*road_max_angular_offset - road_max_angular_offset/2), road_step);
             road_points.add(p);
             prev = p;
@@ -98,7 +99,7 @@ public class MenuState extends BasicGameState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.setColor(Color.white);
-        g.texture(new Rectangle(0,0, ResMgr.screen_res_w,ResMgr.screen_res_h), bkg);
+        g.texture(new Rectangle(0,0, Settings.screen_width,Settings.screen_height), bkg);
         Transform t = Transform.createTranslateTransform(-cam_x, -cam_y);
         g.texture(shape.transform(t), img, false);
         

@@ -18,8 +18,9 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.simon.utils.Log;
-import org.simon.src.main.ResourceManager;
-import org.simon.src.main.Settings;
+
+import main.ResourceManager;
+import main.Settings;
 
 /**
  *

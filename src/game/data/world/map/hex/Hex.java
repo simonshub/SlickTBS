@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import main.Consts;
-import main.ResMgr;
+import main.Settings;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -143,20 +143,20 @@ public final class Hex {
         if (terrain != null && terrain.img != null && fog_of_war!=FogOfWarEnum.HIDDEN)
             terrain.img.draw(x_draw, y_draw, x_scale, y_scale);
         
-        if (HEX_FOG_OF_WAR_IMG != null && Consts.RENDER_FOG_OF_WAR)
+        if (HEX_FOG_OF_WAR_IMG != null && Settings.render_fow)
             HEX_FOG_OF_WAR_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (1f,1f,1f,fog_of_war.LEVEL));
         
         if (HEX_GRID_IMG == null)
             return;
         
-        if (ResMgr.render_continents && continent!=null && continent.getColor()!=null)
+        if (Settings.render_continents && continent!=null && continent.getColor()!=null)
             HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, continent.getColor());
         
-        if (ResMgr.render_grid)
+        if (Settings.render_grid)
             HEX_GRID_IMG.draw(x_draw, y_draw, x_scale, y_scale);
     }
     
-    public void renderMouseShadow (float x_draw, float y_draw, float x_scale, float y_scale) {
+	public void renderMouseShadow (float x_draw, float y_draw, float x_scale, float y_scale) {
         if (HEX_OVERLAY_IMG != null)
             HEX_OVERLAY_IMG.draw(x_draw, y_draw, x_scale, y_scale, new Color (0f,0f,0f,0.2f));
     }

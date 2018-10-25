@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Properties;
+
 import org.simon.utils.Log;
 
 /**
@@ -33,6 +34,11 @@ public class Settings {
     public static boolean debug_mode = true;
     public static boolean debug_gui = true;
     
+    public static boolean render_fow = false;
+    public static boolean render_grid = true;
+    public static boolean render_continents = false;
+    public static boolean render_mouse_shadow = false;
+    
     public static String savegame_path = "saves/";
     
     public static String default_tooltip_background_image = "pixel";
@@ -40,6 +46,17 @@ public class Settings {
     public static String default_world_generation_template = "continents";
     public static String inventory_background_image = "icons/backpack";
     public static String test_sound = "wauw";
+    
+    public static String grfx_path = "res/grfx/";
+    public static String sounds_path = "res/sounds/";
+    public static String fonts_path = "res/fonts/";
+    
+    public static String tiles_path = "res/data/tiles/";
+    
+    public static int default_font_size = Consts.DEFAULT_FONT_SIZE;
+    public static int default_tooltip_font_size = Consts.DEFAULT_FONT_SIZE;
+    public static String default_font = Consts.DEFAULT_FONT;
+    public static String default_tooltip_font = Consts.DEFAULT_FONT;
     
     
     

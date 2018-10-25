@@ -13,7 +13,8 @@ import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_Y;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import main.ResMgr;
+import main.Settings;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -154,8 +155,8 @@ public final class HexGrid {
         render_counter = 0;
         not_render_counter = 0;
         
-        for (int i=0;i<ResMgr.screen_res_h/((Hex.HEX_GRID_SIZE_Y*3/4)*cam.zoom)+DRAW_MARGIN_Y*2;i++) {
-            for (int j=0;j<ResMgr.screen_res_w/(Hex.HEX_GRID_SIZE_X*cam.zoom)+DRAW_MARGIN_X*2;j++) {
+        for (int i=0;i<Settings.screen_height/((Hex.HEX_GRID_SIZE_Y*3/4)*cam.zoom)+DRAW_MARGIN_Y*2;i++) {
+            for (int j=0;j<Settings.screen_width/(Hex.HEX_GRID_SIZE_X*cam.zoom)+DRAW_MARGIN_X*2;j++) {
                 Hex hex = get(j + start_x_index, i + start_y_index);
                 if (hex!=null) {
                     int x = j + start_x_index;

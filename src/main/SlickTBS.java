@@ -21,6 +21,8 @@ import org.simon.utils.Log;
  * @author emil.simon
  */
 public class SlickTBS extends StateBasedGame {
+	
+	public static final SlickTBS instance = new SlickTBS (Consts.APP_TITLE);
 
     /**
      * @param args the command line arguments
@@ -49,8 +51,8 @@ public class SlickTBS extends StateBasedGame {
         }
 
         try {
-            AppGameContainer agc = new AppGameContainer (new SlickTBS (ResMgr.title));
-            agc.setDisplayMode (ResMgr.screen_res_w, ResMgr.screen_res_h, false);
+            AppGameContainer agc = new AppGameContainer (instance);
+            agc.setDisplayMode (Settings.screen_width, Settings.screen_height, false);
             agc.setTargetFrameRate(60);
             
             agc.start();
@@ -68,10 +70,10 @@ public class SlickTBS extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer container) throws SlickException {
         try {
-            ResMgr.init();
+            ResourceManager.init();
             AppGameContainer app = (AppGameContainer) this.getContainer();
-            app.setTitle(ResMgr.title);
-        } catch (IOException | IllegalArgumentException | IllegalAccessException ex) {
+            app.setTitle(Consts.APP_TITLE);
+        } catch (IllegalArgumentException ex) {
             Log.err("Couldn't start the game!");
             Log.err(ex);
             System.exit(-1);

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import main.Consts;
+import main.Settings;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.simon.utils.Log;
@@ -51,7 +53,7 @@ import org.simon.utils.SlickUtils;
     }
     
     public void init () throws IOException, SlickException {
-        img_path = Consts.TILES_PATH + this.name().toLowerCase() + Consts.TILES_EXT;
+        img_path = Settings.tiles_path + this.name().toLowerCase() + Consts.TILES_FILE_EXTENSION;
         File f = new File (img_path);
         SlickUtils.readObjectFromFile(f, this);
         this.img = new Image (this.img_path);

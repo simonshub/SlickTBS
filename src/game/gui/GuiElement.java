@@ -19,6 +19,9 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.simon.utils.Log;
 
+import main.ResourceManager;
+import main.Settings;
+
 /**
  *
  * @author emil.simon
