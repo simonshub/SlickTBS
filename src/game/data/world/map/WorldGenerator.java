@@ -222,7 +222,7 @@ public abstract class WorldGenerator {
     
     
     
-    public static final void generateMap (double continent_size_factor, double culture_number_factor) {
+    public static final void generateMap (double continent_size_factor, int seed) {
         Log.log("Generating map...");
         String loadLabelBase = "... Loading ...\n";
         
@@ -230,6 +230,8 @@ public abstract class WorldGenerator {
         PlayingState.loadLabel = loadLabelBase;
         long start = System.currentTimeMillis();
         long section_start = 0;
+        
+        SlickUtils.setSeed(seed);
         
         GRID.continents = new ArrayList<> ();
         GRID.land = new ArrayList<> ();

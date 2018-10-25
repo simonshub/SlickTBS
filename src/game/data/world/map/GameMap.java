@@ -20,11 +20,15 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class GameMap {
     
-    public enum MapSize {
-        TINY(64), SMALL(96), MEDIUM(128), LARGE(192), HUGE(256), EPIC(512)
+    public static enum MapSize {
+    	
+        TINY(32), SMALL(64), MEDIUM(96), LARGE(128), EXTRA_LARGE(192), HUGE(256), EPIC(512)
+        
         ;
-        public final int size;
+        
+    	public final int size;
         MapSize (int size) { this.size = size; }
+        
     }
     
     
@@ -37,14 +41,14 @@ public class GameMap {
     
     
     
-    public GameMap (MapSize size) {
+    public GameMap (MapSize size, int seed) {
         grid = new HexGrid (size.size*2, size.size);
         mouse_shadow_x = -1;
         mouse_shadow_y = -1;
         debug_hex = null;
         
         WorldGenerator.setGrid(grid);
-        WorldGenerator.generateMap(1.0, 1.0);
+        WorldGenerator.generateMap(1.0, seed);
     }
     
     public void render (Camera camera, GameContainer container, StateBasedGame game, Graphics g) {
