@@ -107,7 +107,7 @@ public final class Hex {
 //        HEX_COAST_CLIFF_DR_IMG = new Image (HEX_COAST_CLIFF_DR_IMG_PATH);
     }
     
-    public Hex (int x, int y, String continent_name) {
+    public Hex (int x, int y) {
         this.x = x;
         this.y = y;
         this.continent = null;

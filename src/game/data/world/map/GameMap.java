@@ -6,7 +6,9 @@
 package game.data.world.map;
 
 import game.data.world.map.hex.HexGrid;
+import main.Consts;
 import main.Settings;
+import game.data.player.Player;
 import game.data.world.map.hex.Hex;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_X;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_Y;
@@ -14,6 +16,8 @@ import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_Y;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -46,9 +50,11 @@ public class GameMap {
     
     public HexGrid grid;
     
-    public int mouse_shadow_x, mouse_shadow_y;
+    public List<Player> players;
     
-    public Hex debug_hex;
+    public transient int mouse_shadow_x, mouse_shadow_y;
+    
+    public transient Hex debug_hex;
     
     
     
@@ -58,6 +64,8 @@ public class GameMap {
         mouse_shadow_y = -1;
         debug_hex = null;
         
+        players = new ArrayList<> ();
+        
         WorldGenerator.setGrid(grid);
         WorldGenerator.generateMap(1.0, seed);
     }
@@ -65,7 +73,7 @@ public class GameMap {
     
     
     public boolean save (String filename) {
-    	String complete_path = Settings.save_path + filename;
+    	String complete_path = Settings.save_path + filename + Consts.SAVE_FILE_EXTENSION;
     	
     	try {
     		File f = new File (complete_path);
@@ -87,6 +95,7 @@ public class GameMap {
     		return false;
     	}
     	
+    	Log.log("Successfully saved map as '"+filename+"'");
     	return true;
     }
     

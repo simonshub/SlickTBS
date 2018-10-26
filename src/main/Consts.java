@@ -26,6 +26,7 @@ public abstract class Consts {
     public static final String DATABASE_FILE_EXTENSION = ".db";
     
     public static final String TILES_FILE_EXTENSION = ".tile";
+    public static final String SAVE_FILE_EXTENSION = ".save";
     
     public static final String DEFAULT_FONT = "note_this";
     public static final int DEFAULT_FONT_SIZE = 20;
