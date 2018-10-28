@@ -25,6 +25,8 @@ import org.simon.utils.Location;
 import org.simon.utils.SlickUtils;
 
 import com.google.gson.annotations.Expose;
+import game.data.players.settlements.Settlement;
+import java.util.Objects;
 
 /**
  *
@@ -77,11 +79,13 @@ public final class Hex {
 //    public boolean coastal_dl;
 //    public boolean coastal_dr;
     
-    public int x, y;
+    public final int x, y;
     
     public TerrainTypeEnum terrain;
     
     public transient Continent continent;
+    
+    public transient Settlement settlement;
 
     public transient FogOfWarEnum fog_of_war;
     
@@ -113,6 +117,8 @@ public final class Hex {
         this.continent = null;
 
 //        river = false;
+        settlement = null;
+        
         terrain = TerrainTypeEnum.OPEN;
         fog_of_war = FogOfWarEnum.VISIBLE;
         
@@ -126,9 +132,12 @@ public final class Hex {
     
     
     
-    public void setLocation (int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void setSettlement (Settlement settlement) {
+        this.settlement = settlement;
+    }
+    
+    public Settlement getSettlement () {
+        return settlement;
     }
     
     public Location getMapCoordsCenter () {
@@ -345,5 +354,25 @@ public final class Hex {
             hex.terrain = to_type;
         
         return candidates;
+    }
+    
+    
+    
+    @Override
+    public boolean equals (Object obj) {
+        if (obj instanceof Hex) {
+            Hex hex = (Hex) obj;
+            return hex.x==x && hex.y==y;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.x;
+        hash = 97 * hash + this.y;
+        hash = 97 * hash + Objects.hashCode(this.terrain);
+        return hash;
     }
 }

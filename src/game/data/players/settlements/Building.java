@@ -31,7 +31,7 @@ public enum Building {
     FORTIFICATIONS (
             "Fortifications", 10, 0,
             (lvl) -> lvl*5,
-            (lvl) -> lvl*15
+            (lvl) -> lvl*20
         ),
     
     

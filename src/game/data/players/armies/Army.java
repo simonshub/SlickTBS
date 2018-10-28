@@ -6,8 +6,12 @@
 package game.data.players.armies;
 
 import game.data.players.unitdesign.UnitDesign;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.simon.utils.Log;
 
 /**
@@ -61,6 +65,41 @@ public class Army {
         }
         
         return army;
+    }
+    
+    private boolean canFight () {
+        return (composition.keySet().stream().anyMatch( (design) -> (composition.containsKey(design) && composition.get(design)>0) ));
+    }
+    
+    private void takeCasualties (Map<UnitDesign,Integer> casualties, Map<UnitDesign,Integer> routed) {
+        Map<UnitDesign,Integer> active_units = new HashMap<> ();
+        Set<UnitDesign> all_designs = new HashSet<> ();
+        all_designs.addAll(composition.keySet());
+        all_designs.addAll(casualties.keySet());
+        all_designs.addAll(routed.keySet());
+        
+        for (UnitDesign design : all_designs) {
+            int actual = 0;
+            
+            if (composition.containsKey(design))
+                actual += composition.get(design);
+            if (casualties.containsKey(design))
+                actual -= casualties.get(design);
+            if (routed.containsKey(design))
+                actual -= routed.get(design);
+            
+            if (actual>0) active_units.put(design, actual);
+        }
+        
+        this.composition.clear();
+        this.composition.putAll(active_units);
+    }
+    
+    public void doBattle (Army other) {
+        // repeat, until someone can't fight anymore
+        do {
+            
+        } while (this.canFight() && other.canFight());
     }
     
 }

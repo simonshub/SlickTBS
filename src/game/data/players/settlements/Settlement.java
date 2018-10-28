@@ -18,9 +18,9 @@ public class Settlement {
     
     public Player owner;
     
-    private final Hex location;
+    public final Hex location;
     
-    private final Map<Building, Integer> buildings;
+    public final Map<Building, Integer> buildings;
     
     
     
@@ -40,8 +40,11 @@ public class Settlement {
         this.owner = owner;
         this.location = location;
         this.buildings = getNewSettlementBuildings();
-        
-        this.location.setSettlement(this);
+        this.setHex(location);
+    }
+    
+    private final void setHex (final Hex hex) {
+        hex.setSettlement(this);
     }
     
 }
