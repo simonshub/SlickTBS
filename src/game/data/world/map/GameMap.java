@@ -8,7 +8,7 @@ package game.data.world.map;
 import game.data.world.map.hex.HexGrid;
 import main.Consts;
 import main.Settings;
-import game.data.player.Player;
+import game.data.players.Player;
 import game.data.world.map.hex.Hex;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_X;
 import static game.data.world.map.hex.Hex.HEX_GRID_SIZE_Y;

@@ -7,7 +7,6 @@ package game.states;
 
 import game.data.world.map.Camera;
 import game.data.world.map.GameMap;
-import main.Consts;
 import main.Settings;
 
 import java.util.Random;
@@ -94,12 +93,6 @@ public class PlayingState extends BasicGameState {
         
         gameMap.update(camera, container, game);
         
-//        if (is_night && night_overlay<0.3f) {
-//            night_overlay = Math.min(night_overlay + (delta/10000f), 0.3f);
-//        } else if (!is_night && night_overlay>0f) {
-//            night_overlay = Math.max(night_overlay - (delta/10000f), 0f);
-//        }
-        
         if (container.getInput().isKeyDown(Input.KEY_LEFT)) {
             camera.x--;
         }
@@ -132,10 +125,6 @@ public class PlayingState extends BasicGameState {
             // NAME GENERATOR TEST
         }
         
-//        if (container.getInput().isKeyPressed(Input.KEY_X)) {
-//            // NIGHT TIME TEST
-//            is_night = !is_night;
-//        }
     }
     
 }
