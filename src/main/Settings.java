@@ -62,6 +62,7 @@ public class Settings {
     
     
     public static void load () {
+    	Log.log("Loading settings...");
         File file = new File (Consts.APP_SETTINGS_FILE_PATH);
         
         if (file.exists()) {
@@ -84,12 +85,14 @@ public class Settings {
                         f.set(null, props.getProperty(f.getName()));
                     }
                 }
+            	Log.log("Successfully loaded settings!");
             } catch (IOException | IllegalAccessException | NumberFormatException ex) {
                 Log.err("error while reading settings file at '"+Consts.APP_SETTINGS_FILE_PATH+"'");
                 Log.err(ex);
             }
         } else {
             try {
+            	Log.log("Settings file not found - generating with default values...");
                 OutputStream os = new FileOutputStream (file);
                 Properties props = new Properties();
                 
@@ -99,6 +102,7 @@ public class Settings {
                 }
                 
                 props.store(os, null);
+            	Log.log("Settings file properly generated!");
             } catch (IOException | IllegalAccessException ex) {
                 Log.err("error while trying to create default settings file at '"+Consts.APP_SETTINGS_FILE_PATH+"'");
                 Log.err(ex);

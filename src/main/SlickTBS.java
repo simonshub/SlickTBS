@@ -70,6 +70,7 @@ public class SlickTBS extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer container) throws SlickException {
         try {
+            Settings.load();
             ResourceManager.init();
             AppGameContainer app = (AppGameContainer) this.getContainer();
             app.setTitle(Consts.APP_TITLE);
@@ -78,9 +79,9 @@ public class SlickTBS extends StateBasedGame {
             Log.err(ex);
             System.exit(-1);
         }
-            
-        this.addState(new MenuState ());
+
         this.addState(new PlayingState ());
+        this.addState(new MenuState ());
         
         this.enterState(PlayingState.ID);
     }
