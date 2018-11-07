@@ -2,3 +2,4 @@ img_path = res/grfx/tiles/coast.png
 military_land_value = 20
 civilian_land_value = 20
 move_cost = 1
+max_battle_width = 100

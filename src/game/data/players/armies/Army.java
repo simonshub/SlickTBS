@@ -6,10 +6,9 @@
 package game.data.players.armies;
 
 import game.data.players.unitdesign.UnitDesign;
-import java.util.ArrayList;
+import game.engine.map.Hex;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.simon.utils.Log;
@@ -20,12 +19,25 @@ import org.simon.utils.Log;
  */
 public class Army {
     
+    private Hex location;
+    
     private final Map<UnitDesign,Integer> composition;
     
     
     
-    public Army () {
-        composition = new HashMap<> ();
+    public Army (final Hex spawn_location) {
+        this.location = spawn_location;
+        this.composition = new HashMap<> ();
+    }
+    
+    
+    
+    public Hex getLocation () {
+        return location;
+    }
+    
+    public void move (final Hex new_location) {
+        this.location = new_location;
     }
     
     
@@ -47,7 +59,7 @@ public class Army {
     }
     
     public Army split (Map<UnitDesign,Integer> what) {
-        Army army = new Army ();
+        Army army = new Army (null);
         
         for (UnitDesign design : what.keySet()) {
             if ( !composition.containsKey(design) || (composition.get(design)==null) || (composition.get(design)==0) ) {
@@ -95,11 +107,26 @@ public class Army {
         this.composition.putAll(active_units);
     }
     
-    public void doBattle (Army other) {
+    /**
+     * Calculates the outcome of a battle against another army.
+     * 
+     * @param other - The army this one should fight against
+     * @return The surviving army
+     */
+    public Army doBattle (Army other) {
+        Army surviving = null;
         // repeat, until someone can't fight anymore
         do {
+            // pick up to N random soldiers from this army
+            // where N is the max battle width of the hex this army is on
             
+            // pick up to N random soldiers from other army
+            // where N is the max battle width of the hex the other army is on
+            
+            // 
         } while (this.canFight() && other.canFight());
+        
+        return surviving;
     }
     
 }

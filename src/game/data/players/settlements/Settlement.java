@@ -6,7 +6,7 @@
 package game.data.players.settlements;
 
 import game.data.players.Player;
-import game.data.world.map.hex.Hex;
+import game.engine.map.Hex;
 import java.util.HashMap;
 import java.util.Map;
 

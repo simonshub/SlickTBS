@@ -39,6 +39,8 @@ public class Settings {
     public static boolean render_continents = false;
     public static boolean render_mouse_shadow = false;
     
+    public static String token_background_image = "tokens/token";
+    
     public static String savegame_path = "saves/";
     
     public static String default_tooltip_background_image = "pixel";

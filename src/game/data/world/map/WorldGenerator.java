@@ -6,9 +6,9 @@
 package game.data.world.map;
 
 import game.data.world.NameGenerator;
-import game.data.world.map.hex.DirEnum;
-import game.data.world.map.hex.HexGrid;
-import game.data.world.map.hex.Hex;
+import game.engine.map.DirEnum;
+import game.engine.map.HexGrid;
+import game.engine.map.Hex;
 import game.states.PlayingState;
 import java.util.ArrayList;
 import java.util.Arrays;

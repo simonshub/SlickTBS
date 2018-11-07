@@ -5,8 +5,8 @@
  */
 package game.states;
 
-import game.data.world.map.Camera;
-import game.data.world.map.GameMap;
+import game.engine.map.Camera;
+import game.engine.map.GameMap;
 import main.Settings;
 
 import java.util.Random;

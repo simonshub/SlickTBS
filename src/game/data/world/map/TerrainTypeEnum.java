@@ -35,6 +35,7 @@ import org.simon.utils.SlickUtils;
     public int move_cost;
     public int military_land_value;
     public int civilian_land_value;
+    public int max_battle_width;
     public Image img;
     public String img_path;
     
